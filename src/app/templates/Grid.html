@@ -1,0 +1,34 @@
+<div>
+    <div role="tabpanel">
+        <ul class="nav nav-tabs">
+            <li class="active" data-dojo-attach-point='stationsTab'>
+                <a href="#stations" data-toggle="tab">Stations</a>
+            </li>
+            <li>
+                <a href="#results" data-toggle="tab">Results</a>
+            </li>
+            <li>
+                <a href='#download' data-toggle='tab'>Download</a>
+            </li>
+            <li data-dojo-attach-point='clearSelectionBtnContainer' class='pull-right hidden'>
+                <button type='button' class='btn btn-info btn-sm'
+                    data-dojo-attach-event='click: clearSelection'>
+                        Clear Selected Station
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id='stations' class="tab-pane fade in active">
+                <div data-dojo-attach-point="stationsGridDiv"></div>
+            </div>
+            <div id='results' class="tab-pane fade">
+                <div data-dojo-attach-point="resultsGridDiv"></div>
+            </div>
+            <div id="download" class="tab-pane fade">
+                <div data-dojo-attach-point="downloadDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>

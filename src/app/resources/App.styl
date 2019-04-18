@@ -1,0 +1,104 @@
+@import '../../dijit/themes/tundra/tundra.css'
+@import '../../esri/css/esri.css'
+@import '../../agrc/resources/map/BaseMap.css'
+@import '../../bootstrap/dist/css/bootstrap.css'
+@import '../../dgrid/css/dgrid.css'
+@import '../../ijit/resources/authentication/LoginRegister.css'
+@import '../../toaster/src/resources/Toaster'
+@import '../../layer-selector/resources/LayerSelector'
+@import '../charts/resources/ChartContainer'
+@import 'FilterContainer'
+@import 'Grid'
+@import 'Download'
+@require 'vars.styl'
+
+body,
+html,
+.app
+    color: $text-color
+    font-family: Arial, sans-serif
+    height: 100%
+    margin: 0
+    overflow: hidden
+    padding: 0
+    width: 100%
+    .border-container
+        height: 100%
+        width: 100%
+        padding 0
+        .dijitBorderContainer-dijitContentPane
+            padding 0
+        .dijitBorderContainer-child
+            border-left none
+            border-right none
+            border-bottom none
+        .dijitSplitter
+            background-color $background-grey
+
+    /* NAV BAR */
+    .navbar
+        background-color: $background-grey
+        background-image: none
+        border-color $border-color
+        margin-bottom 0
+    .navbar-main
+        border-radius: 0
+        height 55px
+    .logo
+        padding: 5px 0 5px 10px
+    .navbar-brand
+        font-size: 28px
+        padding-top: 18px
+        &.exchange
+            padding: 0
+    .version
+        display: inline
+        font-size: 12px
+        letter-spacing: 0
+        padding: 0
+        text-decoration: none
+    .version:hover
+        text-decoration: underline !important
+    .logoutDiv a
+        margin: 0
+
+    /* CENTER (MAP) */
+    .center
+        padding: 0
+    .map-div
+        width 100%
+        top 55px
+        bottom 0
+        position absolute
+        .esriSimpleSliderTL
+            background-color: $background-grey
+
+        .esriSimpleSliderTL,
+        .esriSimpleSliderVertical .esriSimpleSliderIncrementButton
+            border-color: $border-color
+
+        .esriSimpleSliderVertical .esriSimpleSliderIncrementButton
+            border-bottom-color: $border-color
+
+        .selectorMain
+            right: 10px
+
+        // fix tooltip collision with bootstrap
+        .tooltip
+            opacity: 1
+        .layer-selector
+            &.layer-selector-top
+                top: 50px
+            box-shadow: none
+            border: 1px solid $border-color
+        .chart-container>.btn
+            border-color: $border-color
+
+    /* GRID */
+    [data-dojo-attach-point='gridContainer']
+        height: $grid-height
+
+/* GENERAL STUFF */
+/* remove orange outline in chrome */
+*:focus
+    outline: none !important

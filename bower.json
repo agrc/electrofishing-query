@@ -1,0 +1,30 @@
+{
+  "name": "ugs-chemistry",
+  "version": "1.1.1",
+  "dependencies": {
+    "agrc": "agrc-widgets#4.1",
+    "agrc-jasmine-matchers": "~0.1.0",
+    "bootstrap": "~3.3",
+    "dgrid": "~1.0",
+    "dgrid03": "dgrid#~0.3.0",
+    "esri": "arcgis-js-api#~3.16.0",
+    "ijit": "agrc-ijit#ugs-customizations",
+    "jasmine-favicon-reporter": "*",
+    "jasmine-jsreporter": "~0.1.2",
+    "put-selector": "~0.3.6",
+    "stubmodule": "~0.6.1",
+    "xstyle": "09b4d603f63df3e7aa5acc04784e36710a75671d",
+    "highcharts": "~4.2",
+    "toaster": "agrc-toaster#~1.0.1",
+    "bootstrap3-typeahead": "~4.0.1",
+    "layer-selector": "agrc-layer-selector#~0.4.0"
+  },
+  "resolutions": {
+    "xstyle": "09b4d603f63df3e7aa5acc04784e36710a75671d",
+    "dgrid": "~1.0",
+    "dstore": "~1.0.3 || ~1.1.1",
+    "dijit": "v1.10.4/esri-3.14.0",
+    "dojo": "v1.10.4/esri-3.14.0",
+    "esri": "~3.16.0"
+  }
+}
