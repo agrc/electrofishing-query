@@ -4,9 +4,9 @@ define([
     'app/Download',
     'app/_ResultsQueryMixin',
 
-    'dgrid/extensions/ColumnResizer',
-    'dgrid/extensions/DijitRegistry',
-    'dgrid/OnDemandGrid',
+    'dgrid1/extensions/ColumnResizer',
+    'dgrid1/extensions/DijitRegistry',
+    'dgrid1/OnDemandGrid',
 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetBase',
@@ -14,7 +14,6 @@ define([
 
     'dojo/date/locale',
     'dojo/dom-class',
-    'dojo/store/Memory',
     'dojo/text!app/templates/Grid.html',
     'dojo/topic',
     'dojo/_base/declare',
@@ -37,7 +36,6 @@ define([
 
     locale,
     domClass,
-    Memory,
     template,
     topic,
     declare,

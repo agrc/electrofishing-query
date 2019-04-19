@@ -4,7 +4,7 @@
             'agrc',
             'app',
             'dgrid',
-            'dgrid03',
+            'dgrid1',
             'dijit',
             'dojo',
             'dojox',
@@ -52,9 +52,6 @@
         map: {
             ladda: {
                 spin: 'ladda/dist/spin'
-            },
-            esri: {
-                dgrid: 'dgrid03'
             }
         }
     });
