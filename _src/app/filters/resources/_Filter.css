@@ -1,0 +1,6 @@
+.panel-heading {
+  cursor: pointer;
+}
+.panel-heading:hover {
+  border-color: #a5a5a5;
+}

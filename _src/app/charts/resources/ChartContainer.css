@@ -1,0 +1,16 @@
+.controls .form-control {
+  max-width: 205px;
+}
+.chart-container .btn-default {
+  right: 20px;
+  top: 20px;
+  position: absolute;
+  z-index: 99;
+}
+.chart-container .panel-default {
+  width: 540px;
+  position: absolute;
+  right: 108px;
+  top: 20px;
+  z-index: 99;
+}

@@ -1,0 +1,44 @@
+.panel-heading {
+  cursor: pointer;
+}
+.panel-heading:hover {
+  border-color: #a5a5a5;
+}
+.date-filter .dijitComboBox .dijitButtonNode {
+  padding: 0.1em 0.2em 0em 0.2em;
+}
+.date-filter .dijitComboBox .dijitArrowButtonContainer {
+  border-width: 1px !important;
+}
+.date-filter .dijitComboBox .dijitInputField {
+  padding-top: 0.15em;
+}
+.list-filter .btn-cont {
+  margin-bottom: 5px;
+}
+.list-filter .btn-cont .btn {
+  margin: 0 5px 5px 0;
+  border-radius: 15px;
+  padding: 1px 8px;
+}
+.filter-container {
+  position: absolute;
+  top: 20px;
+  left: 70px;
+  z-index: 1;
+  width: 350px;
+}
+.filter-container .navbar {
+  min-width: 0;
+  margin-bottom: 3px;
+}
+.filter-container .navbar select {
+  margin-left: 10px;
+  width: 235px;
+}
+.filter-container .container-fluid {
+  padding: 0;
+}
+.filter-container .panel {
+  margin-bottom: 3px;
+}

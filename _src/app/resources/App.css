@@ -1,0 +1,388 @@
+@import '../../dijit/themes/tundra/tundra.css';
+@import '../../esri/css/esri.css';
+@import '../../agrc/resources/map/BaseMap.css';
+@import '../../bootstrap/dist/css/bootstrap.css';
+@import '../../dgrid/css/dgrid.css';
+@import '../../ijit/resources/authentication/LoginRegister.css';
+.toaster {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 5000;
+  overflow: hidden;
+  width: 400px;
+}
+.layer-selector-item {
+  margin: 0 8px;
+}
+.layer-selector-items {
+  max-width: 100px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+.layer-selector-item-input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 4px 0 0;
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+  position: relative;
+  display: block;
+}
+.layer-selector-item.radio,
+.layer-selector-item.checkbox {
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.layer-selector-item.radio input[type=checkbox],
+.layer-selector-item.checkbox input[type=checkbox],
+.layer-selector-item.radio input[type=radio],
+.layer-selector-item.checkbox input[type=radio] {
+  position: absolute;
+  margin-left: -20px;
+}
+.layer-selector-item.radio label,
+.layer-selector-item.checkbox label {
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+.layer-selector {
+  position: absolute;
+  z-index: 1;
+  margin: 20px;
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background: #fff;
+  border-radius: 5px;
+  pointer-events: auto;
+  max-width: 150px;
+}
+.layer-selector-width {
+  width: 8em;
+}
+.layer-selector-toggle {
+  background-image: url("../../layer-selector/resources/layers.png");
+  background-image: -webkit-linear-gradient(transparent, transparent), url("../../layer-selector/resources/layers.min.svg");
+  background-image: -moz-linear-gradient(transparent, transparent), url("../../layer-selector/resources/layers.min.svg");
+  background-image: -o-linear-gradient(transparent, transparent), url("../../layer-selector/resources/layers.min.svg");
+  background-image: -ms-linear-gradient(transparent, transparent), url("../../layer-selector/resources/layers.min.svg");
+  background-image: linear-gradient(transparent, transparent), url("../../layer-selector/resources/layers.min.svg");
+  width: 36px;
+  height: 36px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  display: block;
+  position: relative;
+}
+.layer-selector-layers {
+  min-height: 36px;
+  min-width: 36px;
+  padding: 10px 5px;
+  white-space: nowrap;
+}
+.layer-selector-separator {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.layer-selector-top {
+  top: 0;
+}
+.layer-selector-right {
+  right: 0;
+}
+.layer-selector-bottom {
+  bottom: 0;
+}
+.layer-selector-left {
+  left: 0;
+}
+.layer-selector-hidden {
+  display: none;
+}
+.controls .form-control {
+  max-width: 205px;
+}
+.chart-container .btn-default {
+  right: 20px;
+  top: 20px;
+  position: absolute;
+  z-index: 99;
+}
+.chart-container .panel-default {
+  width: 540px;
+  position: absolute;
+  right: 108px;
+  top: 20px;
+  z-index: 99;
+}
+.panel-heading {
+  cursor: pointer;
+}
+.panel-heading:hover {
+  border-color: #a5a5a5;
+}
+.date-filter .dijitComboBox .dijitButtonNode {
+  padding: 0.1em 0.2em 0em 0.2em;
+}
+.date-filter .dijitComboBox .dijitArrowButtonContainer {
+  border-width: 1px !important;
+}
+.date-filter .dijitComboBox .dijitInputField {
+  padding-top: 0.15em;
+}
+.list-filter .btn-cont {
+  margin-bottom: 5px;
+}
+.list-filter .btn-cont .btn {
+  margin: 0 5px 5px 0;
+  border-radius: 15px;
+  padding: 1px 8px;
+}
+.filter-container {
+  position: absolute;
+  top: 20px;
+  left: 70px;
+  z-index: 1;
+  width: 350px;
+}
+.filter-container .navbar {
+  min-width: 0;
+  margin-bottom: 3px;
+}
+.filter-container .navbar select {
+  margin-left: 10px;
+  width: 235px;
+}
+.filter-container .container-fluid {
+  padding: 0;
+}
+.filter-container .container-fluid .alert {
+  margin: 10px 10px 0 10px;
+  padding: 10px;
+}
+.filter-container .panel {
+  margin-bottom: 3px;
+}
+.grid {
+  height: 100%;
+}
+.grid [role='tabpanel'] {
+  height: 100%;
+}
+.grid [role='tabpanel'] .tab-content {
+  top: 47px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+.grid [role='tabpanel'] .tab-content .tab-pane,
+.grid [role='tabpanel'] .tab-content .dgrid {
+  height: 100%;
+  width: 100%;
+}
+.grid button.btn-link {
+  padding: 10px 15px;
+}
+.grid .nav-tabs {
+  margin-bottom: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.grid .dgrid .dgrid-header-row {
+  background-color: rgba(231,231,231,0.9);
+}
+.grid .dgrid .dgrid-row-odd {
+  background-color: #f5f5f5;
+}
+.grid .dgrid .dgrid-cell.field-Id {
+  width: 0;
+}
+.grid .dgrid .dgrid-cell {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.grid [data-dojo-attach-point='clearSelectionBtnContainer'] button {
+  margin-right: 7px;
+  margin-top: 3px;
+}
+.grid #download {
+  padding: 20px;
+}
+.download .alert-info {
+  margin-top: 20px;
+  width: 337px;
+  text-align: center;
+}
+body,
+html,
+.app {
+  color: #444;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+/* NAV BAR */
+/* CENTER (MAP) */
+/* GRID */
+}
+body .border-container,
+html .border-container,
+.app .border-container {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+body .border-container .dijitBorderContainer-dijitContentPane,
+html .border-container .dijitBorderContainer-dijitContentPane,
+.app .border-container .dijitBorderContainer-dijitContentPane {
+  padding: 0;
+}
+body .border-container .dijitBorderContainer-child,
+html .border-container .dijitBorderContainer-child,
+.app .border-container .dijitBorderContainer-child {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+body .border-container .dijitSplitter,
+html .border-container .dijitSplitter,
+.app .border-container .dijitSplitter {
+  background-color: rgba(231,231,231,0.9);
+}
+body .navbar,
+html .navbar,
+.app .navbar {
+  background-color: rgba(231,231,231,0.9);
+  background-image: none;
+  border-color: #b6b6b6;
+  margin-bottom: 0;
+}
+body .navbar-main,
+html .navbar-main,
+.app .navbar-main {
+  border-radius: 0;
+  height: 55px;
+}
+body .logo,
+html .logo,
+.app .logo {
+  padding: 5px 0 5px 10px;
+}
+body .navbar-brand,
+html .navbar-brand,
+.app .navbar-brand {
+  font-size: 28px;
+  padding-top: 18px;
+}
+body .navbar-brand.exchange,
+html .navbar-brand.exchange,
+.app .navbar-brand.exchange {
+  padding: 0;
+}
+body .version,
+html .version,
+.app .version {
+  display: inline;
+  font-size: 12px;
+  letter-spacing: 0;
+  padding: 0;
+  text-decoration: none;
+}
+body .version:hover,
+html .version:hover,
+.app .version:hover {
+  text-decoration: underline !important;
+}
+body .logoutDiv a,
+html .logoutDiv a,
+.app .logoutDiv a {
+  margin: 0;
+}
+body .center,
+html .center,
+.app .center {
+  padding: 0;
+}
+body .map-div,
+html .map-div,
+.app .map-div {
+  width: 100%;
+  top: 55px;
+  bottom: 0;
+  position: absolute;
+}
+body .map-div .esriSimpleSliderTL,
+html .map-div .esriSimpleSliderTL,
+.app .map-div .esriSimpleSliderTL {
+  background-color: rgba(231,231,231,0.9);
+}
+body .map-div .esriSimpleSliderTL,
+html .map-div .esriSimpleSliderTL,
+.app .map-div .esriSimpleSliderTL,
+body .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton,
+html .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton,
+.app .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton {
+  border-color: #b6b6b6;
+}
+body .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton,
+html .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton,
+.app .map-div .esriSimpleSliderVertical .esriSimpleSliderIncrementButton {
+  border-bottom-color: #b6b6b6;
+}
+body .map-div .selectorMain,
+html .map-div .selectorMain,
+.app .map-div .selectorMain {
+  right: 10px;
+}
+body .map-div .tooltip,
+html .map-div .tooltip,
+.app .map-div .tooltip {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+body .map-div .layer-selector,
+html .map-div .layer-selector,
+.app .map-div .layer-selector {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #b6b6b6;
+}
+body .map-div .layer-selector.layer-selector-top,
+html .map-div .layer-selector.layer-selector-top,
+.app .map-div .layer-selector.layer-selector-top {
+  top: 50px;
+}
+body .map-div .chart-container>.btn,
+html .map-div .chart-container>.btn,
+.app .map-div .chart-container>.btn {
+  border-color: #b6b6b6;
+}
+body [data-dojo-attach-point='gridContainer'],
+html [data-dojo-attach-point='gridContainer'],
+.app [data-dojo-attach-point='gridContainer'] {
+  height: 225px;
+}
+/* GENERAL STUFF */
+/* remove orange outline in chrome */
+*:focus {
+  outline: none !important;
+}

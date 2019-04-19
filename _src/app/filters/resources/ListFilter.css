@@ -1,0 +1,14 @@
+.panel-heading {
+  cursor: pointer;
+}
+.panel-heading:hover {
+  border-color: #a5a5a5;
+}
+.list-filter .btn-cont {
+  margin-bottom: 5px;
+}
+.list-filter .btn-cont .btn {
+  margin: 0 5px 5px 0;
+  border-radius: 15px;
+  padding: 1px 8px;
+}

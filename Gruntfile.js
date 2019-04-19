@@ -52,6 +52,21 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['latest'],
+                plugins: ['transform-remove-strict-mode']
+            },
+            src: {
+                files: [{
+                    expand: true,
+                    cwd: '_src/app/',
+                    src: ['**/*.js'],
+                    dest: 'src/app/'
+                }]
+            }
+        },
         bump: {
             options: {
                 files: bumpFiles,
@@ -60,8 +75,8 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            build: ['dist'],
-            deploy: ['deploy']
+            deploy: ['deploy'],
+            src: ['src/app']
         },
         compress: {
             main: {
@@ -80,8 +95,14 @@ module.exports = function (grunt) {
             uses_defaults: {}
         },
         copy: {
-            main: {
+            dist: {
                 files: [{expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/'}]
+            },
+            src: {
+                expand: true,
+                cwd: '_src',
+                src: ['**/*.html', '**/*.css', '**/*.png', '**/*.jpg', 'secrets.json', 'app/package.json'],
+                dest: 'src'
             }
         },
         dojo: {
@@ -192,7 +213,7 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'src/',
+                    cwd: '_src/',
                     src: ['app/resources/App.styl'],
                     dest: 'src/',
                     ext: '.css'
@@ -200,41 +221,46 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            jshint: {
-                files: jsFiles,
-                tasks: ['newer:jshint:main', 'newer:jscs:main', 'jasmine:main:build']
-            },
             src: {
                 files: jsFiles.concat(otherFiles),
-                options: { livereload: true }
+                options: { livereload: true },
+                tasks: ['newer:copy:src']
             },
             stylus: {
-                files: 'src/app/**/*.styl',
+                files: '_src/app/**/*.styl',
+                options: { livereload: true },
                 tasks: ['stylus']
             }
         }
     });
 
     grunt.registerTask('default', [
-        'jasmine:main:build',
-        'connect',
+        'clean:src',
+        'babel',
         'stylus',
+        'copy:src',
+        'connect',
+        'jasmine:main:build',
         'watch'
     ]);
     grunt.registerTask('build-prod', [
-        'clean:build',
-        'newer:imagemin:main',
+        'clean:src',
+        'babel',
         'stylus',
+        'copy:src',
+        'newer:imagemin:main',
         'dojo:prod',
-        'copy:main',
+        'copy:dist',
         'processhtml:main'
     ]);
     grunt.registerTask('build-stage', [
-        'clean:build',
-        'newer:imagemin:main',
+        'clean:src',
+        'babel',
         'stylus',
+        'copy:src',
+        'newer:imagemin:main',
         'dojo:stage',
-        'copy:main',
+        'copy:dist',
         'processhtml:main'
     ]);
     grunt.registerTask('deploy-prod', [

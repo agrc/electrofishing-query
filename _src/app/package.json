@@ -1,0 +1,5 @@
+{
+    "name": "electrofishing-query",
+    "version": "0.1.0",
+    "dojoBuild": "app.profile.js"
+}
