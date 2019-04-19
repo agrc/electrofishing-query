@@ -31,7 +31,7 @@ module.exports = function (grunt) {
         '!stubmodule/**',
         '!util/**'
     ];
-    var deployDir = 'wwwroot/ugschemistry';
+    var deployDir = 'dwrefdb';
     var secrets;
     try {
         secrets = grunt.file.readJSON('secrets.json');
