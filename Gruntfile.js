@@ -3,9 +3,9 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     var otherFiles = [
-        'src/app/**/*.html',
-        'src/index.html',
-        'src/ChangeLog.html'
+        '_src/app/**/*.html',
+        '_src/index.html',
+        '_src/ChangeLog.html'
     ];
     var gruntFile = 'Gruntfile.js';
     var jsFiles = ['_src/app/**/*.js', gruntFile];
