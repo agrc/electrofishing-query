@@ -1,10 +1,10 @@
 {
-  "name": "ugs-chemistry",
-  "version": "1.1.1",
-  "homepage": "https://github.com/agrc/ugs-chemistry",
+  "name": "electrofishing-query",
+  "version": "0.1.0",
+  "homepage": "https://github.com/agrc/electrofishing-query",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agrc/ugs-chemistry.git"
+    "url": "https://github.com/agrc/electrofishing-query.git"
   },
   "devDependencies": {
     "dojo": "1.15.0",
