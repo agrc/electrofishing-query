@@ -84,26 +84,12 @@ define([
             var that = this;
 
             this.map = new BaseMap(mapDiv, {
-                useDefaultBaseMap: false,
-                extent: new Extent({
-                    xmax: -11762120.612131765,
-                    xmin: -13074391.513731329,
-                    ymax: 5225035.106177688,
-                    ymin: 4373832.359194187,
-                    spatialReference: {
-                        wkid: 3857
-                    }
-                })
+                useDefaultBaseMap: false
             });
             var ls = new LayerSelector({
                 map: this.map,
                 quadWord: config.quadWord,
                 baseLayers: [
-                    {
-                        url: config.urls.esriStreets,
-                        Factory: ArcGISTiledMapServiceLayer,
-                        id: 'ESRI Streets'
-                    },
                     'Hybrid',
                     'Terrain',
                     'Topo'
