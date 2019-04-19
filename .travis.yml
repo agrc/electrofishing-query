@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-    - '4'
+    - 'lts/*'
 before_install:
-    - npm install -g npm@latest
+    - npm install -g npm
     - npm install -g grunt-cli
     - npm install -g bower
     - bower install
@@ -10,11 +10,7 @@ notifications:
     email:
         on_success: change
         on_failure: change
-env:
-    global:
-        - secure: NSwuRfocBY1/mG9rT7fNSIC0Bu7uwT7Se/Uo6jy8JQkA1PXjMHju5yGnyd9b+SscS8JbgE23jQjcVNI1dep9E/mt/vwb19g8Y1HsG0mirpCD5aweWY0Nnk+MvQDunDI2Unw0BId1DdyWnhBxvgAnzUdnl1VOsZoqxsLX60ceFnY=
-        - secure: MHNqWHv0NALeUD58GNJa31zOCdEGbeu9u4fDjaXPyEFnrk5B7g/RXMhJU/W9z/zZDxTABKQCvRCb76/ETo2+mW0YhAme5iIxHVkRXmZKHSft8/BKJhYx5fhEAnW7SsYf2D6aNi59v+JYGxEo4gusD6eD5/L7TXB4S48XBNaOvlo=
-sudo: false
-cache:
-    directories:
-        - node_modules
+sudo: required
+cache: npm
+addons:
+    chrome: stable
