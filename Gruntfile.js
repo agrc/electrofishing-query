@@ -1,8 +1,7 @@
-var path = require('path');
-
+/* eslint-disable camelcase */
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
-    var jsAppFiles = 'src/app/**/*.js';
+
     var otherFiles = [
         'src/app/**/*.html',
         'src/app/**/*.css',
@@ -11,15 +10,13 @@ module.exports = function (grunt) {
         'src/user_admin.html'
     ];
     var gruntFile = 'Gruntfile.js';
-    var jsFiles = [
-        jsAppFiles,
-        gruntFile
-    ];
+    var jsFiles = ['_src/app/**/*.js', gruntFile];
     var bumpFiles = [
         'package.json',
+        'package-lock.json',
         'bower.json',
-        'src/app/package.json',
-        'src/app/config.js'
+        '_src/app/package.json',
+        '_src/app/config.js'
     ];
     var deployFiles = [
         '**',
@@ -51,7 +48,6 @@ module.exports = function (grunt) {
     }
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
         babel: {
             options: {
                 sourceMap: true,
@@ -70,13 +66,13 @@ module.exports = function (grunt) {
         bump: {
             options: {
                 files: bumpFiles,
-                commitFiles: bumpFiles.concat(['src/ChangeLog.html']),
+                commitFiles: bumpFiles.concat(['_src/ChangeLog.html']),
                 push: false
             }
         },
         clean: {
             deploy: ['deploy'],
-            src: ['src/app']
+            src: ['_src/app']
         },
         compress: {
             main: {
@@ -96,7 +92,12 @@ module.exports = function (grunt) {
         },
         copy: {
             dist: {
-                files: [{expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/'}]
+                files: [{
+                    expand: true,
+                    cwd: 'src/',
+                    src: ['*.html'],
+                    dest: 'dist/'
+                }]
             },
             src: {
                 expand: true,
@@ -108,22 +109,19 @@ module.exports = function (grunt) {
         dojo: {
             prod: {
                 options: {
-                    // You can also specify options to be used in all your tasks
-                    profiles: ['profiles/prod.build.profile.js', 'profiles/build.profile.js'] // Profile for build
+                    profiles: ['profiles/prod.build.profile.js', 'profiles/build.profile.js']
                 }
             },
             stage: {
                 options: {
-                    // You can also specify options to be used in all your tasks
-                    profiles: ['profiles/stage.build.profile.js', 'profiles/build.profile.js'] // Profile for build
+                    profiles: ['profiles/stage.build.profile.js', 'profiles/build.profile.js']
                 }
             },
             options: {
-                // You can also specify options to be used in all your tasks
-                dojo: 'src/dojo/dojo.js', // Path to dojo.js file in dojo source
-                load: 'build', // Optional: Utility to bootstrap (Default: 'build')
+                dojo: 'src/dojo/dojo.js',
+                load: 'build',
                 releaseDir: '../dist',
-                requires: ['src/app/packages.js', 'src/app/run.js'], // Optional: Module to require for the build (Default: nothing)
+                requires: ['src/app/packages.js', 'src/app/run.js'],
                 basePath: './src'
             }
         },
@@ -160,6 +158,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+        pkg: grunt.file.readJSON('package.json'),
         processhtml: {
             options: {},
             main: {
