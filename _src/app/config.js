@@ -20,33 +20,33 @@ define([
     SimpleLineSymbol,
     SimpleMarkerSymbol
 ) {
-    // force api to use CORS on mapserv thus removing the test request on app load
-    // e.g. http://mapserv.utah.gov/ArcGIS/rest/info?f=json
-    esriConfig.defaults.io.corsEnabledServers.push('mapserv.utah.gov');
-
-    var agsDomain;
-    var apiKey;
-    var quadWord;
-    var servicesFolder = 'UGSChemistry';
+    let agsDomain = 'udwrigis.utah.gov';
+    let apiKey;
+    let quadWord;
+    let servicesFolder;
     if (has('agrc-build') === 'prod') {
-        apiKey = 'AGRC-78940522976389';
-        agsDomain = 'maps.geology.utah.gov';
-        quadWord = 'complex-salary-gram-spain';
-        servicesFolder = 'Water';
-        esriConfig.defaults.io.corsEnabledServers.push(agsDomain);
+        // dwrapps.utah.gov
+        apiKey = 'AGRC-2E4D1DBA263288';
+        quadWord = '';
+        servicesFolder = 'Electrofishing';
     } else if (has('agrc-build') === 'stage') {
-        agsDomain = 'test.mapserv.utah.gov';
-        apiKey = 'AGRC-AC122FA9671436';
-        quadWord = 'opera-event-little-pinball';
+        // dwrapps.dev.utah.gov
+        apiKey = 'AGRC-FC693CC1911383';
+        quadWord = '';
+        servicesFolder = 'ElectrofishingTest';
     } else {
         // localhost
         agsDomain = window.location.host;
     }
 
-    var baseUrl = window.location.protocol + '//' + agsDomain + '/arcgis/rest/services/' + servicesFolder;
-    var drawingColor = [51, 160, 44];
-    var selectionColor = [52, 208, 231];
-    var StationId = 'StationId';
+    // force api to use CORS on udwrgis thus removing the test request on app load
+    // e.g. http://udwrgis.utah.gov/ArcGIS/rest/info?f=json
+    esriConfig.defaults.io.corsEnabledServers.push(agsDomain);
+
+    const baseUrl = `${window.location.protocol}//${agsDomain}/arcgis/rest/services/${servicesFolder}`;
+    const drawingColor = [51, 160, 44];
+    const selectionColor = [52, 208, 231];
+    const StationId = 'StationId';
     window.AGRC = {
         // app: app.App
         //      global reference to App
