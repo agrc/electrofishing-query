@@ -91,25 +91,6 @@ define([
                 type: 'danger'
             });
         },
-        switchToSecure: function () {
-            // summary:
-            //      switch url to secured url and refresh grid
-            console.log('app/Grid:switchToSecure', arguments);
-
-            this.mapServiceUrl = config.urls.secureMapService;
-
-            // clear out collections to prevent caching in populateGrid
-            if (this.stationsGrid && this.stationsGrid.collection) {
-                this.stationsGrid.collection = null;
-            }
-            if (this.resultsGrid && this.resultsGrid.collection) {
-                this.resultsGrid.collection = null;
-            }
-
-            this.download.switchToSecure();
-
-            this.clearSelection();
-        },
         populateGrid: function (defQuery) {
             // summary:
             //      Populate the grid with a newly created store based upon defQuery

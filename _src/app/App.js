@@ -58,9 +58,9 @@ define([
             this.inherited(arguments);
 
             this.grid = new Grid(null, this.gridDiv);
-            this.filterContainer = new FilterContainer(null, this.filterDiv);
+            // this.filterContainer = new FilterContainer(null, this.filterDiv);
             this.children = [
-                this.filterContainer,
+                // this.filterContainer,
                 this.grid,
                 // eslint-disable-next-line new-cap
                 new Toaster.default({

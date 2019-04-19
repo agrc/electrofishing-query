@@ -23,12 +23,11 @@ define([
     let agsDomain = 'udwrigis.utah.gov';
     let apiKey;
     let quadWord;
-    let servicesFolder;
+    let servicesFolder = 'Electrofishing';
     if (has('agrc-build') === 'prod') {
         // dwrapps.utah.gov
         apiKey = 'AGRC-2E4D1DBA263288';
         quadWord = '';
-        servicesFolder = 'Electrofishing';
     } else if (has('agrc-build') === 'stage') {
         // dwrapps.dev.utah.gov
         apiKey = 'AGRC-FC693CC1911383';
@@ -113,7 +112,7 @@ define([
             Depth: 'Depth',
             WIN: 'WIN',
 
-            // Results
+            // SamplingEvents
             StationId: StationId, // also used in Stations
             ParamGroup: 'ParamGroup',
             DataSource: 'DataSource', // also used in Stations
@@ -125,12 +124,10 @@ define([
         },
 
         queryByResults: StationId + ' IN (SELECT ' + StationId + ' FROM ugswaterchemistry.Results WHERE ',
-        showAllQuery: '1 = 1',
 
         layerIndices: {
-            main: 0,
-            results: 1,
-            parameters: 2
+            stations: 0,
+            events: 1
         },
 
         topics: {

@@ -79,13 +79,6 @@ define([
 
             this.btn.disabled = this.formatSelect.value === '-1';
         },
-        switchToSecure: function () {
-            // summary:
-            //      description
-            console.log('app.Download:switchToSecure', arguments);
-
-            this.initGP(config.urls.secureDownload);
-        },
         reset: function () {
             // summary:
             //      description

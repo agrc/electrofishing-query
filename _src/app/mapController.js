@@ -74,11 +74,10 @@ define([
             secure: 'secure'
         },
 
-        initMap: function (mapDiv, securityLevel) {
+        initMap: function (mapDiv) {
             // summary:
             //      Sets up the map
             // mapDiv: Node
-            // securityLevel: string
             console.info('app/mapController:initMap', arguments);
 
             var that = this;
@@ -97,7 +96,7 @@ define([
             });
             ls.startup();
 
-            this.initLayers(securityLevel);
+            this.initLayers();
 
             topic.subscribe(config.topics.filterFeatures, lang.hitch(this, 'filterFeatures'));
             topic.subscribe(config.topics.addGraphic, function (geo) {
@@ -116,42 +115,28 @@ define([
         initLayers: function () {
             // summary:
             //      description
-            // securityLevel: string
             console.log('app.mapController:initLayers', arguments);
 
-            var that = this;
-            const mapServiceUrl = config.urls.mapService;
             const fLayerUrl = config.urls.mapService;
-            const queryFLayerUrl = config.urls.mapService + '/' + config.layerIndices.main;
 
             if (this.layerEventHandlers.length > 0) {
-                this.map.removeLayer(this.dLayer);
                 this.map.removeLayer(this.fLayer);
             }
 
-            this.dLayer = new ArcGISDynamicMapServiceLayer(mapServiceUrl, {
-                maxScale: config.minFeatureLayerScale
-            });
-            this.map.addLayer(this.dLayer);
-            this.map.addLoaderToLayer(this.dLayer);
-
             this.fLayer = new FeatureLayer(fLayerUrl + '/' + config.layerIndices.main, {
-                minScale: config.minFeatureLayerScale
+                visible: false
             });
-            this.layerEventHandlers.push(this.fLayer.on('load', function () {
-                that.fLayer.renderer.symbol.setSize(config.stationSymbolSize);
-            }));
-            this.layerEventHandlers.push(this.fLayer.on('click', function selectFeatureLayerStation(evt) {
-                that.clearStationSelection();
-                that.selectStation(evt.graphic);
+            this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
+                this.clearStationSelection();
+                this.selectStation(evt.graphic);
                 evt.stopPropagation();
             }));
             this.map.addLayer(this.fLayer);
             this.map.addLoaderToLayer(this.fLayer);
 
-            this.queryFLayer = new FeatureLayer(queryFLayerUrl);
+            this.queryFLayer = new FeatureLayer(this.fLayer.url);
             this.layerEventHandlers.push(
-                this.queryFLayer.on('query-ids-complete', lang.hitch(this, 'queryIdsComplete'))
+                this.queryFLayer.on('query-ids-complete', this.queryIdsComplete.bind(this))
             );
         },
         onMapClick: function (evt) {
@@ -341,15 +326,6 @@ define([
             });
 
             return def;
-        },
-        switchToSecure: function () {
-            // summary:
-            //      description
-            console.log('app.mapController:switchToSecure', arguments);
-
-            this.initLayers(this.securityLevels.secure);
-
-            this.identifyTask = new IdentifyTask(config.urls.secureMapService);
         }
     };
 });
