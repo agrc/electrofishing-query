@@ -64,7 +64,6 @@ define([
                 outFields: joinedOutFields,
                 where: '1 = 1',
                 returnGeometry: false,
-                token: (config.user) ? config.user.token : null,
                 orderByFields: options.idProperty
             };
 

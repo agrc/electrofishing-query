@@ -5,8 +5,7 @@ module.exports = function (grunt) {
     var otherFiles = [
         'src/app/**/*.html',
         'src/index.html',
-        'src/ChangeLog.html',
-        'src/user_admin.html'
+        'src/ChangeLog.html'
     ];
     var gruntFile = 'Gruntfile.js';
     var jsFiles = ['_src/app/**/*.js', gruntFile];
@@ -167,8 +166,7 @@ module.exports = function (grunt) {
             options: {},
             main: {
                 files: {
-                    'dist/index.html': ['src/index.html'],
-                    'dist/user_admin.html': ['src/user_admin.html']
+                    'dist/index.html': ['src/index.html']
                 }
             }
         },
@@ -277,10 +275,15 @@ module.exports = function (grunt) {
         'sftp:stage',
         'sshexec:stage'
     ]);
-    grunt.registerTask('travis', [
-        'eslint',
+    grunt.registerTask('test', [
         'babel',
         'copy:src',
+        'connect',
+        'jasmine'
+    ]);
+    grunt.registerTask('travis', [
+        'eslint',
+        'test',
         'build-prod'
     ]);
 };

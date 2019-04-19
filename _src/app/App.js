@@ -1,5 +1,4 @@
 define([
-    'app/charts/ChartContainer',
     'app/config',
     'app/FilterContainer',
     'app/Grid',
@@ -10,20 +9,15 @@ define([
     'dijit/_WidgetsInTemplateMixin',
 
     'dojo/dom-construct',
-    'dojo/fx',
     'dojo/text!app/templates/App.html',
     'dojo/topic',
     'dojo/_base/declare',
-    'dojo/_base/fx',
     'dojo/_base/lang',
-
-    'ijit/widgets/authentication/LoginRegister',
 
     'toaster/dist/Toaster',
 
     'dijit/layout/BorderContainer'
 ], function (
-    ChartContainer,
     config,
     FilterContainer,
     Grid,
@@ -34,14 +28,10 @@ define([
     _WidgetsInTemplateMixin,
 
     domConstruct,
-    coreFx,
     template,
     topic,
     declare,
-    baseFx,
     lang,
-
-    LoginRegister,
 
     Toaster
 ) {
@@ -67,20 +57,11 @@ define([
 
             this.inherited(arguments);
 
-            this.loginRegister = new LoginRegister({
-                appName: config.appName,
-                logoutDiv: this.logoutDiv,
-                showOnLoad: false,
-                securedServicesBaseUrl: config.urls.baseUrl
-            });
             this.grid = new Grid(null, this.gridDiv);
             this.filterContainer = new FilterContainer(null, this.filterDiv);
-            this.chartContainer = new ChartContainer(null, this.chartsDiv);
             this.children = [
-                this.loginRegister,
                 this.filterContainer,
                 this.grid,
-                this.chartContainer,
                 // eslint-disable-next-line new-cap
                 new Toaster.default({
                     topic: config.topics.toast
@@ -94,31 +75,7 @@ define([
             // set version number
             this.version.innerHTML = AGRC.version;
 
-            topic.subscribe(this.loginRegister.topics.signInSuccess, lang.hitch(this, 'onSignInSuccess'));
-            this.loginRegister.on('remember-me-unsuccessful', lang.hitch(this, 'onRememberMeUnsuccessful'));
-        },
-        onSignInSuccess: function (evt) {
-            // wired to LoginRegister event
-            console.log('app.App:onSignInSuccess', arguments);
-
-            config.user = evt.user;
-
-            if (mapController.map) {
-                mapController.switchToSecure();
-            } else {
-                mapController.initMap(this.mapDiv, mapController.securityLevels.secure);
-            }
-
-            this.grid.switchToSecure();
-
-            this.filterContainer.onFilterChange();
-            this.chartContainer.switchToSecure();
-        },
-        onRememberMeUnsuccessful: function () {
-            // load unsecure app
-            console.log('app.App:onRememberMeUnsuccessful', arguments);
-
-            mapController.initMap(this.mapDiv, mapController.securityLevels.open);
+            mapController.initMap(this.mapDiv);
         }
     });
 });

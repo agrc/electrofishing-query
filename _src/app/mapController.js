@@ -127,26 +127,16 @@ define([
             topic.subscribe(config.topics.pauseMapClick, lang.hitch(this.mapClickHandler, 'pause'));
             topic.subscribe(config.topics.resumeMapClick, lang.hitch(this.mapClickHandler, 'resume'));
         },
-        initLayers: function (securityLevel) {
+        initLayers: function () {
             // summary:
             //      description
             // securityLevel: string
             console.log('app.mapController:initLayers', arguments);
 
             var that = this;
-            var mapServiceUrl;
-            var fLayerUrl;
-            var queryFLayerUrl;
-            if (securityLevel === this.securityLevels.open) {
-                mapServiceUrl = config.urls.mapService;
-                fLayerUrl = config.urls.mapService;
-                queryFLayerUrl = config.urls.mapService + '/' + config.layerIndices.main;
-            } else {
-                mapServiceUrl = config.urls.secureMapService + '?token=' + config.user.token;
-                fLayerUrl = config.urls.secureMapService;
-                queryFLayerUrl = config.urls.secureMapService + '/' +
-                    config.layerIndices.main + '?token=' + config.user.token;
-            }
+            const mapServiceUrl = config.urls.mapService;
+            const fLayerUrl = config.urls.mapService;
+            const queryFLayerUrl = config.urls.mapService + '/' + config.layerIndices.main;
 
             if (this.layerEventHandlers.length > 0) {
                 this.map.removeLayer(this.dLayer);

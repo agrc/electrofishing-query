@@ -48,9 +48,6 @@ define([
     var selectionColor = [52, 208, 231];
     var StationId = 'StationId';
     window.AGRC = {
-        // errorLogger: ijit.modules.ErrorLogger
-        errorLogger: null,
-
         // app: app.App
         //      global reference to App
         app: null,
@@ -66,11 +63,7 @@ define([
 
         // version.: String
         //      The version number.
-        version: '1.1.1',
-
-        // user: Object
-        //      Permission proxy user object
-        user: null,
+        version: '0.1.0',
 
         // apiKey: String
         //      The api key used for services on api.mapserv.utah.gov
