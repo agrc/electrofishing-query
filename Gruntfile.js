@@ -2,30 +2,6 @@ var path = require('path');
 
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
-    var osx = 'OS X 10.10';
-    var windows = 'Windows 8.1';
-    var browsers = [{
-        browserName: 'safari',
-        platform: osx
-    }, {
-        browserName: 'firefox',
-        platform: windows
-    }, {
-        browserName: 'chrome',
-        platform: windows
-    }, {
-        browserName: 'internet explorer',
-        platform: windows,
-        version: '11'
-    }, {
-        browserName: 'internet explorer',
-        platform: 'Windows 8',
-        version: '10'
-    }, {
-        browserName: 'internet explorer',
-        platform: 'Windows 7',
-        version: '9'
-    }];
     var jsAppFiles = 'src/app/**/*.js';
     var otherFiles = [
         'src/app/**/*.html',
@@ -62,25 +38,8 @@ module.exports = function (grunt) {
     ];
     var deployDir = 'wwwroot/ugschemistry';
     var secrets;
-    var sauceConfig = {
-        urls: ['http://127.0.0.1:8000/_SpecRunner.html'],
-        tunnelTimeout: 120,
-        build: process.env.TRAVIS_JOB_ID,
-        browsers: browsers,
-        testname: 'ugs-chemistry',
-        maxRetries: 10,
-        maxPollRetries: 10,
-        'public': 'public',
-        throttled: 5,
-        sauceConfig: {
-            'max-duration': 10800
-        },
-        statusCheckAttempts: 500
-    };
     try {
         secrets = grunt.file.readJSON('secrets.json');
-        sauceConfig.username = secrets.sauce_name;
-        sauceConfig.key = secrets.sauce_key;
     } catch (e) {
         // swallow for build server
         secrets = {
@@ -93,43 +52,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        arcgis_press: {
-            options: {
-                server: {
-                    username: secrets.ags_username,
-                    password: secrets.ags_password
-                },
-                mapServerBasePath: path.join(process.cwd(), 'maps'),
-                services: {
-                    mapService: {
-                        type: 'MapServer',
-                        serviceName: 'UGSChemistry',
-                        resource: 'UGSChemistry.mxd'
-                    }
-                }
-            },
-            dev: {
-                options: {
-                    server: {
-                        host: 'localhost'
-                    }
-                }
-            },
-            stage: {
-                options: {
-                    server: {
-                        host: secrets.stageHost
-                    }
-                }
-            },
-            prod: {
-                options: {
-                    server: {
-                        host: secrets.prodHost
-                    }
-                }
-            }
-        },
         bump: {
             options: {
                 files: bumpFiles,
@@ -217,28 +139,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        jscs: {
-            main: {
-                src: jsFiles
-            },
-            force: {
-                src: jsFiles,
-                options: { force: true }
-            }
-        },
-        jshint: {
-            main: {
-                src: jsFiles
-            },
-            force: {
-                src: jsFiles,
-                options: { force: true }
-            },
-            options: {
-                reporter: require('jshint-stylish'),
-                jshintrc: '.jshintrc'
-            }
-        },
         processhtml: {
             options: {},
             main: {
@@ -246,11 +146,6 @@ module.exports = function (grunt) {
                     'dist/index.html': ['src/index.html'],
                     'dist/user_admin.html': ['src/user_admin.html']
                 }
-            }
-        },
-        'saucelabs-jasmine': {
-            all: {
-                options: sauceConfig
             }
         },
         secrets: secrets,
@@ -322,8 +217,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jasmine:main:build',
-        'jshint:force',
-        'jscs:force',
         'connect',
         'stylus',
         'watch'
@@ -354,15 +247,7 @@ module.exports = function (grunt) {
         'sftp:stage',
         'sshexec:stage'
     ]);
-    grunt.registerTask('sauce', [
-        'jasmine:main:build',
-        'connect',
-        'saucelabs-jasmine'
-    ]);
     grunt.registerTask('travis', [
-        'jshint:main',
-        'jscs:main',
-        'sauce',
         'build-prod'
     ]);
 };
