@@ -9,9 +9,9 @@ require([
 ) {
     describe('app/charts/ChartContainer', function () {
         var widget;
-        var destroy = function (widget) {
-            widget.destroyRecursive();
-            widget = null;
+        var destroy = function (destroyWidget) {
+            destroyWidget.destroyRecursive();
+            destroyWidget = null;
         };
 
         beforeEach(function () {
@@ -32,7 +32,8 @@ require([
         });
         describe('updateMsg', function () {
             it('renders the correct message', function () {
-                widget.updateMsg(11000, 200);
+                const numResults = 11000;
+                widget.updateMsg(numResults, 200);
 
                 expect(widget.chartMsg.innerHTML).toBe('Showing 11,000 results from 200 stations.');
             });

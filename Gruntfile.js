@@ -72,7 +72,7 @@ module.exports = function (grunt) {
         },
         clean: {
             deploy: ['deploy'],
-            src: ['_src/app']
+            src: ['src/app']
         },
         compress: {
             main: {
@@ -123,6 +123,11 @@ module.exports = function (grunt) {
                 releaseDir: '../dist',
                 requires: ['src/app/packages.js', 'src/app/run.js'],
                 basePath: './src'
+            }
+        },
+        eslint: {
+            main: {
+                src: jsFiles
             }
         },
         imagemin: {
@@ -223,7 +228,7 @@ module.exports = function (grunt) {
             src: {
                 files: jsFiles.concat(otherFiles),
                 options: { livereload: true },
-                tasks: ['newer:copy:src']
+                tasks: ['eslint', 'newer:babel', 'newer:copy:src']
             },
             stylus: {
                 files: '_src/app/**/*.styl',
@@ -234,6 +239,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', [
+        'eslint',
         'clean:src',
         'babel',
         'stylus',
@@ -273,6 +279,9 @@ module.exports = function (grunt) {
         'sshexec:stage'
     ]);
     grunt.registerTask('travis', [
+        'eslint',
+        'babel',
+        'copy:src',
         'build-prod'
     ]);
 };

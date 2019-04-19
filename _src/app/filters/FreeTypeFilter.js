@@ -90,10 +90,11 @@ define([
 
             if (this.valueSpan.innerHTML !== '') {
                 var where = this.fieldName + ' = \'' + this.valueSpan.innerHTML + '\'';
+
                 return this.getRelatedTableQuery(where);
-            } else {
-                return undefined;
             }
+
+            return undefined;
         }
     });
 });

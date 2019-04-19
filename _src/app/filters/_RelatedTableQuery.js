@@ -23,8 +23,7 @@ define([
             //      The original where clause
             console.log('app/filters/_RelatedTableQuery:getRelatedTableQuery', arguments);
 
-            return (!this.relatedTableQuery) ?
-                where : config.queryByResults + where + ')';
+            return (this.relatedTableQuery) ? config.queryByResults + where + ')' : where;
         }
     });
 });

@@ -36,10 +36,11 @@ define([
 
             if (!this.currentQuery || '') {
                 topic.publish(config.topics.toast, 'You must add at least one filter.');
+
                 return false;
-            } else {
-                return true;
             }
+
+            return true;
         },
         submitJob: function (data) {
             // summary:

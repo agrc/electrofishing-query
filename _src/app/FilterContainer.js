@@ -165,6 +165,7 @@ define([
             array.some(this.select.children, function (option) {
                 if (option.value === id) {
                     domClass.toggle(option, 'hidden', !visible);
+
                     return true;
                 }
             });
@@ -194,6 +195,7 @@ define([
             var filter;
             this.filters.some(function (f) {
                 filter = f;
+
                 return f.id === id;
             });
 

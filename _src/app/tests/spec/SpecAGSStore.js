@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, no-magic-numbers */
 require([
     'app/AGSStore'
 ], function (

@@ -8,7 +8,7 @@
             typeof window !== 'undefined' &&
             window.dojoConfig &&
             window.dojoConfig.isJasmineTestRunner
-            ) ? '/src' : './'
+        ) ? '/src' : './'
     };
     require(config, ['dojo/has', 'dojo/parser', 'jquery', 'dojo/domReady!'], function (has, parser) {
         has.add('web-workers', function () {
@@ -16,4 +16,4 @@
         });
         parser.parse();
     });
-})();
+}());

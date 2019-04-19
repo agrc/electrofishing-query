@@ -96,22 +96,23 @@ define([
             //      builds the where clause using the dates
             console.log('app/filters/DateFilter:getQuery', arguments);
 
-            var formatDate = function (date) {
-                return locale.format(date, {
+            var formatDate = function (inputDate) {
+                return locale.format(inputDate, {
                     selector: 'date',
                     datePattern: 'MM/dd/yyyy'
                 });
             };
             if (this.isValid()) {
                 var where = "${fieldName} >= '${from}' AND ${fieldName} <= '${to}')";
+
                 return config.queryByResults + dojoString.substitute(where, {
                     fieldName: this.fieldName,
                     from: formatDate(this.fromDate.value),
                     to: formatDate(this.toDate.value)
                 });
-            } else {
-                return undefined;
             }
+
+            return undefined;
         }
     });
 });

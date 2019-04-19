@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 require([
     'app/config',
     'app/filters/ListFilter'
@@ -5,7 +6,6 @@ require([
     config,
     ListFilter
 ) {
-
     describe('app/filters/ListFilter', function () {
         var testWidget;
         beforeEach(function () {
@@ -66,7 +66,7 @@ require([
 
                 testWidget.fieldType = ListFilter.TYPE_NUMBER;
 
-                expect(testWidget.getQuery()).toBe("FieldName IN (1, 2)");
+                expect(testWidget.getQuery()).toBe('FieldName IN (1, 2)');
             });
             it('handles "all" queries', function () {
                 testWidget.any = false;

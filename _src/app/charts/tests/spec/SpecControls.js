@@ -9,9 +9,9 @@ require([
 ) {
     describe('app/charts/Controls', function () {
         var widget;
-        var destroy = function (widget) {
-            widget.destroyRecursive();
-            widget = null;
+        var destroy = function (destroyWidget) {
+            destroyWidget.destroyRecursive();
+            destroyWidget = null;
         };
 
         beforeEach(function () {

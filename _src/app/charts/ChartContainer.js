@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers, no-new */
 define([
     'agrc/modules/Formatting',
 
@@ -234,16 +235,16 @@ define([
 
             this.controls.initSpinner();
         },
-        updateMsg: function (num_results, num_stations) {
+        updateMsg: function (numResults, numStations) {
             // summary:
             //      Sets the chart message numbers
-            // num_results: Number
-            // num_stations: Number
+            // numResults: Number
+            // numStations: Number
             console.log('app/charts/ChartContainer:updateMsg', arguments);
 
             this.chartMsg.innerHTML = dojoString.substitute(
                 config.chartMsgTxt,
-                [formatting.addCommas(num_results), formatting.addCommas(num_stations)]
+                [formatting.addCommas(numResults), formatting.addCommas(numStations)]
             );
         },
         toggleAlert: function (show) {

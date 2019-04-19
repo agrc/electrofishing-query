@@ -79,9 +79,9 @@ define([
                 domConstruct.create('button', {
                     innerHTML: item[0],
                     value: item[1],
-                    'class': 'btn btn-default btn-xs',
+                    class: 'btn btn-default btn-xs',
                     'data-toggle': 'button',
-                    'onclick': lang.partial(lang.hitch(that, 'itemClicked'), item[1])
+                    onclick: lang.partial(lang.hitch(that, 'itemClicked'), item[1])
                 }, that.buttonContainer);
             });
 
@@ -148,21 +148,23 @@ define([
                 }
                 if (this.any) {
                     var where = this.fieldName + ' IN (' + values.join(', ') + ')';
+
                     return this.getRelatedTableQuery(where);
-                } else {
-                    var that = this;
-                    return values.reduce(function (previousReturn, currentValue) {
-                        var where = that.fieldName + ' = ' + currentValue;
-                        if (!previousReturn) {
-                            return that.getRelatedTableQuery(where);
-                        } else {
-                            return previousReturn + ' AND ' + that.getRelatedTableQuery(where);
-                        }
-                    }, false);
                 }
-            } else {
-                return undefined;
+
+                var that = this;
+
+                return values.reduce(function (previousReturn, currentValue) {
+                    var innerWhere = that.fieldName + ' = ' + currentValue;
+                    if (!previousReturn) {
+                        return that.getRelatedTableQuery(innerWhere);
+                    }
+
+                    return previousReturn + ' AND ' + that.getRelatedTableQuery(innerWhere);
+                }, false);
             }
+
+            return undefined;
         },
         toggleAny: function () {
             // summary:

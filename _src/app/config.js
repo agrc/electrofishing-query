@@ -1,4 +1,4 @@
-/* jshint maxlen:false */
+/* eslint-disable max-len, no-magic-numbers */
 define([
     'dojo/has',
     'dojo/request/xhr',
@@ -131,7 +131,7 @@ define([
             DetectCond: 'DetectCond'
         },
 
-        queryByResults: StationId + " IN (SELECT " + StationId + " FROM ugswaterchemistry.Results WHERE ",
+        queryByResults: StationId + ' IN (SELECT ' + StationId + ' FROM ugswaterchemistry.Results WHERE ',
         showAllQuery: '1 = 1',
 
         layerIndices: {

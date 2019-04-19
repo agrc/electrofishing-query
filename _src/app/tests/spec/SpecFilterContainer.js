@@ -62,9 +62,9 @@ require([
                 expect(array.every(testWidget.select.children, function (option) {
                     if (option.value === testWidget.filters[0].id) {
                         return domClass.contains(option, 'hidden');
-                    } else {
-                        return true;
                     }
+
+                    return true;
                 })).toBe(true);
             });
         });

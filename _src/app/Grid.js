@@ -276,6 +276,7 @@ define([
                 maxRowsPerPage: 500
             }, div);
             grid.startup();
+
             return grid;
         }
     });

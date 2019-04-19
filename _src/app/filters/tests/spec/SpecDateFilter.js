@@ -9,9 +9,9 @@ require([
 ) {
     describe('app/filters/DateFilter', function () {
         var widget;
-        var destroy = function (widget) {
-            widget.destroyRecursive();
-            widget = null;
+        var destroy = function (destroyWidget) {
+            destroyWidget.destroyRecursive();
+            destroyWidget = null;
         };
 
         beforeEach(function () {
@@ -40,7 +40,7 @@ require([
 
                 var result = widget.getQuery();
 
-                expect(result).toBe("StationId IN (SELECT StationId FROM ugswaterchemistry.Results WHERE " +
+                expect(result).toBe('StationId IN (SELECT StationId FROM ugswaterchemistry.Results WHERE ' +
                     "FieldName >= '03/30/2015' AND FieldName <= '03/27/2015')");
             });
             it('returns undefined if there are not valid dates', function () {

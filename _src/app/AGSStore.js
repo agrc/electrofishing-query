@@ -42,7 +42,8 @@ define([
 
             // initialize options
             var joinedOutFields = options.outFields.join(',');
-            var query = 'SELECT ' + joinedOutFields + ' FROM ugswaterchemistry.' + options.tableName + ' WHERE ' + options.where;
+            var query = 'SELECT ' + joinedOutFields + ' FROM ugswaterchemistry.' +
+                options.tableName + ' WHERE ' + options.where;
 
             // push options to url query and build url
             // this is using a dynamic layer so that the query can be more specific (prevents a full table scan)
@@ -92,6 +93,7 @@ define([
             };
 
             var results = this._request(requestArgs);
+
             return new QueryResults(results.data, {
                 totalLength: when(request(this.target, {
                     method: 'POST',
@@ -99,7 +101,7 @@ define([
                         returnCountOnly: true
                     }, this.params),
                     handleAs: 'json',
-                    headers: {'X-Requested-With': ''}
+                    headers: { 'X-Requested-With': '' }
                 }), function (response) {
                     return response.count;
                 }),
@@ -111,7 +113,10 @@ define([
             kwArgs = kwArgs || {};
 
             // perform the actual query
-            var headers = lang.delegate(this.headers, {Accept: this.accepts, 'X-Requested-With': ''});
+            var headers = lang.delegate(this.headers, {
+                Accept: this.accepts,
+                'X-Requested-With': ''
+            });
 
             if ('headers' in kwArgs) {
                 lang.mixin(headers, kwArgs.headers);
@@ -130,17 +135,20 @@ define([
                 headers: headers,
                 data: lang.mixin(qParams, this.params)
             });
-            var collection = this;
-            var parsedResponse = response.then(function (response) {
-                return collection.parse(response);
+            var that = this;
+            var parsedResponse = response.then(function (innerResponse) {
+                return that.parse(innerResponse);
             });
+
             return {
                 data: parsedResponse.then(function (data) {
                     // support items in the results
                     var results = data.items || data;
                     for (var i = 0, l = results.length; i < l; i++) {
-                        results[i] = collection._restore(results[i], true);
+                        // eslint-disable-next-line no-underscore-dangle
+                        results[i] = that._restore(results[i], true);
                     }
+
                     return results;
                 }),
                 total: parsedResponse.then(function (data) {
@@ -152,8 +160,10 @@ define([
                         return total;
                     }
                     // else use headers
-                    return response.response.then(function (response) {
-                        var range = response.getHeader('Content-Range');
+
+                    return response.response.then(function (innerResponse) {
+                        var range = innerResponse.getHeader('Content-Range');
+
                         return range && (range = range.match(/\/(.*)/)) && +range[1];
                     });
                 }),
@@ -173,6 +183,7 @@ define([
             var fields = sort.map(function (s) {
                 return s.property + ' ' + ((s.descending) ? 'DESC' : 'ASC');
             });
+
             return ['orderByFields=' + fields.join(', ')];
         }
     });

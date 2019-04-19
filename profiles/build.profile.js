@@ -1,5 +1,4 @@
-/*jshint unused:false */
-
+/* eslint-disable no-implicit-globals, no-undef */
 var profile = {
     basePath: '../src',
     action: 'release',

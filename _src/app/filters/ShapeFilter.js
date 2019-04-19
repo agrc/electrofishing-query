@@ -109,7 +109,8 @@ define([
             this.currentGeometry = evt.geometry;
 
             // 109413 = square miles
-            when(geometryEngine.planarArea(evt.geometry, 109413), function (sqMiles) {
+            const squareMiles = 109413;
+            when(geometryEngine.planarArea(evt.geometry, squareMiles), function (sqMiles) {
                 that.numSpan.innerHTML = formatting.addCommas(formatting.round(sqMiles, 0));
             });
 

@@ -81,7 +81,8 @@ define([
                 this.filterContainer,
                 this.grid,
                 this.chartContainer,
-                new Toaster['default']({
+                // eslint-disable-next-line new-cap
+                new Toaster.default({
                     topic: config.topics.toast
                 }, domConstruct.create('div', {}, document.body))
             ];

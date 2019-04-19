@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 require([
     'app/Grid',
 
@@ -11,9 +12,9 @@ require([
 ) {
     describe('app/Grid', function () {
         var widget;
-        var destroy = function (widget) {
-            widget.destroyRecursive();
-            widget = null;
+        var destroy = function (destroyWidget) {
+            destroyWidget.destroyRecursive();
+            destroyWidget = null;
         };
 
         beforeEach(function () {

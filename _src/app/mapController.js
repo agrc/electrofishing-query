@@ -144,7 +144,8 @@ define([
             } else {
                 mapServiceUrl = config.urls.secureMapService + '?token=' + config.user.token;
                 fLayerUrl = config.urls.secureMapService;
-                queryFLayerUrl = config.urls.secureMapService + '/' + config.layerIndices.main + '?token=' + config.user.token;
+                queryFLayerUrl = config.urls.secureMapService + '/' +
+                    config.layerIndices.main + '?token=' + config.user.token;
             }
 
             if (this.layerEventHandlers.length > 0) {
@@ -201,16 +202,16 @@ define([
 
                 if (!this.identifyTask) {
                     this.identifyTask = new IdentifyTask(config.urls.mapService);
-                    this.identifyTask.on('complete', function processResults(evt) {
+                    this.identifyTask.on('complete', function processResults(resultsEvt) {
                         that.clearStationSelection();
-                        if (evt.results.length > 0) {
-                            that.selectStation(evt.results[0].feature);
+                        if (resultsEvt.results.length > 0) {
+                            that.selectStation(resultsEvt.results[0].feature);
                         } else {
                             that.clearStationSelection();
                         }
                     });
-                    this.identifyTask.on('error', function processError(evt) {
-                        console.error(evt.error);
+                    this.identifyTask.on('error', function processError(errorEvt) {
+                        console.error(errorEvt.error);
                         that.clearStationSelection();
                     });
                 }
@@ -299,7 +300,7 @@ define([
                     console.log('feature count: ', count);
                     def.resolve(query);
                 }
-            }.bind(this));
+            });
 
             return def.promise;
         },
