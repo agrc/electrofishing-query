@@ -4,7 +4,6 @@ module.exports = function (grunt) {
 
     var otherFiles = [
         'src/app/**/*.html',
-        'src/app/**/*.css',
         'src/index.html',
         'src/ChangeLog.html',
         'src/user_admin.html'
@@ -102,7 +101,7 @@ module.exports = function (grunt) {
             src: {
                 expand: true,
                 cwd: '_src',
-                src: ['**/*.html', '**/*.css', '**/*.png', '**/*.jpg', 'secrets.json', 'app/package.json'],
+                src: ['**/*.html', '**/*.png', '**/*.jpg', 'secrets.json', 'app/package.json'],
                 dest: 'src'
             }
         },
