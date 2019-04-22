@@ -90,6 +90,11 @@ define([
                 quadWord: config.quadWord,
                 baseLayers: [
                     'Hybrid',
+                    {
+                        url: config.urls.esriStreets,
+                        Factory: ArcGISTiledMapServiceLayer,
+                        id: 'Esri Streets'
+                    },
                     'Terrain',
                     'Topo'
                 ]
