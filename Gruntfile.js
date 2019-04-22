@@ -31,7 +31,7 @@ module.exports = function (grunt) {
         '!stubmodule/**',
         '!util/**'
     ];
-    var deployDir = 'dwrefdb';
+    var deployDir = 'dwrefdb/query';
     var secrets;
     try {
         secrets = grunt.file.readJSON('secrets.json');
@@ -173,37 +173,23 @@ module.exports = function (grunt) {
         secrets: secrets,
         sftp: {
             stage: {
-                files: {
-                    './': 'deploy/deploy.zip'
-                },
+                files: [{
+                    expand: true,
+                    cwd: 'dist',
+                    src: deployFiles,
+                    dest: './'
+                }],
                 options: {
                     host: '<%= secrets.stageHost %>'
                 }
             },
             options: {
-                path: './' + deployDir + '/',
-                srcBasePath: 'deploy/',
+                path: `./${deployDir}/`,
+                srcBasePath: 'dist/',
                 username: '<%= secrets.username %>',
                 password: '<%= secrets.password %>',
-                showProgress: true
-            }
-        },
-        sshexec: {
-            options: {
-                username: '<%= secrets.username %>',
-                password: '<%= secrets.password %>'
-            },
-            stage: {
-                command: ['cd ' + deployDir, 'unzip -oq deploy.zip', 'rm deploy.zip'].join(';'),
-                options: {
-                    host: '<%= secrets.stageHost %>'
-                }
-            },
-            prod: {
-                command: ['cd ' + deployDir, 'unzip -oq deploy.zip', 'rm deploy.zip'].join(';'),
-                options: {
-                    host: '<%= secrets.prodHost %>'
-                }
+                showProgress: true,
+                createDirectories: true
             }
         },
         stylus: {
@@ -301,9 +287,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('deploy-stage', [
         'clean:deploy',
-        'compress:main',
-        'sftp:stage',
-        'sshexec:stage'
+        'sftp:stage'
     ]);
     grunt.registerTask('test', [
         'babel',

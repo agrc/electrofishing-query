@@ -22,16 +22,14 @@ define([
 ) {
     let agsDomain = 'udwrigis.utah.gov';
     let apiKey;
-    let quadWord;
+    let quadWord = 'patent-window-address-asia';
     let servicesFolder = 'Electrofishing';
     if (has('agrc-build') === 'prod') {
         // dwrapps.utah.gov
         apiKey = 'AGRC-2E4D1DBA263288';
-        quadWord = '';
     } else if (has('agrc-build') === 'stage') {
         // dwrapps.dev.utah.gov
         apiKey = 'AGRC-FC693CC1911383';
-        quadWord = '';
         servicesFolder = 'ElectrofishingTest';
     } else {
         // localhost
