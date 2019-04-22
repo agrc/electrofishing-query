@@ -14,6 +14,9 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang',
 
+    'sherlock/Sherlock',
+    'sherlock/providers/MapService',
+
     'toaster/dist/Toaster',
 
     'dijit/layout/BorderContainer'
@@ -32,6 +35,9 @@ define([
     topic,
     declare,
     lang,
+
+    Sherlock,
+    MapService,
 
     Toaster
 ) {
@@ -57,11 +63,24 @@ define([
 
             this.inherited(arguments);
 
+            mapController.initMap(this.mapDiv);
+
             this.grid = new Grid(null, this.gridDiv);
             // this.filterContainer = new FilterContainer(null, this.filterDiv);
+            const provider = new MapService(
+                `${config.urls.referenceService}/${config.layerIndexes.stations}`,
+                config.fieldNames.WaterName,
+                { wkid: config.wkids.webMercator }
+            );
+            this.sherlock = new Sherlock({
+                placeHolder: 'water name',
+                provider,
+                map: mapController.map
+            }, this.sherlockDiv);
             this.children = [
                 // this.filterContainer,
                 this.grid,
+                this.sherlock,
                 // eslint-disable-next-line new-cap
                 new Toaster.default({
                     topic: config.topics.toast
@@ -74,8 +93,6 @@ define([
 
             // set version number
             this.version.innerHTML = AGRC.version;
-
-            mapController.initMap(this.mapDiv);
         }
     });
 });

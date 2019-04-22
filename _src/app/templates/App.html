@@ -1,24 +1,25 @@
 <div>
     <div data-dojo-type="dijit/layout/BorderContainer"
-        data-dojo-props='gutters: false'
-        class='border-container'>
-        <div data-dojo-type='dijit/layout/ContentPane'
-            class='center'
-            data-dojo-props='region: "center", splitter: false'>
-            <div class='navbar navbar-fixed-top navbar-main navbar-inverse'>
+        data-dojo-props="gutters: false"
+        class="border-container">
+        <div data-dojo-type="dijit/layout/ContentPane"
+            class="center"
+            data-dojo-props="region: 'center', splitter: false">
+            <div class="navbar navbar-fixed-top navbar-main navbar-inverse">
                 <ul class="nav navbar-nav">
-                    <li class='navbar-brand'>
+                    <li class="navbar-brand">
                         Electrofishing Rivers and Streams Data Queries
-                        <a data-dojo-attach-point='version' class='version' href='ChangeLog.html'></a>
+                        <a data-dojo-attach-point="version" class="version" href="ChangeLog.html"></a>
                     </li>
                 </ul>
             </div>
-            <div data-dojo-attach-point='mapDiv' class='map-div'>
+            <div data-dojo-attach-point="mapDiv" class="map-div">
                 <div data-dojo-attach-point="filterDiv"></div>
+                <div data-dojo-attach-point="sherlockDiv"></div>
             </div>
         </div>
-        <div data-dojo-type='dijit/layout/ContentPane'
-            data-dojo-props='region: "bottom", splitter: true'
+        <div data-dojo-type="dijit/layout/ContentPane"
+            data-dojo-props="region: 'bottom', splitter: true"
             data-dojo-attach-point="gridContainer">
             <div data-dojo-attach-point="gridDiv"></div>
         </div>

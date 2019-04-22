@@ -55,9 +55,6 @@ define([
 
         agsDomain: agsDomain,
 
-        // dynamicWorkspaceId: String
-        dynamicWorkspaceId: 'UGSWaterChemistry',
-
         // version.: String
         //      The version number.
         version: '0.1.0',
@@ -74,15 +71,15 @@ define([
         //      The max number of stations that the app will display
         stationsDisplayLimit: 1000,
 
+        wkids: {
+            webMercator: 3857
+        },
+
         urls: {
             baseUrl: baseUrl,
             mapService: baseUrl + '/MapService/MapServer',
-            secureMapService: baseUrl + '/SecureMapService/MapServer',
-            geometry: baseUrl + '/Geometry/GeometryServer',
-            buildChart: baseUrl + '/Toolbox/GPServer/BuildChart',
-            secureBuildChart: baseUrl + '/ToolboxSecure/GPServer/BuildChartSecure',
+            referenceService: baseUrl + '/Reference/MapServer',
             download: baseUrl + '/Toolbox/GPServer/Download',
-            secureDownload: baseUrl + '/ToolboxSecure/GPServer/DownloadSecure',
             esriStreets: '//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
         },
 
@@ -100,32 +97,17 @@ define([
 
         fieldNames: {
             // Stations
-            Id: 'Id',
-            StateCode: 'StateCode',
-            CountyCode: 'CountyCode',
-            StationType: 'StationType',
-            HUC8: 'HUC8',
-            OrgId: 'OrgId',
-            StationName: 'StationName',
-            Depth: 'Depth',
-            WIN: 'WIN',
-
             // SamplingEvents
-            StationId: StationId, // also used in Stations
-            ParamGroup: 'ParamGroup',
-            DataSource: 'DataSource', // also used in Stations
-            Param: 'Param',
-            ResultValue: 'ResultValue',
-            SampleDate: 'SampleDate',
-            Unit: 'Unit',
-            DetectCond: 'DetectCond'
+            // Streams
+            WaterName: 'WaterName'
         },
 
         queryByResults: StationId + ' IN (SELECT ' + StationId + ' FROM ugswaterchemistry.Results WHERE ',
 
-        layerIndices: {
+        layerIndexes: {
             stations: 0,
-            events: 1
+            events: 1,
+            streams: 0
         },
 
         topics: {

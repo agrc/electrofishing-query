@@ -128,7 +128,7 @@ define([
                 this.map.removeLayer(this.fLayer);
             }
 
-            this.fLayer = new FeatureLayer(fLayerUrl + '/' + config.layerIndices.main, {
+            this.fLayer = new FeatureLayer(fLayerUrl + '/' + config.layerIndexes.main, {
                 visible: false
             });
             this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
@@ -294,7 +294,7 @@ define([
             this.fLayer.setDefinitionExpression(def);
 
             var defs = [];
-            defs[config.layerIndices.main] = def;
+            defs[config.layerIndexes.main] = def;
             this.dLayer.setLayerDefinitions(defs);
 
             var gridDef;
@@ -319,7 +319,7 @@ define([
             q.outFields = [config.fieldNames.Param];
             q.where = config.showAllQuery;
 
-            var qt = new QueryTask(config.urls.mapService + '/' + config.layerIndices.parameters);
+            var qt = new QueryTask(config.urls.mapService + '/' + config.layerIndexes.parameters);
 
             qt.execute(q).then(function (fSet) {
                 var params = fSet.features.map(function (f) {

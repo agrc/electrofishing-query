@@ -13,6 +13,8 @@
             'layer-selector',
             'moment',
             'put-selector',
+            'sherlock',
+            'spinjs',
             'toaster',
             'xstyle',
             {
@@ -36,10 +38,6 @@
                 location: './mustache',
                 main: 'mustache'
             }, {
-                name: 'spin',
-                location: './spinjs',
-                main: 'spin'
-            }, {
                 name: 'stubmodule',
                 location: './stubmodule',
                 main: 'src/stub-module'
@@ -52,6 +50,9 @@
         map: {
             ladda: {
                 spin: 'ladda/dist/spin'
+            },
+            agrc: {
+                spin: 'spinjs/spin'
             }
         }
     });

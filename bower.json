@@ -13,7 +13,8 @@
     "bootstrap3-typeahead": "4.0.2",
     "layer-selector": "agrc-layer-selector#1.1.1",
     "dijit-themes": "https://github.com/dojo/dijit-themes.git#1.14.0",
-    "ladda-bootstrap": "^0.1.0"
+    "ladda-bootstrap": "^0.1.0",
+    "sherlock": "agrc-sherlock#1.2.0"
   },
   "resolutions": {
     "esri": "3.28.0",
@@ -23,6 +24,8 @@
     "dgrid": "0.3.17/esri-3.20.0",
     "util": "v1.14.2/esri-3.28.0",
     "dstore": "1.1.2",
-    "xstyle": "0.3.2"
+    "xstyle": "0.3.2",
+    "agrc": "6.1.2",
+    "spinjs": "~2.3.2"
   }
 }
