@@ -28,10 +28,10 @@ profile = {
         name: 'bootstrap-css-only',
         location: './bootstrap-css-only'
     }, {
-        name: 'spin',
+        name: 'spinjs',
         resourceTags: {
             copyOnly: function (filename, mid) {
-                return mid === 'spin/jquery.spin';
+                return mid === 'spinjs/jquery.spin';
             }
         }
     }, {
