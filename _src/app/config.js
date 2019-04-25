@@ -20,7 +20,7 @@ define([
     SimpleLineSymbol,
     SimpleMarkerSymbol
 ) {
-    let agsDomain = 'udwrigis.utah.gov';
+    let agsDomain = 'udwrgis.utah.gov';
     let apiKey;
     let quadWord = 'patent-window-address-asia';
     let servicesFolder = 'Electrofishing';
