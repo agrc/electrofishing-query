@@ -1,19 +1,24 @@
 <div>
     <div class="navbar navbar-default">
         <div class="container-fluid">
-            <div data-dojo-attach-point='limitWarning' class="alert alert-warning hidden">
+            <div data-dojo-attach-point="limitWarning" class="alert alert-warning hidden">
                 Too many stations selected. Please reduce the number by making your filters more specific.
             </div>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
                     <label>Add Filter</label>
-                    <select data-dojo-attach-point='select'
-                        data-dojo-attach-event='change: addFilter'
-                        class='form-control'>
-                        <option value='none'>select a filter</option>
+                    <select data-dojo-attach-point="select"
+                        data-dojo-attach-event="change: addFilter"
+                        class="form-control">
+                        <option value="none">select a filter</option>
                     </select>
                 </div>
             </form>
+            <button class="btn btn-primary ladda-button"
+                data-dojo-attach-event="click: submit"
+                data-dojo-attach-point="submitBtn" disabled>
+                <span class="ladda-label">Submit</span>
+            </button>
         </div>
     </div>
     <div data-dojo-attach-point="container"></div>

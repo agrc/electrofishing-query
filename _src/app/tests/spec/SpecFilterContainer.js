@@ -83,8 +83,7 @@ require([
             it('builds a def query from all of the existing filters', function () {
                 testWidget.onFilterChange();
 
-                expect(config.topics.filterFeatures)
-                    .toHaveBeenPublishedWith('one AND two', undefined);
+                expect(testWidget.wheres).toEqual(['one', 'two']);
             });
             it('adds the geometry', function () {
                 var geo = {};
@@ -96,8 +95,8 @@ require([
 
                 testWidget.onFilterChange();
 
-                expect(config.topics.filterFeatures)
-                    .toHaveBeenPublishedWith('one AND two', geo);
+                expect(testWidget.geo).toBe(geo);
+                expect(testWidget.wheres).toEqual(['one', 'two']);
             });
             it('can show only geometry', function () {
                 var geo = {};
@@ -109,8 +108,7 @@ require([
 
                 testWidget.onFilterChange();
 
-                expect(config.topics.filterFeatures)
-                    .toHaveBeenPublishedWith(undefined, geo);
+                expect(testWidget.geo).toBe(geo);
             });
             it('doesn\'t overwrite geometry', function () {
                 var geo = {};
@@ -124,8 +122,7 @@ require([
 
                 testWidget.onFilterChange();
 
-                expect(config.topics.filterFeatures)
-                    .toHaveBeenPublishedWith(undefined, geo);
+                expect(testWidget.geo).toBe(geo);
             });
         });
     });

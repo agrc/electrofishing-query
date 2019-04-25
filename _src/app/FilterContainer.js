@@ -166,23 +166,31 @@ define([
             //      builds a def query and/or geometry and sends it to the map controller
             console.log('app/FilterContainer:onFilterChange', arguments);
 
-            var geo;
-            var wheres = [];
-            this.filters.forEach(function (f) {
+            this.geo = null;
+            this.wheres = [];
+            this.filters.forEach(f => {
                 var query = f.getQuery();
                 if (query) {
                     if (typeof query === 'string') {
-                        wheres.push(query);
+                        this.wheres.push(query);
                     } else {
                         // must be a geometry
-                        geo = query;
+                        this.geo = query;
                     }
                 }
             });
-            var where = (wheres.length) ? wheres.join(' AND ') : undefined;
-            topic.publish(config.topics.filterFeatures, where, geo);
+
+            this.submitBtn.disabled = this.wheres.length === 0 && !this.geo;
 
             domClass.add(this.limitWarning, 'hidden');
+        },
+        submit() {
+            // summary:
+            //      builds a query from all of the filters
+            console.log('app/FilterContainer:submit', arguments);
+
+            const where = (this.wheres.length) ? this.wheres.join(' AND ') : undefined;
+            topic.publish(config.topics.filterFeatures, where, this.geo);
         }
     });
 });
