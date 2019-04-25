@@ -11,6 +11,7 @@ define([
     'esri/Color',
     'esri/geometry/Extent',
     'esri/graphic',
+    'esri/graphicsUtils',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
@@ -33,6 +34,7 @@ define([
     Color,
     Extent,
     Graphic,
+    graphicsUtils,
     ArcGISDynamicMapServiceLayer,
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
@@ -103,7 +105,7 @@ define([
 
             this.initLayers();
 
-            topic.subscribe(config.topics.filterFeatures, lang.hitch(this, 'filterFeatures'));
+            topic.subscribe(config.topics.filterFeatures, this.filterFeatures.bind(this));
             topic.subscribe(config.topics.addGraphic, function (geo) {
                 that.map.graphics.clear();
                 that.map.graphics.add(new Graphic(geo, config.drawingSymbol));
@@ -293,6 +295,11 @@ define([
             console.log('app.mapController:updateLayerDefs', arguments);
             this.fLayer.setDefinitionExpression(def);
             this.fLayer.setVisibility(true);
+
+            const handler = this.fLayer.on('update-end', () => {
+                this.map.setExtent(graphicsUtils.graphicsExtent(this.fLayer.graphics), true);
+                handler.remove();
+            });
 
             // var gridDef = (this.selectedStationId) ?
             //     def + ' AND ' + config.fieldNames.Id + ' = ' + this.selectedStationId : def;
