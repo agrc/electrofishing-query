@@ -107,7 +107,8 @@ define([
         layerIndexes: {
             stations: 0,
             events: 1,
-            streams: 0
+            streams: 0,
+            lakes: 1
         },
 
         topics: {

@@ -67,20 +67,32 @@ define([
 
             this.grid = new Grid(null, this.gridDiv);
             // this.filterContainer = new FilterContainer(null, this.filterDiv);
-            const provider = new MapService(
-                `${config.urls.referenceService}/${config.layerIndexes.stations}`,
+            const streamsProvider = new MapService(
+                `${config.urls.referenceService}/${config.layerIndexes.streams}`,
                 config.fieldNames.WaterName,
                 { wkid: config.wkids.webMercator }
             );
-            this.sherlock = new Sherlock({
-                placeHolder: 'water name',
-                provider,
+            this.streamsSherlock = new Sherlock({
+                placeHolder: 'stream name',
+                provider: streamsProvider,
                 map: mapController.map
-            }, this.sherlockDiv);
+            }, this.streamsSherlockDiv);
+            const lakesProvider = new MapService(
+                `${config.urls.referenceService}/${config.layerIndexes.lakes}`,
+                config.fieldNames.WaterName,
+                { wkid: config.wkids.webMercator }
+            );
+            this.lakesSherlock = new Sherlock({
+                placeHolder: 'lake name',
+                provider: lakesProvider,
+                map: mapController.map,
+                baseClass: 'sherlock sherlock-2'
+            }, this.lakesSherlockDiv);
             this.children = [
                 // this.filterContainer,
                 this.grid,
-                this.sherlock,
+                this.streamsSherlock,
+                this.lakesSherlock,
                 // eslint-disable-next-line new-cap
                 new Toaster.default({
                     topic: config.topics.toast
