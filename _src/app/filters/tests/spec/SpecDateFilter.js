@@ -1,8 +1,10 @@
 require([
+    'app/config',
     'app/filters/DateFilter',
 
     'dojo/dom-construct'
 ], function (
+    config,
     WidgetUnderTest,
 
     domConstruct
@@ -40,8 +42,10 @@ require([
 
                 var result = widget.getQuery();
 
-                expect(result).toBe('StationId IN (SELECT StationId FROM ugswaterchemistry.Results WHERE ' +
-                    "FieldName >= '03/30/2015' AND FieldName <= '03/27/2015')");
+                expect(result).toBe(`${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} ` +
+                    'FROM ELECTROFISHING.WILDADMIN.SamplingEvents ' +
+                    "WHERE FieldName >= '03/30/2015' AND FieldName <= '03/27/2015')"
+                );
             });
             it('returns undefined if there are not valid dates', function () {
                 expect(widget.getQuery()).toBeUndefined();

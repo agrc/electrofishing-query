@@ -92,5 +92,19 @@ require([
                 expect(testWidget.getQuery()).toBe(config.queryByResults + "FieldName IN ('1', '2'))");
             });
         });
+        describe('translateCodedValuesToItems', () => {
+            it('translates items appropriately', () => {
+                const input = [{
+                    code: '1',
+                    name: 'one'
+                }, {
+                    code: '2',
+                    name: 'two'
+                }];
+                const expected = [['one', '1'], ['two', '2']];
+
+                expect(testWidget.translateCodedValuesToItems(input)).toEqual(expected);
+            });
+        });
     });
 });

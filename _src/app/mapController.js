@@ -128,7 +128,7 @@ define([
                 this.map.removeLayer(this.fLayer);
             }
 
-            this.fLayer = new FeatureLayer(fLayerUrl + '/' + config.layerIndexes.main, {
+            this.fLayer = new FeatureLayer(`${fLayerUrl}/${config.layerIndexes.stations}`, {
                 visible: false
             });
             this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
@@ -212,7 +212,7 @@ define([
         filterFeatures: function (defQuery, geometry) {
             // summary:
             //      selects stations on the map
-            //      applies selection to dLayer & fLayer
+            //      applies selection to fLayer
             // defQuery[optional]: String
             //      select by definition query
             // geometry[optional]: Polygon
@@ -292,21 +292,12 @@ define([
             // def: String
             console.log('app.mapController:updateLayerDefs', arguments);
             this.fLayer.setDefinitionExpression(def);
+            this.fLayer.setVisibility(true);
 
-            var defs = [];
-            defs[config.layerIndexes.main] = def;
-            this.dLayer.setLayerDefinitions(defs);
+            // var gridDef = (this.selectedStationId) ?
+            //     def + ' AND ' + config.fieldNames.Id + ' = ' + this.selectedStationId : def;
 
-            var gridDef;
-            if (def === config.showAllQuery) {
-                // display no results in grid if showing all stations on map
-                gridDef = '1 = 2';
-            } else {
-                gridDef = (this.selectedStationId) ?
-                    def + ' AND ' + config.fieldNames.Id + ' = ' + this.selectedStationId : def;
-            }
-
-            topic.publish(config.topics.queryIdsComplete, gridDef);
+            // topic.publish(config.topics.queryIdsComplete, gridDef);
         },
         getParameters: function () {
             // summary:

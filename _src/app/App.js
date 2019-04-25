@@ -66,7 +66,7 @@ define([
             mapController.initMap(this.mapDiv);
 
             this.grid = new Grid(null, this.gridDiv);
-            // this.filterContainer = new FilterContainer(null, this.filterDiv);
+            this.filterContainer = new FilterContainer(null, this.filterDiv);
             const streamsProvider = new MapService(
                 `${config.urls.referenceService}/${config.layerIndexes.streams}`,
                 config.fieldNames.WaterName,
@@ -89,7 +89,7 @@ define([
                 baseClass: 'sherlock sherlock-2'
             }, this.lakesSherlockDiv);
             this.children = [
-                // this.filterContainer,
+                this.filterContainer,
                 this.grid,
                 this.streamsSherlock,
                 this.lakesSherlock,

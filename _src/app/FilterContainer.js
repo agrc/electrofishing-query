@@ -58,74 +58,34 @@ define([
 
             this.filters = [
                 new ListFilter({
-                    name: 'County',
-                    items: config.counties,
+                    name: 'Purpose',
+                    featureService: `${config.urls.mapService}/${config.layerIndexes.events}`,
                     parent: this.container,
-                    fieldName: config.fieldNames.CountyCode,
-                    fieldType: ListFilter.TYPE_NUMBER
-                }),
-                new ListFilter({
-                    name: 'Data Source',
-                    items: config.dataSources,
-                    parent: this.container,
-                    fieldName: config.fieldNames.DataSource,
+                    fieldName: config.fieldNames.SURVEY_PURPOSE,
                     fieldType: ListFilter.TYPE_TEXT,
                     relatedTableQuery: true
-                }),
-                new DateFilter({
-                    name: 'Date Range',
-                    parent: this.container,
-                    fieldName: config.fieldNames.SampleDate
-                }),
-                new FreeTypeFilter({
-                    name: 'HUC',
-                    parent: this.container,
-                    fieldName: config.fieldNames.HUC8
-                }),
-                new FreeTypeFilter({
-                    name: 'Organization ID',
-                    parent: this.container,
-                    fieldName: config.fieldNames.OrgId
-                }),
-                new FreeTypeFilter({
-                    name: 'Parameter',
-                    parent: this.container,
-                    fieldName: config.fieldNames.Param,
-                    relatedTableQuery: true,
-                    options: mapController.getParameters()
-                }),
-                new ListFilter({
-                    name: 'Parameter Group',
-                    items: config.parameterGroups,
-                    parent: this.container,
-                    fieldName: config.fieldNames.ParamGroup,
-                    fieldType: ListFilter.TYPE_TEXT,
-                    relatedTableQuery: true,
-                    anyAllToggle: true
-                }),
-                new ShapeFilter({
-                    name: 'Polygon',
-                    parent: this.container
-                }),
-                new FreeTypeFilter({
-                    name: 'Site ID',
-                    parent: this.container,
-                    fieldName: config.fieldNames.StationId
-                }),
-                new ListFilter({
-                    name: 'Site Type',
-                    items: config.siteTypes,
-                    parent: this.container,
-                    fieldName: config.fieldNames.StationType,
-                    fieldType: ListFilter.TYPE_TEXT
-                }),
-                new ListFilter({
-                    name: 'State',
-                    items: config.states,
-                    parent: this.container,
-                    fieldName: config.fieldNames.StateCode,
-                    fieldType: ListFilter.TYPE_NUMBER
                 })
+                // new DateFilter({
+                //     name: 'Date Range',
+                //     parent: this.container,
+                //     fieldName: config.fieldNames.SampleDate
+                // }),
+                // new ShapeFilter({
+                //     name: 'Polygon',
+                //     parent: this.container
+                // }),
+                // new FreeTypeFilter({
+                //     name: 'Site ID',
+                //     parent: this.container,
+                //     fieldName: config.fieldNames.StationId
+                // }),
+                // new ListFilter({
+                //     name: 'State',
+                //     items: config.states,
+                //     parent: this.container,
+                //     fieldName: config.fieldNames.StateCode,
+                //     fieldType: ListFilter.TYPE_NUMBER
+                // })
             ];
 
             var that = this;

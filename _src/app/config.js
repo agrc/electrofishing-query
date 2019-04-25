@@ -43,7 +43,7 @@ define([
     const baseUrl = `${window.location.protocol}//${agsDomain}/arcgis/rest/services/${servicesFolder}`;
     const drawingColor = [51, 160, 44];
     const selectionColor = [52, 208, 231];
-    const StationId = 'StationId';
+    const STATION_ID = 'STATION_ID';
     window.AGRC = {
         // app: app.App
         //      global reference to App
@@ -96,14 +96,16 @@ define([
             .setSize(12),
 
         fieldNames: {
+            STATION_ID,
             // Stations
             // SamplingEvents
+            SURVEY_PURPOSE: 'SURVEY_PURPOSE',
+
             // Streams
             WaterName: 'WaterName'
         },
 
-        queryByResults: StationId + ' IN (SELECT ' + StationId + ' FROM ugswaterchemistry.Results WHERE ',
-
+        queryByResults: `${STATION_ID} IN (SELECT ${STATION_ID} FROM ELECTROFISHING.WILDADMIN.SamplingEvents WHERE `,
         layerIndexes: {
             stations: 0,
             events: 1,
@@ -122,87 +124,7 @@ define([
             pauseMapClick: 'ugs-pause-map-click',
             resumeMapClick: 'ugs-resume-map-click',
             showLimitMessage: 'ugs-show-limit-message'
-        },
-
-        counties: [
-            ['Beaver', 49001],
-            ['Box Elder', 49003],
-            ['Cache', 49005],
-            ['Carbon', 49007],
-            ['Daggett', 49009],
-            ['Davis', 49011],
-            ['Duchesne', 49013],
-            ['Emery', 49015],
-            ['Garfield', 49017],
-            ['Grand', 49019],
-            ['Iron', 49021],
-            ['Juab', 49023],
-            ['Kane', 49025],
-            ['Millard', 49027],
-            ['Morgan', 49029],
-            ['Piute', 49031],
-            ['Rich', 49033],
-            ['Salt Lake', 49035],
-            ['San Juan', 49037],
-            ['Sanpete', 49039],
-            ['Sevier', 49041],
-            ['Summit', 49043],
-            ['Tooele', 49045],
-            ['Uintah', 49047],
-            ['Utah', 49049],
-            ['Wasatch', 49051],
-            ['Washington', 49053],
-            ['Wayne', 49055],
-            ['Weber', 49057]
-        ],
-        states: [
-            ['Utah', 49],
-            ['Idaho', 16],
-            ['Wyoming', 56],
-            ['Colorado', 8],
-            ['New Mexico', 35],
-            ['Arizona', 4],
-            ['Nevada', 32]
-        ],
-        siteTypes: [
-            ['Atmosphere', 'Atmosphere'],
-            ['Facility', 'Facility'],
-            ['Lake, Reservoir,  Impoundment', 'Lake, Reservoir,  Impoundment'],
-            ['Land', 'Land'],
-            ['Other Groundwater', 'Other Groundwater'],
-            ['Other', 'Other'],
-            ['Spring', 'Spring'],
-            ['Stream', 'Stream'],
-            ['Surface Water', 'Surface Water'],
-            ['Well', 'Well'],
-            ['Wetland', 'Wetland']
-        ],
-        parameterGroups: [
-            ['Information', 'Information'],
-            ['Inorganics, Minor, Metals', 'Inorganics, Minor, Metals'],
-            ['Inorganics, Major, Metals', 'Inorganics, Major, Metals'],
-            ['Stable Isotopes', 'Stable Isotopes'],
-            ['Inorganics, Minor, Non-metals', 'Inorganics, Minor, Non-metals'],
-            ['Organics, other', 'Organics, other'],
-            ['Microbiological', 'Microbiological'],
-            ['Biological', 'Biological'],
-            ['Nutrient', 'Nutrient'],
-            ['Inorganics, Major, Non-metals', 'Inorganics, Major, Non-metals'],
-            ['Radiochemical', 'Radiochemical'],
-            ['Organics, pesticide', 'Organics, pesticide'],
-            ['Organics, PCBs', 'Organics, PCBs'],
-            ['Toxicity', 'Toxicity'],
-            ['Sediment', 'Sediment'],
-            ['Physical', 'Physical']
-        ],
-        dataSources: [
-            ['DOGM', 'DOGM'],
-            ['DWR', 'DWR'],
-            ['SDWIS', 'SDWIS'],
-            ['UGS', 'UGS'],
-            ['WQP', 'WQP']
-        ],
-        chartMsgTxt: 'Showing ${0} results from ${1} stations.'
+        }
     };
 
     xhr(require.baseUrl + 'secrets.json', {

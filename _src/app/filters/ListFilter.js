@@ -1,37 +1,32 @@
 define([
-    'app/config',
+    'agrc/modules/Domains',
+
     'app/filters/_Filter',
     'app/filters/_RelatedTableQuery',
 
     'dojo/dom-class',
     'dojo/dom-construct',
-    'dojo/on',
     'dojo/query',
     'dojo/text!app/filters/templates/ListFilter.html',
     'dojo/_base/declare',
-    'dojo/_base/lang',
 
-    'bootstrap',
     'bootstrap'
 ], function (
-    config,
+    Domains,
+
     _Filter,
     _RelatedTableQuery,
 
     domClass,
     domConstruct,
-    on,
     query,
     template,
-    declare,
-    lang
+    declare
 ) {
     var c = declare([_Filter, _RelatedTableQuery], {
         // description:
         //      A control for filtering by a defined set of choices.
         //      Allows selection of one or more choices.
-
-
         templateString: template,
 
         // selectedValues: String[]
@@ -45,9 +40,13 @@ define([
 
         // properties passed in via the constructor
 
-        // items: [String, String][]
+        // items[optional]: [String, String][]
         //      description, value pairs
         items: null,
+
+        // featureService[optional]: String
+        //      feature service for getting domain values
+        featureService: null,
 
         // fieldName: String
         //      The name of the field associated with this filter
@@ -74,16 +73,15 @@ define([
             //      build bubbles
             console.log('app/filters/ListFilter:postCreate', arguments);
 
-            var that = this;
-            this.items.forEach(function (item) {
-                domConstruct.create('button', {
-                    innerHTML: item[0],
-                    value: item[1],
-                    class: 'btn btn-default btn-xs',
-                    'data-toggle': 'button',
-                    onclick: lang.partial(lang.hitch(that, 'itemClicked'), item[1])
-                }, that.buttonContainer);
-            });
+            if (this.items) {
+                this.loadItems(this.items);
+            } else {
+                Domains.getCodedValues(this.featureService, this.fieldName)
+                    .then(codedValues => {
+                        const items = this.translateCodedValuesToItems(codedValues);
+                        this.loadItems(items);
+                    });
+            }
 
             if (this.anyAllToggle) {
                 domClass.remove(this.anyAllGroup, 'hidden');
@@ -99,6 +97,28 @@ define([
                 placement: 'bottom'
             });
             this.inherited(arguments);
+        },
+        translateCodedValuesToItems(codedValues) {
+            // summary:
+            //      converts coded value objects to item arrays
+            console.log('app/filters/ListFilter:translateCodedValuesToItems', arguments);
+
+            return codedValues.map(value => [value.name, value.code]);
+        },
+        loadItems: function (items) {
+            // summary:
+            //      loads all of the items
+            console.log('app/filters/ListFilter:loadItems', arguments);
+
+            items.forEach(item => {
+                domConstruct.create('button', {
+                    innerHTML: item[0],
+                    value: item[1],
+                    class: 'btn btn-default btn-xs',
+                    'data-toggle': 'button',
+                    onclick: this.itemClicked.bind(this, item[1])
+                }, this.buttonContainer);
+            });
         },
         clear: function () {
             // summary:
@@ -138,10 +158,11 @@ define([
             console.log('app/filters/ListFilter:getQuery', arguments);
 
             if (this.selectedValues.length) {
-                var values;
+                let values;
                 if (this.fieldType === c.TYPE_TEXT) {
-                    values = this.selectedValues.map(function (v) {
-                        return "'" + v + "'";
+                    // add quotes for string queries
+                    values = this.selectedValues.map(value => {
+                        return `'${value}'`;
                     });
                 } else {
                     values = this.selectedValues;
