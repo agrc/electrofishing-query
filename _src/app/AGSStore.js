@@ -40,10 +40,21 @@ define([
             // }
             console.log('app.AGSStore:constructor', arguments);
 
-            // initialize options
-            var joinedOutFields = options.outFields.join(',');
-            var query = 'SELECT ' + joinedOutFields + ' FROM ugswaterchemistry.' +
-                options.tableName + ' WHERE ' + options.where;
+            const query = `
+                SELECT DISTINCT e.EVENT_ID,EVENT_DATE,OBSERVERS,e.STATION_ID,
+                    SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
+                                     FROM ELECTROFISHING.WILDADMIN.Fish as f
+                                     WHERE e.EVENT_ID = f.EVENT_ID
+                                     FOR XML PATH ('')),
+                                     1, 1, ''),
+                    TYPES = STUFF((SELECT DISTINCT ', ' + eq.TYPE
+                                   FROM ELECTROFISHING.WILDADMIN.Equipment as eq
+                                   WHERE e.EVENT_ID = eq.EVENT_ID
+                                   FOR XML PATH ('')),
+                                   1, 1, '')
+                FROM ELECTROFISHING.WILDADMIN.SamplingEvents as e
+                WHERE ${options.where}
+            `.replace(/\n/g, ''); // SQL doesn't like newline characters
 
             // push options to url query and build url
             // this is using a dynamic layer so that the query can be more specific (prevents a full table scan)
@@ -61,10 +72,10 @@ define([
                         }
                     }
                 }),
-                outFields: joinedOutFields,
+                outFields: '*',
                 where: '1 = 1',
                 returnGeometry: false,
-                orderByFields: options.idProperty
+                orderByFields: `${config.fieldNames.EVENT_DATE} DESC`
             };
 
             this.inherited(arguments);

@@ -224,20 +224,18 @@ define([
             if (defQuery || geometry) {
                 this.map.showLoader();
 
-                this.checkLimit(defQuery, geometry).then(function continueQuery(query) {
+                this.checkLimit(defQuery, geometry).then(query => {
                     if (geometry) {
                         // only query for ids if there is a geometry
                         this.queryFLayer.queryIds(query);
                     } else {
                         this.updateLayerDefs(defQuery);
                     }
-                }.bind(this), function onError() {
+                }, () => {
                     topic.publish(config.topics.showLimitMessage);
                     this.updateLayerDefs('1 = 2');
                     this.map.hideLoader();
-                }.bind(this));
-            } else {
-                this.updateLayerDefs(config.showAllQuery);
+                });
             }
         },
         checkLimit: function (defQuery, geometry) {
@@ -281,7 +279,7 @@ define([
             this.map.hideLoader();
             var def;
             if (response.objectIds) {
-                def = config.fieldNames.Id + ' IN (' + response.objectIds.join(', ') + ')';
+                def = config.fieldNames.STATION_ID + ' IN (' + response.objectIds.join(', ') + ')';
             } else {
                 def = '1 = 2';
             }
@@ -301,34 +299,10 @@ define([
                 handler.remove();
             });
 
-            // var gridDef = (this.selectedStationId) ?
-            //     def + ' AND ' + config.fieldNames.Id + ' = ' + this.selectedStationId : def;
+            var gridDef = (this.selectedStationId) ?
+                def + ' AND ' + config.fieldNames.STATION_ID + ' = ' + this.selectedStationId : def;
 
-            // topic.publish(config.topics.queryIdsComplete, gridDef);
-        },
-        getParameters: function () {
-            // summary:
-            //      query tasks for the parameter values
-            console.log('app/mapController:getParameters', arguments);
-
-            var def = new Deferred();
-            var q = new Query();
-            q.returnGeometry = false;
-            q.outFields = [config.fieldNames.Param];
-            q.where = config.showAllQuery;
-
-            var qt = new QueryTask(config.urls.mapService + '/' + config.layerIndexes.parameters);
-
-            qt.execute(q).then(function (fSet) {
-                var params = fSet.features.map(function (f) {
-                    return f.attributes[config.fieldNames.Param];
-                });
-                def.resolve(params);
-            }, function () {
-                def.reject();
-            });
-
-            return def;
+            topic.publish(config.topics.queryIdsComplete, gridDef);
         }
     };
 });

@@ -1,11 +1,8 @@
 <div>
     <div role="tabpanel">
         <ul class="nav nav-tabs">
-            <li class="active" data-dojo-attach-point='stationsTab'>
-                <a href="#stations" data-toggle="tab">Stations</a>
-            </li>
-            <li>
-                <a href="#results" data-toggle="tab">Results</a>
+            <li class="active">
+                <a href="#results" data-toggle="tab">Sampling Events</a>
             </li>
             <li>
                 <a href='#download' data-toggle='tab'>Download</a>
@@ -20,11 +17,8 @@
         </ul>
 
         <div class="tab-content">
-            <div id='stations' class="tab-pane fade in active">
-                <div data-dojo-attach-point="stationsGridDiv"></div>
-            </div>
-            <div id='results' class="tab-pane fade">
-                <div data-dojo-attach-point="resultsGridDiv"></div>
+            <div id='results' class="tab-pane fade in active">
+                <div data-dojo-attach-point="gridDiv"></div>
             </div>
             <div id="download" class="tab-pane fade">
                 <div data-dojo-attach-point="downloadDiv"></div>

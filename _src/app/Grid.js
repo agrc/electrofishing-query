@@ -17,7 +17,6 @@ define([
     'dojo/text!app/templates/Grid.html',
     'dojo/topic',
     'dojo/_base/declare',
-    'dojo/_base/lang',
 
     'bootstrap'
 ], function (
@@ -38,8 +37,7 @@ define([
     domClass,
     template,
     topic,
-    declare,
-    lang
+    declare
 ) {
     var fn = config.fieldNames;
 
@@ -51,11 +49,8 @@ define([
         baseClass: 'grid',
         widgetsInTemplate: true,
 
-        // stationsGrid: Grid
-        stationsGrid: null,
-
-        // resultsGrid: Grid
-        resultsGrid: null,
+        // grid: Grid
+        grid: null,
 
 
         // Properties to be sent into constructor
@@ -72,7 +67,7 @@ define([
             var that = this;
             this.download = new Download({}, this.downloadDiv);
             this.own(
-                topic.subscribe(config.topics.queryIdsComplete, lang.hitch(this, 'populateGrid')),
+                topic.subscribe(config.topics.queryIdsComplete, this.populateGrid.bind(this)),
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
                     that.populateGrid(that.lastDefQuery);
                 }),
@@ -105,60 +100,30 @@ define([
                 defQuery.indexOf(config.fieldNames.Id + ' = ') === -1
             );
 
-            // store this before it possible gets mutated by convertToResultsQuery
             this.lastDefQuery = defQuery;
 
-            if (domClass.contains(this.stationsTab, 'active')) {
-                if (!this.stationsGrid) {
-                    this.initStationsGrid();
-                }
-                this.stationsGrid.resize();
-                if (!this.stationsGrid.collection ||
-                    (this.stationsGrid.collection && this.stationsGrid.collection.where !== defQuery)) {
-                    store = new AGSStore({
-                        target: this.mapServiceUrl + '/dynamicLayer/query',
-                        tableName: 'Stations',
-                        idProperty: config.fieldNames.Id,
-                        outFields: [
-                            fn.Id,
-                            fn.DataSource,
-                            fn.StationId,
-                            fn.StationName,
-                            fn.StationType,
-                            fn.Depth,
-                            fn.WIN
-                        ],
-                        where: defQuery,
-                        id: 0
-                    });
-                    this.stationsGrid.set('collection', store);
-                }
-            } else {
-                if (!this.resultsGrid) {
-                    this.initResultsGrid();
-                }
-                this.resultsGrid.resize();
-                defQuery = this.convertToResultsQuery(defQuery);
-                if (!this.resultsGrid.collection ||
-                    (this.resultsGrid.collection && this.resultsGrid.collection.where !== defQuery)) {
-                    store = new AGSStore({
-                        target: this.mapServiceUrl + '/dynamicLayer/query',
-                        tableName: 'Results',
-                        idProperty: config.fieldNames.Id,
-                        outFields: [
-                            fn.Id,
-                            fn.Param,
-                            fn.ResultValue,
-                            fn.Unit,
-                            fn.SampleDate,
-                            fn.StationId,
-                            fn.DetectCond
-                        ],
-                        where: defQuery,
-                        id: 1
-                    });
-                    this.resultsGrid.set('collection', store);
-                }
+            if (!this.grid) {
+                this.initGrid();
+            }
+            this.grid.resize();
+            if (!this.grid.collection ||
+                (this.grid.collection && this.grid.collection.where !== defQuery)) {
+                store = new AGSStore({
+                    target: this.mapServiceUrl + '/dynamicLayer/query',
+                    tableName: 'SamplingEvents',
+                    idProperty: config.fieldNames.EVENT_ID,
+                    outFields: [
+                        fn.EVENT_ID,
+                        fn.EVENT_DATE,
+                        fn.OBSERVERS,
+                        fn.STATION_ID,
+                        fn.SPECIES,
+                        fn.TYPES
+                    ],
+                    where: defQuery,
+                    id: 1
+                });
+                this.grid.set('collection', store);
             }
 
             return defQuery; // for testing only
@@ -170,26 +135,17 @@ define([
 
             topic.publish(config.topics.clearStationSelection);
         },
-        initResultsGrid: function () {
+        initGrid: function () {
             // summary:
             //      initialize the results dgrid
-            console.log('app/Grid:initResultsGrid', arguments);
+            console.log('app/Grid:initGrid', arguments);
 
             var resultColumns = [
                 {
-                    field: fn.Id
+                    field: fn.EVENT_ID
                 }, {
-                    field: fn.Param,
-                    label: 'Parameter'
-                }, {
-                    field: fn.ResultValue,
-                    label: 'Measure Value'
-                }, {
-                    field: fn.Unit,
-                    label: 'Meaure Unit'
-                }, {
-                    field: fn.SampleDate,
-                    label: 'Sample Date',
+                    field: fn.EVENT_DATE,
+                    label: 'Event Date',
                     formatter: function (value) {
                         return locale.format(new Date(value), {
                             selector: 'date',
@@ -197,48 +153,22 @@ define([
                         });
                     }
                 }, {
-                    field: fn.StationId,
-                    label: 'Station Id'
+                    field: fn.OBSERVERS,
+                    label: 'Observers'
                 }, {
-                    field: fn.DetectCond,
-                    label: 'Detection Condition'
+                    field: fn.STATION_ID,
+                    label: 'Station ID'
+                }, {
+                    field: fn.SPECIES,
+                    label: 'Species Codes'
+                }, {
+                    field: fn.TYPES,
+                    label: 'Equipment Types'
                 }
             ];
 
-            this.resultsGrid = this.buildGrid(this.resultsGridDiv, resultColumns);
-            this.resultsGrid.on('dgrid-error', lang.hitch(this, 'onError'));
-        },
-        initStationsGrid: function () {
-            // summary:
-            //      initialize the stations dgrid
-            console.log('app/Grid:initStationsGrid', arguments);
-
-            var stationColumns = [
-                {
-                    field: fn.Id
-                }, {
-                    field: fn.DataSource,
-                    label: 'Database Source'
-                }, {
-                    field: fn.StationId,
-                    label: 'ID'
-                }, {
-                    field: fn.StationName,
-                    label: 'Name'
-                }, {
-                    field: fn.StationType,
-                    label: 'Type'
-                }, {
-                    field: fn.Depth,
-                    label: 'Well Depth'
-                }, {
-                    field: fn.WIN,
-                    label: 'WR Well Id'
-                }
-            ];
-
-            this.stationsGrid = this.buildGrid(this.stationsGridDiv, stationColumns);
-            this.stationsGrid.on('dgrid-error', lang.hitch(this, 'onError'));
+            this.grid = this.buildGrid(this.gridDiv, resultColumns);
+            this.grid.on('dgrid-error', this.onError.bind(this));
         },
         buildGrid: function (div, columns) {
             // summary:

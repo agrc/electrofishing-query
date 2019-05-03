@@ -49,10 +49,6 @@ define([
         //      global reference to App
         app: null,
 
-        // appName: String
-        //      for permissions proxy
-        appName: 'ugschemistry',
-
         agsDomain: agsDomain,
 
         // version.: String
@@ -70,6 +66,9 @@ define([
         // stationsDisplayLimit: Number
         //      The max number of stations that the app will display
         stationsDisplayLimit: 1000,
+
+        // dynamicWorkspaceId: String
+        dynamicWorkspaceId: 'ElectrofishingQuery',
 
         wkids: {
             webMercator: 3857
@@ -96,10 +95,22 @@ define([
             .setSize(12),
 
         fieldNames: {
+            // common
             STATION_ID,
+
             // Stations
+
             // SamplingEvents
+            EVENT_ID: 'EVENT_ID',
             SURVEY_PURPOSE: 'SURVEY_PURPOSE',
+            EVENT_DATE: 'EVENT_DATE',
+            OBSERVERS: 'OBSERVERS',
+
+            // Fish
+            SPECIES: 'SPECIES', // dynamic field created via SQL query in AGSStores
+
+            // Equipment
+            TYPES: 'TYPES', // dynamic field created via SQL query in AGSStores
 
             // Streams
             WaterName: 'WaterName'
