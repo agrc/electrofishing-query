@@ -97,7 +97,7 @@ define([
             domClass.toggle(
                 this.clearSelectionBtnContainer,
                 'hidden',
-                defQuery.indexOf(config.fieldNames.Id + ' = ') === -1
+                defQuery.indexOf(config.fieldNames.STATION_ID + ' = ') === -1
             );
 
             this.lastDefQuery = defQuery;

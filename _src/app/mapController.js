@@ -208,7 +208,7 @@ define([
             console.log('app.mapController:selectStation', arguments);
 
             this.map.graphics.add(new Graphic(feature.geometry, config.selectionSymbol));
-            this.selectedStationId = feature.attributes[config.fieldNames.Id];
+            this.selectedStationId = feature.attributes[config.fieldNames.STATION_ID];
             this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
         },
         filterFeatures: function (defQuery, geometry) {
