@@ -43,7 +43,7 @@ require([
                 var result = widget.getQuery();
 
                 expect(result).toBe(`${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} ` +
-                    'FROM ELECTROFISHING.WILDADMIN.SamplingEvents ' +
+                    `FROM ${config.databaseName}.WILDADMIN.SamplingEvents ` +
                     "WHERE FieldName >= '03/30/2015' AND FieldName <= '03/27/2015')"
                 );
             });

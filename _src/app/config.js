@@ -24,6 +24,7 @@ define([
     let apiKey;
     let quadWord = 'patent-window-address-asia';
     let servicesFolder = 'Electrofishing';
+    let databaseName = 'Wildlife';
     if (has('agrc-build') === 'prod') {
         // dwrapps.utah.gov
         apiKey = 'AGRC-2E4D1DBA263288';
@@ -60,7 +61,9 @@ define([
         //      global reference to App
         app: null,
 
-        agsDomain: agsDomain,
+        agsDomain,
+
+        databaseName,
 
         // version.: String
         //      The version number.
@@ -68,11 +71,11 @@ define([
 
         // apiKey: String
         //      The api key used for services on api.mapserv.utah.gov
-        apiKey: apiKey, // acquire at developer.mapserv.utah.gov
+        apiKey, // acquire at developer.mapserv.utah.gov
 
         // quadWord: String
         //      For use with discover services
-        quadWord: quadWord,
+        quadWord,
 
         // stationsDisplayLimit: Number
         //      The max number of stations that the app will display
@@ -86,7 +89,7 @@ define([
         },
 
         urls: {
-            baseUrl: baseUrl,
+            baseUrl,
             mapService: baseUrl + '/MapService/MapServer',
             referenceService: baseUrl + '/Reference/MapServer',
             download: baseUrl + '/Toolbox/GPServer/Download',
@@ -127,7 +130,7 @@ define([
             WaterName: 'WaterName'
         },
 
-        queryByResults: `${STATION_ID} IN (SELECT ${STATION_ID} FROM ELECTROFISHING.WILDADMIN.SamplingEvents WHERE `,
+        queryByResults: `${STATION_ID} IN (SELECT ${STATION_ID} FROM ${databaseName}.WILDADMIN.SamplingEvents WHERE `,
         layerIndexes: {
             stations: 0,
             events: 1,

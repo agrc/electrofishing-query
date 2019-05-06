@@ -43,16 +43,16 @@ define([
             const query = `
                 SELECT DISTINCT e.EVENT_ID,EVENT_DATE,OBSERVERS,e.STATION_ID,
                     SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
-                                     FROM ELECTROFISHING.WILDADMIN.Fish as f
+                                     FROM ${config.databaseName}.WILDADMIN.Fish as f
                                      WHERE e.EVENT_ID = f.EVENT_ID
                                      FOR XML PATH ('')),
                                      1, 1, ''),
                     TYPES = STUFF((SELECT DISTINCT ', ' + eq.TYPE
-                                   FROM ELECTROFISHING.WILDADMIN.Equipment as eq
+                                   FROM ${config.databaseName}.WILDADMIN.Equipment as eq
                                    WHERE e.EVENT_ID = eq.EVENT_ID
                                    FOR XML PATH ('')),
                                    1, 1, '')
-                FROM ELECTROFISHING.WILDADMIN.SamplingEvents as e
+                FROM ${config.databaseName}.WILDADMIN.SamplingEvents as e
                 WHERE ${options.where}
             `.replace(/\n/g, ''); // SQL doesn't like newline characters
 
