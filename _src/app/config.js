@@ -34,6 +34,17 @@ define([
     } else {
         // localhost
         agsDomain = window.location.host;
+        databaseName = 'Electrofishing';
+
+        xhr(require.baseUrl + 'secrets.json', {
+            handleAs: 'json',
+            sync: true
+        }).then(function (secrets) {
+            window.AGRC.quadWord = secrets.quadWord;
+            window.AGRC.apiKey = secrets.apiKey;
+        }, function () {
+            throw 'Error getting secrets!';
+        });
     }
 
     // force api to use CORS on udwrgis thus removing the test request on app load
@@ -137,16 +148,6 @@ define([
             showLimitMessage: 'ugs-show-limit-message'
         }
     };
-
-    xhr(require.baseUrl + 'secrets.json', {
-        handleAs: 'json',
-        sync: true
-    }).then(function (secrets) {
-        window.AGRC.quadWord = secrets.quadWord;
-        window.AGRC.apiKey = secrets.apiKey;
-    }, function () {
-        throw 'Error getting secrets!';
-    });
 
     return window.AGRC;
 });
