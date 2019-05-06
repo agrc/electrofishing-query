@@ -7,8 +7,6 @@ define([
     'dojo/date',
     'dojo/date/locale',
     'dojo/dom-class',
-    'dojo/on',
-    'dojo/query',
     'dojo/string',
     'dojo/text!app/filters/templates/DateFilter.html',
     'dojo/_base/declare',
@@ -23,8 +21,6 @@ define([
     date,
     locale,
     domClass,
-    on,
-    query,
     dojoString,
     template,
     declare
@@ -103,13 +99,10 @@ define([
                 });
             };
             if (this.isValid()) {
-                var where = "${fieldName} >= '${from}' AND ${fieldName} <= '${to}')";
+                const from = formatDate(this.fromDate.value);
+                const to = formatDate(this.toDate.value);
 
-                return config.queryByResults + dojoString.substitute(where, {
-                    fieldName: this.fieldName,
-                    from: formatDate(this.fromDate.value),
-                    to: formatDate(this.toDate.value)
-                });
+                return `${config.queryByEvents} ${this.fieldName} >= '${from}' AND ${this.fieldName} <= '${to}')`;
             }
 
             return undefined;

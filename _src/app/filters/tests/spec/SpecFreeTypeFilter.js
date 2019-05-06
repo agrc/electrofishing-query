@@ -51,7 +51,7 @@ require([
                 widget.txtBox.value = 'blah';
                 widget.onApplyClick();
 
-                expect(widget.getQuery()).toEqual(config.queryByResults + 'FieldName = \'blah\')');
+                expect(widget.getQuery()).toEqual(config.queryByEvents + 'FieldName = \'blah\')');
             });
         });
     });

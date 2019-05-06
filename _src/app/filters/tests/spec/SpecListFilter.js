@@ -78,8 +78,8 @@ require([
 
                 testWidget.relatedTableQuery = true;
 
-                expected = config.queryByResults + "FieldName = '1') AND " +
-                     config.queryByResults + "FieldName = '2')";
+                expected = config.queryByEvents + "FieldName = '1') AND " +
+                     config.queryByEvents + "FieldName = '2')";
 
                 expect(testWidget.getQuery()).toBe(expected);
             });
@@ -89,7 +89,7 @@ require([
                 testWidget.itemClicked('1');
                 testWidget.itemClicked('2');
 
-                expect(testWidget.getQuery()).toBe(config.queryByResults + "FieldName IN ('1', '2'))");
+                expect(testWidget.getQuery()).toBe(config.queryByEvents + "FieldName IN ('1', '2'))");
             });
         });
         describe('translateCodedValuesToItems', () => {

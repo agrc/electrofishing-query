@@ -130,7 +130,7 @@ define([
             WaterName: 'WaterName'
         },
 
-        queryByResults: `${STATION_ID} IN (SELECT ${STATION_ID} FROM ${databaseName}.WILDADMIN.SamplingEvents WHERE `,
+        queryByEvents: `${STATION_ID} IN (SELECT ${STATION_ID} FROM ${databaseName}.WILDADMIN.SamplingEvents WHERE `,
         layerIndexes: {
             stations: 0,
             events: 1,

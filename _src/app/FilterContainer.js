@@ -163,7 +163,7 @@ define([
         },
         onFilterChange: function () {
             // summary:
-            //      builds a def query and/or geometry and sends it to the map controller
+            //      builds a def query and/or geometry and enables the submit button if appropriate
             console.log('app/FilterContainer:onFilterChange', arguments);
 
             this.geo = null;
