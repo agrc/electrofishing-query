@@ -41,8 +41,8 @@ define([
             handleAs: 'json',
             sync: true
         }).then(function (secrets) {
-            window.AGRC.quadWord = secrets.quadWord;
-            window.AGRC.apiKey = secrets.apiKey;
+            quadWord = secrets.quadWord;
+            apiKey = secrets.apiKey;
         }, function () {
             throw 'Error getting secrets!';
         });
