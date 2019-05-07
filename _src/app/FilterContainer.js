@@ -1,10 +1,9 @@
 define([
     'app/config',
     'app/filters/DateFilter',
-    'app/filters/FreeTypeFilter',
+    // 'app/filters/FreeTypeFilter',
     'app/filters/ListFilter',
-    'app/filters/ShapeFilter',
-    'app/mapController',
+    // 'app/filters/ShapeFilter',
 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetBase',
@@ -20,10 +19,9 @@ define([
 ], function (
     config,
     DateFilter,
-    FreeTypeFilter,
+    // FreeTypeFilter,
     ListFilter,
-    ShapeFilter,
-    mapController,
+    // ShapeFilter,
 
     _TemplatedMixin,
     _WidgetBase,
@@ -63,13 +61,13 @@ define([
                     parent: this.container,
                     fieldName: config.fieldNames.SURVEY_PURPOSE,
                     fieldType: ListFilter.TYPE_TEXT,
-                    relatedTableQuery: true
+                    relatedTableName: config.tableNames.events
+                }),
+                new DateFilter({
+                    name: 'Date Range',
+                    parent: this.container,
+                    fieldName: config.fieldNames.EVENT_DATE
                 })
-                // new DateFilter({
-                //     name: 'Date Range',
-                //     parent: this.container,
-                //     fieldName: config.fieldNames.SampleDate
-                // }),
                 // new ShapeFilter({
                 //     name: 'Polygon',
                 //     parent: this.container
@@ -171,7 +169,7 @@ define([
             this.filters.forEach(f => {
                 var query = f.getQuery();
                 if (query) {
-                    if (typeof query === 'string') {
+                    if (query.table) {
                         this.wheres.push(query);
                     } else {
                         // must be a geometry
@@ -189,8 +187,7 @@ define([
             //      builds a query from all of the filters
             console.log('app/FilterContainer:submit', arguments);
 
-            const where = (this.wheres.length) ? this.wheres.join(' AND ') : undefined;
-            topic.publish(config.topics.filterFeatures, where, this.geo);
+            topic.publish(config.topics.filterFeatures, this.wheres, this.geo);
         }
     });
 });

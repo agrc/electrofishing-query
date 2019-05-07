@@ -147,10 +147,9 @@ define([
                     field: fn.EVENT_DATE,
                     label: 'Event Date',
                     formatter: function (value) {
-                        return locale.format(new Date(value), {
-                            selector: 'date',
-                            datePattern: 'MM/dd/yyyy'
-                        });
+                        const date = new Date(value);
+
+                        return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
                     }
                 }, {
                     field: fn.OBSERVERS,

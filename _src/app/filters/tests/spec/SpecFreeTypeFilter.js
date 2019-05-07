@@ -39,7 +39,7 @@ require([
                 widget.txtBox.value = 'blah';
                 widget.onApplyClick();
 
-                expect(widget.getQuery()).toEqual('FieldName = \'blah\'');
+                expect(widget.getQuery().where).toEqual('FieldName = \'blah\'');
             });
             it('returns undefined if no query has been applied', function () {
                 widget.txtBox.value = 'blah';
@@ -47,11 +47,10 @@ require([
                 expect(widget.getQuery()).toBeUndefined();
             });
             it('returns the appropriate related table query form', function () {
-                widget.relatedTableQuery = true;
                 widget.txtBox.value = 'blah';
                 widget.onApplyClick();
 
-                expect(widget.getQuery()).toEqual(config.queryByEvents + 'FieldName = \'blah\')');
+                expect(widget.getQuery().where).toEqual('FieldName = \'blah\'');
             });
         });
     });

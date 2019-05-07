@@ -7,7 +7,6 @@ define([
     'dojo/date',
     'dojo/date/locale',
     'dojo/dom-class',
-    'dojo/string',
     'dojo/text!app/filters/templates/DateFilter.html',
     'dojo/_base/declare',
 
@@ -21,7 +20,6 @@ define([
     date,
     locale,
     domClass,
-    dojoString,
     template,
     declare
 ) {
@@ -102,7 +100,10 @@ define([
                 const from = formatDate(this.fromDate.value);
                 const to = formatDate(this.toDate.value);
 
-                return `${config.queryByEvents} ${this.fieldName} >= '${from}' AND ${this.fieldName} <= '${to}')`;
+                return {
+                    table: config.tableNames.events,
+                    where: `${this.fieldName} >= '${from}' AND ${this.fieldName} <= '${to}'`
+                };
             }
 
             return undefined;

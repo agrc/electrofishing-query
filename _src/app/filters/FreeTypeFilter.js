@@ -1,6 +1,5 @@
 define([
     'app/filters/_Filter',
-    'app/filters/_RelatedTableQuery',
 
     'dojo/_base/declare',
     'dojo/text!app/filters/templates/FreeTypeFilter.html',
@@ -8,13 +7,12 @@ define([
     'typeahead'
 ], function (
     _Filter,
-    _RelatedTableQuery,
 
     declare,
 
     template
 ) {
-    return declare([_Filter, _RelatedTableQuery], {
+    return declare([_Filter], {
         // description:
         //      Auto complete text box
 
@@ -91,7 +89,10 @@ define([
             if (this.valueSpan.innerHTML !== '') {
                 var where = this.fieldName + ' = \'' + this.valueSpan.innerHTML + '\'';
 
-                return this.getRelatedTableQuery(where);
+                return {
+                    table: this.tableName,
+                    where
+                };
             }
 
             return undefined;

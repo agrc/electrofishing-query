@@ -2,7 +2,6 @@ define([
     'agrc/modules/Domains',
 
     'app/filters/_Filter',
-    'app/filters/_RelatedTableQuery',
 
     'dojo/dom-class',
     'dojo/dom-construct',
@@ -15,7 +14,6 @@ define([
     Domains,
 
     _Filter,
-    _RelatedTableQuery,
 
     domClass,
     domConstruct,
@@ -23,7 +21,7 @@ define([
     template,
     declare
 ) {
-    var c = declare([_Filter, _RelatedTableQuery], {
+    var c = declare([_Filter], {
         // description:
         //      A control for filtering by a defined set of choices.
         //      Allows selection of one or more choices.
@@ -170,19 +168,23 @@ define([
                 if (this.any) {
                     var where = this.fieldName + ' IN (' + values.join(', ') + ')';
 
-                    return this.getRelatedTableQuery(where);
+                    return {
+                        table: this.relatedTableName,
+                        where
+                    };
                 }
 
-                var that = this;
+                return {
+                    table: this.relatedTableName,
+                    where: values.reduce((previousReturn, currentValue) => {
+                        var innerWhere = this.fieldName + ' = ' + currentValue;
+                        if (!previousReturn) {
+                            return innerWhere;
+                        }
 
-                return values.reduce(function (previousReturn, currentValue) {
-                    var innerWhere = that.fieldName + ' = ' + currentValue;
-                    if (!previousReturn) {
-                        return that.getRelatedTableQuery(innerWhere);
-                    }
-
-                    return previousReturn + ' AND ' + that.getRelatedTableQuery(innerWhere);
-                }, false);
+                        return previousReturn + ' AND ' + innerWhere;
+                    }, false)
+                };
             }
 
             return undefined;

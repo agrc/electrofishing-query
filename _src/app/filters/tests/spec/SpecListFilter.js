@@ -62,11 +62,11 @@ require([
                 testWidget.itemClicked('1');
                 testWidget.itemClicked('2');
 
-                expect(testWidget.getQuery()).toBe("FieldName IN ('1', '2')");
+                expect(testWidget.getQuery().where).toBe("FieldName IN ('1', '2')");
 
                 testWidget.fieldType = ListFilter.TYPE_NUMBER;
 
-                expect(testWidget.getQuery()).toBe('FieldName IN (1, 2)');
+                expect(testWidget.getQuery().where).toBe('FieldName IN (1, 2)');
             });
             it('handles "all" queries', function () {
                 testWidget.any = false;
@@ -74,22 +74,13 @@ require([
                 testWidget.itemClicked('2');
                 var expected = "FieldName = '1' AND FieldName = '2'";
 
-                expect(testWidget.getQuery()).toBe(expected);
-
-                testWidget.relatedTableQuery = true;
-
-                expected = config.queryByEvents + "FieldName = '1') AND " +
-                     config.queryByEvents + "FieldName = '2')";
-
-                expect(testWidget.getQuery()).toBe(expected);
+                expect(testWidget.getQuery().where).toBe(expected);
             });
             it('prepend related table queries', function () {
-                testWidget.relatedTableQuery = true;
-
                 testWidget.itemClicked('1');
                 testWidget.itemClicked('2');
 
-                expect(testWidget.getQuery()).toBe(config.queryByEvents + "FieldName IN ('1', '2'))");
+                expect(testWidget.getQuery().where).toBe("FieldName IN ('1', '2')");
             });
         });
         describe('translateCodedValuesToItems', () => {

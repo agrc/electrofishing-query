@@ -2,46 +2,40 @@ define([
     'agrc/widgets/map/BaseMap',
 
     'app/config',
+    'app/queryHelpers',
 
     'dojo/Deferred',
     'dojo/on',
     'dojo/topic',
     'dojo/_base/lang',
 
-    'esri/Color',
-    'esri/geometry/Extent',
     'esri/graphic',
     'esri/graphicsUtils',
-    'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
     'esri/tasks/IdentifyParameters',
     'esri/tasks/IdentifyTask',
     'esri/tasks/query',
-    'esri/tasks/QueryTask',
 
     'layer-selector/LayerSelector'
 ], function (
     BaseMap,
 
     config,
+    queryHelpers,
 
     Deferred,
     on,
     topic,
     lang,
 
-    Color,
-    Extent,
     Graphic,
     graphicsUtils,
-    ArcGISDynamicMapServiceLayer,
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
     IdentifyParameters,
     IdentifyTask,
     Query,
-    QueryTask,
 
     LayerSelector
 ) {
@@ -211,25 +205,27 @@ define([
             this.selectedStationId = feature.attributes[config.fieldNames.STATION_ID];
             this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
         },
-        filterFeatures: function (defQuery, geometry) {
+        filterFeatures: function (filterQueryInfos, geometry) {
             // summary:
             //      selects stations on the map
             //      applies selection to fLayer
-            // defQuery[optional]: String
-            //      select by definition query
+            // filterQueryInfos[optional]: String[]
+            //      select by definition queries
             // geometry[optional]: Polygon
             //      select by geometry
             console.log('app/mapController:filterFeatures', arguments);
 
-            if (defQuery || geometry) {
+            if (filterQueryInfos && filterQueryInfos.length > 0 || geometry) {
                 this.map.showLoader();
 
-                this.checkLimit(defQuery, geometry).then(query => {
+                const where = queryHelpers.getStationQuery(filterQueryInfos);
+
+                this.checkLimit(where, geometry).then(query => {
                     if (geometry) {
                         // only query for ids if there is a geometry
                         this.queryFLayer.queryIds(query);
                     } else {
-                        this.updateLayerDefs(defQuery);
+                        this.updateLayerDefs(filterQueryInfos);
                     }
                 }, () => {
                     topic.publish(config.topics.showLimitMessage);
@@ -264,7 +260,7 @@ define([
                     def.reject();
                 } else {
                     console.log('feature count: ', count);
-                    def.resolve(query);
+                    def.resolve();
                 }
             });
 
@@ -284,14 +280,17 @@ define([
                 def = '1 = 2';
             }
 
-            this.updateLayerDefs(def);
+            this.updateLayerDefs([{
+                table: config.tableNames.stations,
+                where: def
+            }]);
         },
-        updateLayerDefs: function (def) {
+        updateLayerDefs: function (filterQueryInfos) {
             // summary
             //      update layer defs
-            // def: String
+            // filterQueryInfos: Object
             console.log('app.mapController:updateLayerDefs', arguments);
-            this.fLayer.setDefinitionExpression(def);
+            this.fLayer.setDefinitionExpression(queryHelpers.getStationQuery(filterQueryInfos));
             this.fLayer.setVisibility(true);
 
             const handler = this.fLayer.on('update-end', () => {
@@ -299,10 +298,7 @@ define([
                 handler.remove();
             });
 
-            var gridDef = (this.selectedStationId) ?
-                def + ' AND ' + config.fieldNames.STATION_ID + ' = ' + this.selectedStationId : def;
-
-            topic.publish(config.topics.queryIdsComplete, gridDef);
+            topic.publish(config.topics.queryIdsComplete, queryHelpers.getGridQuery(filterQueryInfos));
         }
     };
 });

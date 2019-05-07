@@ -72,18 +72,19 @@ require([
             beforeEach(function () {
                 testWidget.filters = [{
                     getQuery: function () {
-                        return 'one';
+                        return {
+                            table: 'blah',
+                            where: 'one'
+                        };
                     }
                 }, {
                     getQuery: function () {
-                        return 'two';
+                        return {
+                            table: 'blah',
+                            where: 'two'
+                        };
                     }
                 }];
-            });
-            it('builds a def query from all of the existing filters', function () {
-                testWidget.onFilterChange();
-
-                expect(testWidget.wheres).toEqual(['one', 'two']);
             });
             it('adds the geometry', function () {
                 var geo = {};
@@ -96,7 +97,7 @@ require([
                 testWidget.onFilterChange();
 
                 expect(testWidget.geo).toBe(geo);
-                expect(testWidget.wheres).toEqual(['one', 'two']);
+                expect(testWidget.wheres.length).toBe(2);
             });
             it('can show only geometry', function () {
                 var geo = {};
