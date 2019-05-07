@@ -92,8 +92,6 @@ define([
             // defQuery: String
             console.log('app/Grid:populateGrid', arguments);
 
-            var store;
-
             domClass.toggle(
                 this.clearSelectionBtnContainer,
                 'hidden',
@@ -108,7 +106,7 @@ define([
             this.grid.resize();
             if (!this.grid.collection ||
                 (this.grid.collection && this.grid.collection.where !== defQuery)) {
-                store = new AGSStore({
+                const store = new AGSStore({
                     target: this.mapServiceUrl + '/dynamicLayer/query',
                     tableName: 'SamplingEvents',
                     idProperty: config.fieldNames.EVENT_ID,

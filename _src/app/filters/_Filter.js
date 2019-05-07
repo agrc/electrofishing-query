@@ -21,6 +21,10 @@ define([
         // description:
         //      A base class for filters that are included in FilterContainer
 
+        // isAdded: Boolean
+        //      Stores a value indicating if the filter widget has been added to the container
+        isAdded: false,
+
 
         // Properties to be sent into constructor
 
@@ -66,6 +70,8 @@ define([
 
             this.clear();
 
+            this.isAdded = false;
+
             this.emit('removed', this);
         },
         open: function () {
@@ -75,9 +81,15 @@ define([
 
             $(this.body).collapse('show');
 
+            this.isAdded = true;
+
             this.inherited(arguments);
         },
         getQuery: function () {
+            // summary:
+            //      to be implemented by sub class
+        },
+        clear() {
             // summary:
             //      to be implemented by sub class
         }

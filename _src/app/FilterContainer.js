@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 define([
     'app/config',
     'app/filters/DateFilter',
@@ -188,6 +189,17 @@ define([
             console.log('app/FilterContainer:submit', arguments);
 
             topic.publish(config.topics.filterFeatures, this.wheres, this.geo);
+        },
+        clear() {
+            // summary:
+            //      prompts the user and then clears all filters
+            console.log('app/FilterContainer:clear', arguments);
+
+            if (window.confirm('Are you sure you want to clear your filter(s)?')) {
+                this.filters.filter(f => f.isAdded).forEach(f => f.remove());
+
+                topic.publish(config.topics.filterFeatures);
+            }
         }
     });
 });

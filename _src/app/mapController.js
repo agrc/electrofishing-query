@@ -193,6 +193,7 @@ define([
                 this.map.graphics.clear();
             }
             this.selectedStationId = null;
+            // TODO - fix this
             this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
         },
         selectStation: function (feature) {
@@ -203,6 +204,7 @@ define([
 
             this.map.graphics.add(new Graphic(feature.geometry, config.selectionSymbol));
             this.selectedStationId = feature.attributes[config.fieldNames.STATION_ID];
+            // TODO - fix this
             this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
         },
         filterFeatures: function (filterQueryInfos, geometry) {
@@ -229,9 +231,12 @@ define([
                     }
                 }, () => {
                     topic.publish(config.topics.showLimitMessage);
-                    this.updateLayerDefs('1 = 2');
+                    this.updateLayerDefs(false);
                     this.map.hideLoader();
                 });
+            } else {
+                this.updateLayerDefs(false);
+                this.map.hideLoader();
             }
         },
         checkLimit: function (defQuery, geometry) {
@@ -290,15 +295,22 @@ define([
             //      update layer defs
             // filterQueryInfos: Object
             console.log('app.mapController:updateLayerDefs', arguments);
-            this.fLayer.setDefinitionExpression(queryHelpers.getStationQuery(filterQueryInfos));
-            this.fLayer.setVisibility(true);
 
-            const handler = this.fLayer.on('update-end', () => {
-                this.map.setExtent(graphicsUtils.graphicsExtent(this.fLayer.graphics), true);
-                handler.remove();
-            });
+            if (filterQueryInfos) {
+                this.fLayer.setDefinitionExpression(queryHelpers.getStationQuery(filterQueryInfos));
+                this.fLayer.setVisibility(true);
 
-            topic.publish(config.topics.queryIdsComplete, queryHelpers.getGridQuery(filterQueryInfos));
+                const handler = this.fLayer.on('update-end', () => {
+                    this.map.setExtent(graphicsUtils.graphicsExtent(this.fLayer.graphics), true);
+                    handler.remove();
+                });
+
+                topic.publish(config.topics.queryIdsComplete, queryHelpers.getGridQuery(filterQueryInfos));
+            } else {
+                this.fLayer.setVisibility(false);
+                this.fLayer.setDefinitionExpression(null);
+                topic.publish(config.topics.queryIdsComplete, '1 = 2');
+            }
         }
     };
 });

@@ -14,11 +14,18 @@
                     </select>
                 </div>
             </form>
-            <button class="btn btn-primary ladda-button"
-                data-dojo-attach-event="click: submit"
-                data-dojo-attach-point="submitBtn" disabled>
-                <span class="ladda-label">Submit</span>
-            </button>
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group">
+                    <button class="btn" data-dojo-attach-event="click: clear">Clear</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary ladda-button"
+                        data-dojo-attach-event="click: submit"
+                        data-dojo-attach-point="submitBtn" disabled>
+                        <span class="ladda-label">Submit</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div data-dojo-attach-point="container"></div>
