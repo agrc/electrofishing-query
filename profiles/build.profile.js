@@ -10,14 +10,18 @@ profile = {
     layers: {
         'dojo/dojo': {
             include: [
-                'dojo/i18n',
-                'dojo/domReady',
+                'app/App',
                 'app/packages',
                 'app/run',
-                'app/App',
-                'dojox/gfx/path',
+                'dojox/gfx/filters',
                 'dojox/gfx/svg',
-                'dojox/gfx/shape'
+                'dojox/gfx/svgext',
+                'esri/dijit/Attribution',
+                'esri/layers/LabelLayer',
+                'esri/layers/VectorTileLayerImpl',
+                'esri/PopupInfo',
+                'esri/tasks/RelationshipQuery',
+                'xstyle/core/load-css'
             ],
             includeLocales: ['en-us'],
             customBase: true,
@@ -58,6 +62,6 @@ profile = {
         'dojo-test-sniff': 0
     },
     userConfig: {
-        packages: ['app', 'dijit', 'dojox', 'agrc', 'esri', 'toaster']
+        packages: ['app', 'dijit', 'dojox', 'agrc', 'esri', 'toaster', 'layer-selector', 'sherlock']
     }
 };
