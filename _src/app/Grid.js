@@ -200,8 +200,12 @@ define([
             console.log('app/Grid:onSelectionChange', arguments);
 
             const eventIds = Object.keys(this.grid.selection);
-            const stationIds = eventIds.map(eventId => this.grid.row(eventId).data[config.fieldNames.STATION_ID]);
+            const stationIds = [...new Set(
+                eventIds.map(eventId => this.grid.row(eventId).data[config.fieldNames.STATION_ID])
+            )];
 
+            this.selectedStationsCount.innerHTML = stationIds.length;
+            this.selectedEventsCount.innerHTML = eventIds.length;
             domClass.toggle(this.clearSelectionBtnContainer, 'hidden', eventIds.length === 0);
 
             topic.publish(config.topics.gridSelectionChanged, stationIds);
