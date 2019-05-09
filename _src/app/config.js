@@ -98,6 +98,7 @@ define([
 
         minFeatureLayerScale: 500000,
         stationSymbolSize: 9,
+        popupOpacity: 0.85,
         drawingSymbol: new SimpleFillSymbol(
             SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol()
@@ -113,6 +114,8 @@ define([
             STATION_ID,
 
             // Stations
+            NAME: 'NAME',
+            STREAM_TYPE: 'STREAM_TYPE',
 
             // SamplingEvents
             EVENT_ID: 'EVENT_ID',

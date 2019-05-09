@@ -5,16 +5,19 @@ define([
     'app/queryHelpers',
 
     'dojo/Deferred',
+    'dojo/dom-style',
     'dojo/on',
     'dojo/topic',
     'dojo/_base/lang',
+
+    'dijit/popup',
+    'dijit/TooltipDialog',
 
     'esri/graphic',
     'esri/graphicsUtils',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
-    'esri/tasks/IdentifyParameters',
-    'esri/tasks/IdentifyTask',
+    'esri/tasks/IdentifyParameters', 'esri/tasks/IdentifyTask',
     'esri/tasks/query',
 
     'layer-selector/LayerSelector'
@@ -25,9 +28,13 @@ define([
     queryHelpers,
 
     Deferred,
+    domStyle,
     on,
     topic,
     lang,
+
+    dijitPopup,
+    TooltipDialog,
 
     Graphic,
     graphicsUtils,
@@ -125,6 +132,7 @@ define([
             }
 
             this.fLayer = new FeatureLayer(`${fLayerUrl}/${config.layerIndexes.stations}`, {
+                outFields: [config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
                 visible: false
             });
             this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
@@ -139,6 +147,30 @@ define([
             this.layerEventHandlers.push(
                 this.queryFLayer.on('query-ids-complete', this.queryIdsComplete.bind(this))
             );
+            this.layerEventHandlers.push(
+                this.fLayer.on('mouse-over', this.onMouseOverStationGraphic.bind(this)),
+                this.fLayer.on('mouse-out', () => dijitPopup.close(this.popup))
+            );
+
+            this.popup = new TooltipDialog();
+            this.popup.startup();
+        },
+        onMouseOverStationGraphic(evt) {
+            // summary:
+            //      user has moused over a station graphic
+            //      show a popup
+            console.log('app/mapController:onMouseOverStationGraphic', arguments);
+
+            const data = event.graphic.attributes;
+            const content = `<b>Name:</b> ${data[config.fieldNames.NAME]}<br>
+                <b>Type:</b> ${data[config.fieldNames.STREAM_TYPE]}`;
+            this.popup.set('content', content);
+            domStyle.set(this.popup.domNode, 'opacity', config.popupOpacity);
+            dijitPopup.open({
+                popup: this.popup,
+                x: evt.pageX,
+                y: evt.pageY
+            });
         },
         onMapClick: function (evt) {
             // summary:
