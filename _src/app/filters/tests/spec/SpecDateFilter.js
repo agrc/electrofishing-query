@@ -37,12 +37,12 @@ require([
         });
         describe('getQuery', function () {
             it('builds a where clause', function () {
-                widget.fromDate.set('value', '2015-03-30');
-                widget.toDate.set('value', '2015-03-27');
+                widget.toDate.set('value', '2015-03-30');
+                widget.fromDate.set('value', '2015-03-27');
 
                 var result = widget.getQuery();
 
-                expect(result.where).toBe("FieldName >= '03/30/2015' AND FieldName <= '03/27/2015'");
+                expect(result.where).toBe("FieldName >= '03/27/2015' AND FieldName <= '03/30/2015'");
             });
             it('returns undefined if there are not valid dates', function () {
                 expect(widget.getQuery()).toBeUndefined();

@@ -56,6 +56,7 @@ define([
             this.fromDate.reset();
             this.toDate.reset();
             domClass.add(this.numSpan, 'hidden');
+            domClass.add(this.negativeSpan, 'hidden');
 
             this.emit('changed');
         },
@@ -82,8 +83,17 @@ define([
             //      checks to make sure that there are valid dates
             console.log('app/filters/DateFilter:isValid', arguments);
 
-            return (this.fromDate.value !== null && !isNaN(this.fromDate.value.getTime())) &&
-                (this.toDate.value !== null && !isNaN(this.toDate.value.getTime()));
+            const isNotValidDate = picker => !picker.value || isNaN(picker.value);
+
+            if (isNotValidDate(this.fromDate) || isNotValidDate(this.toDate)) {
+                return false;
+            }
+
+            const isPositive = this.fromDate.value.getTime() < this.toDate.value.getTime();
+
+            domClass.toggle(this.negativeSpan, 'hidden', isPositive);
+
+            return isPositive;
         },
         getQuery: function () {
             // summary:
