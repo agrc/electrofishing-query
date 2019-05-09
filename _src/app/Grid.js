@@ -134,6 +134,8 @@ define([
             console.log('app.Grid:clearSelection', arguments);
 
             topic.publish(config.topics.clearStationSelection);
+
+            this.grid.clearSelection();
         },
         initGrid: function () {
             // summary:
@@ -199,6 +201,8 @@ define([
 
             const eventIds = Object.keys(this.grid.selection);
             const stationIds = eventIds.map(eventId => this.grid.row(eventId).data[config.fieldNames.STATION_ID]);
+
+            domClass.toggle(this.clearSelectionBtnContainer, 'hidden', eventIds.length === 0);
 
             topic.publish(config.topics.gridSelectionChanged, stationIds);
         }

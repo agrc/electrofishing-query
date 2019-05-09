@@ -236,8 +236,11 @@ define([
                 this.map.graphics.clear();
             }
             this.selectedStationId = null;
-            // TODO - fix this
-            this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
+            this.updateLayerDefs([{
+                table: config.tableNames.stations,
+                where: this.fLayer.getDefinitionExpression()
+            }]);
+            this.fLayer.clearSelection();
         },
         selectStation: function (feature) {
             // summary:
