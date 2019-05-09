@@ -146,16 +146,16 @@ define([
         },
 
         topics: {
-            filterFeatures: 'ugs-filter-features',
-            addGraphic: 'ugs-add-graphic',
-            removeGraphic: 'ugs-remove-graphic',
-            queryIdsComplete: 'ugs-query-ids-complete',
-            clearStationSelection: 'ugs-clear-station-selection',
-            toggleGrid: 'ugs-toggle-grid',
-            toast: 'ugs-toast',
-            pauseMapClick: 'ugs-pause-map-click',
-            resumeMapClick: 'ugs-resume-map-click',
-            showLimitMessage: 'ugs-show-limit-message'
+            filterFeatures: 'electrofishing-filter-features',
+            addGraphic: 'electrofishing-add-graphic',
+            removeGraphic: 'electrofishing-remove-graphic',
+            queryIdsComplete: 'electrofishing-query-ids-complete',
+            clearStationSelection: 'electrofishing-clear-station-selection',
+            toggleGrid: 'electrofishing-toggle-grid',
+            toast: 'electrofishing-toast',
+            pauseMapClick: 'electrofishing-pause-map-click',
+            resumeMapClick: 'electrofishing-resume-map-click',
+            showLimitMessage: 'electrofishing-show-limit-message'
         }
     };
 
