@@ -17,6 +17,7 @@ define([
     'esri/graphicsUtils',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
+    'esri/renderers/SimpleRenderer',
     'esri/tasks/IdentifyParameters', 'esri/tasks/IdentifyTask',
     'esri/tasks/query',
 
@@ -40,6 +41,7 @@ define([
     graphicsUtils,
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
+    SimpleRenderer,
     IdentifyParameters,
     IdentifyTask,
     Query,
@@ -135,6 +137,7 @@ define([
                 outFields: [config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
                 visible: false
             });
+            this.fLayer.setRenderer(new SimpleRenderer(config.stationSymbol));
             this.fLayer.setSelectionSymbol(config.selectionSymbol);
             this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
                 this.clearStationSelection();

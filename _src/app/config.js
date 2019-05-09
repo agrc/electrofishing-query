@@ -55,6 +55,8 @@ define([
     const baseUrl = `${window.location.protocol}//${agsDomain}/arcgis/rest/services/${servicesFolder}`;
     const drawingColor = [51, 160, 44];
     const selectionColor = [52, 208, 231];
+    const stationColor = [253, 160, 73];
+    const stationSymbolSize = 12;
     const STATION_ID = 'STATION_ID';
     window.AGRC = {
         // app: app.App
@@ -97,7 +99,6 @@ define([
         },
 
         minFeatureLayerScale: 500000,
-        stationSymbolSize: 9,
         popupOpacity: 0.85,
         drawingSymbol: new SimpleFillSymbol(
             SimpleFillSymbol.STYLE_SOLID,
@@ -107,7 +108,10 @@ define([
         ),
         selectionSymbol: new SimpleMarkerSymbol()
             .setColor(new Color(selectionColor))
-            .setSize(12),
+            .setSize(stationSymbolSize),
+        stationSymbol: new SimpleMarkerSymbol()
+            .setColor(new Color(stationColor))
+            .setSize(stationSymbolSize),
 
         fieldNames: {
             // common
