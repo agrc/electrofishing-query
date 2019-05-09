@@ -2,12 +2,10 @@
 require([
     'app/Grid',
 
-    'dojo/dom-class',
     'dojo/dom-construct'
 ], function (
     WidgetUnderTest,
 
-    domClass,
     domConstruct
 ) {
     describe('app/Grid', function () {

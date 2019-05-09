@@ -38,7 +38,8 @@
   "eslintConfig": {
     "extends": "agrc",
     "globals": {
-      "AGRC": "writable"
+      "AGRC": "writable",
+      "Set": "nonwritable"
     }
   }
 }

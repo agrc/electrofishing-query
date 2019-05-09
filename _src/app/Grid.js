@@ -7,6 +7,7 @@ define([
     'dgrid1/extensions/ColumnResizer',
     'dgrid1/extensions/DijitRegistry',
     'dgrid1/OnDemandGrid',
+    'dgrid1/Selection',
 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetBase',
@@ -28,6 +29,7 @@ define([
     ColumnResizer,
     DijitRegistry,
     Grid,
+    Selection,
 
     _TemplatedMixin,
     _WidgetBase,
@@ -174,7 +176,7 @@ define([
             // columns: Object[]
             console.log('app/Grid:buildGrid', arguments);
 
-            var grid = new (declare([Grid, ColumnResizer, DijitRegistry]))({
+            var grid = new (declare([Grid, ColumnResizer, DijitRegistry, Selection]))({
                 columns: columns,
                 noDataMessage: 'No data found.',
                 loadingMessage: 'Loading data...',
@@ -183,7 +185,22 @@ define([
             }, div);
             grid.startup();
 
+            this.own(
+                grid.on('dgrid-select', this.onSelectionChange.bind(this)),
+                grid.on('dgrid-deselect', this.onSelectionChange.bind(this))
+            );
+
             return grid;
+        },
+        onSelectionChange() {
+            // summary:
+            //      fires when a user selects a row or rows
+            console.log('app/Grid:onSelectionChange', arguments);
+
+            const eventIds = Object.keys(this.grid.selection);
+            const stationIds = eventIds.map(eventId => this.grid.row(eventId).data[config.fieldNames.STATION_ID]);
+
+            topic.publish(config.topics.gridSelectionChanged, stationIds);
         }
     });
 });

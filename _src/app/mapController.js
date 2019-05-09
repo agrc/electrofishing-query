@@ -135,6 +135,7 @@ define([
                 outFields: [config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
                 visible: false
             });
+            this.fLayer.setSelectionSymbol(config.selectionSymbol);
             this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
                 this.clearStationSelection();
                 this.selectStation(evt.graphic);
@@ -151,6 +152,16 @@ define([
                 this.fLayer.on('mouse-over', this.onMouseOverStationGraphic.bind(this)),
                 this.fLayer.on('mouse-out', () => dijitPopup.close(this.popup))
             );
+
+            topic.subscribe(config.topics.gridSelectionChanged, stationIds => {
+                if (stationIds.length === 0) {
+                    return;
+                }
+
+                const query = new Query();
+                query.where = `${config.fieldNames.STATION_ID} IN ('${stationIds.join('\', \'')}')`;
+                this.fLayer.selectFeatures(query);
+            });
 
             this.popup = new TooltipDialog();
             this.popup.startup();

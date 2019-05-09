@@ -155,7 +155,8 @@ define([
             toast: 'electrofishing-toast',
             pauseMapClick: 'electrofishing-pause-map-click',
             resumeMapClick: 'electrofishing-resume-map-click',
-            showLimitMessage: 'electrofishing-show-limit-message'
+            showLimitMessage: 'electrofishing-show-limit-message',
+            gridSelectionChanged: 'electrofishing-grid-selection-changed'
         }
     };
 
