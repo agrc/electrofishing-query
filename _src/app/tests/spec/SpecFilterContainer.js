@@ -97,7 +97,8 @@ require([
                 testWidget.onFilterChange();
 
                 expect(testWidget.geo).toBe(geo);
-                expect(testWidget.wheres.length).toBe(2);
+                const two = 2;
+                expect(testWidget.wheres.length).toBe(two);
             });
             it('can show only geometry', function () {
                 var geo = {};
