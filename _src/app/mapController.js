@@ -309,13 +309,19 @@ define([
 
             var def = new Deferred();
 
-            this.queryFLayer.queryCount(query).then(function checkLimit(count) {
+            this.queryFLayer.queryCount(query)
+                .then(count => {
                 if (count > config.stationsDisplayLimit) {
                     def.reject();
                 } else {
                     console.log('feature count: ', count);
                     def.resolve();
                 }
+                }, error => {
+                    topic.publish(config.topics.toast, {
+                        message: `Error querying features! ${error.message}`,
+                        type: 'danger'
+                    });
             });
 
             return def.promise;
