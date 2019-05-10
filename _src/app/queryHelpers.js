@@ -45,13 +45,16 @@ define([
         getGridQuery(queryInfos) {
             // summary:
             //      Returns a query that selects rows in the grid
-            console.log('app/queryHelpers:getStationQuery', arguments);
+            console.log('app/queryHelpers:getGridQuery', arguments);
 
-            return Object.keys(queryInfos).reduce((previous, current) => {
-                previous.push(queryInfos[current].where);
+            return queryInfos.reduce((previous, current) => {
+                previous.push(current.where);
 
                 return previous;
             }, []).join(' AND ');
+        },
+        getStationQueryFromIds(ids) {
+            return `${config.fieldNames.STATION_ID} IN ('${ids.join('\', \'')}')`;
         }
     };
 });

@@ -1,27 +1,25 @@
 define([
     'app/config',
 
-    'dojo/io-query',
     'dojo/request/xhr',
     'dojo/when',
     'dojo/_base/declare',
     'dojo/_base/lang',
 
     'dstore/QueryResults',
-    'dstore/Request'
+    'dstore/RequestMemory'
 ], function (
     config,
 
-    ioQuery,
     request,
     when,
     declare,
     lang,
 
     QueryResults,
-    Request
+    RequestMemory
 ) {
-    return declare([Request], {
+    return declare([RequestMemory], {
         // description
         //      A dstore/Store implementation for querying a arcgis server dynamic layer query service
 
@@ -123,6 +121,8 @@ define([
             });
         },
         _request: function (kwArgs) {
+            console.log('app/AGSStore', arguments);
+
             // overriden from dstore/Request to switch to a POST request
             kwArgs = kwArgs || {};
 
@@ -137,10 +137,13 @@ define([
             }
 
             var qParams = {};
-            kwArgs.queryParams.forEach(function decouple(pair) {
-                var parts = pair.split('=');
-                qParams[parts[0]] = parts[1];
-            });
+
+            if (kwArgs.queryParams) {
+                kwArgs.queryParams.forEach(function decouple(pair) {
+                    var parts = pair.split('=');
+                    qParams[parts[0]] = parts[1];
+                });
+            }
 
             var requestUrl = this._renderUrl();
 

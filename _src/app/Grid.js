@@ -188,16 +188,17 @@ define([
             grid.startup();
 
             this.own(
-                grid.on('dgrid-select', this.onSelectionChange.bind(this)),
-                grid.on('dgrid-deselect', this.onSelectionChange.bind(this))
+                grid.on('dgrid-select', this.onGridSelectionChange.bind(this)),
+                grid.on('dgrid-deselect', this.onGridSelectionChange.bind(this)),
+                topic.subscribe(config.topics.mapSelectionChanged, this.onMapSelectionChange.bind(this))
             );
 
             return grid;
         },
-        onSelectionChange() {
+        onGridSelectionChange() {
             // summary:
             //      fires when a user selects a row or rows
-            console.log('app/Grid:onSelectionChange', arguments);
+            console.log('app/Grid:onGridSelectionChange', arguments);
 
             const eventIds = Object.keys(this.grid.selection);
             const stationIds = [...new Set(
@@ -209,6 +210,22 @@ define([
             domClass.toggle(this.clearSelectionBtnContainer, 'hidden', eventIds.length === 0);
 
             topic.publish(config.topics.gridSelectionChanged, stationIds);
+        },
+        onMapSelectionChange(stationIds) {
+            // summary:
+            //      the set of selected stations on the map has changed
+            //      select the associated rows in the grid
+            // stationIds: String[]
+            //      A list of ids for the selected stations on the map
+            console.log('app/Grid:onMapSelectionChange', arguments);
+
+            const filter = new this.grid.collection.Filter().in(config.fieldNames.STATION_ID, stationIds);
+            const subset = this.grid.collection.filter(filter);
+
+            this.grid.clearSelection();
+            subset.forEach(row => {
+                this.grid.select(row);
+            });
         }
     });
 });

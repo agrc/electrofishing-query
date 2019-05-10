@@ -160,7 +160,8 @@ define([
             pauseMapClick: 'electrofishing-pause-map-click',
             resumeMapClick: 'electrofishing-resume-map-click',
             showLimitMessage: 'electrofishing-show-limit-message',
-            gridSelectionChanged: 'electrofishing-grid-selection-changed'
+            gridSelectionChanged: 'electrofishing-grid-selection-changed',
+            mapSelectionChanged: 'electrofishing-map-selection-changed'
         }
     };
 

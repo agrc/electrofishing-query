@@ -66,18 +66,13 @@ define([
         // identifyTask: IdentifyTask
         identifyTask: null,
 
-        // selectedStationId: Number
-        //      The id of the currently selected station if there is one
-        selectedStationId: null,
-
         // mapClickHandler: Object
         //      Used to pause this event during polygon draw
         mapClickHandler: null,
 
-        securityLevels: {
-            open: 'open',
-            secure: 'secure'
-        },
+        // selectedStationIds: String[]
+        //      Used to track selected stations points on the map
+        selectedStationIds: [],
 
         initMap: function (mapDiv) {
             // summary:
@@ -134,16 +129,12 @@ define([
             }
 
             this.fLayer = new FeatureLayer(`${fLayerUrl}/${config.layerIndexes.stations}`, {
-                outFields: [config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
+                outFields: [config.fieldNames.STATION_ID, config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
                 visible: false
             });
             this.fLayer.setRenderer(new SimpleRenderer(config.stationSymbol));
             this.fLayer.setSelectionSymbol(config.selectionSymbol);
-            this.layerEventHandlers.push(this.fLayer.on('click', (evt) => {
-                this.clearStationSelection();
-                this.selectStation(evt.graphic);
-                evt.stopPropagation();
-            }));
+            this.layerEventHandlers.push(this.fLayer.on('click', this.onStationClick.bind(this)));
             this.map.addLayer(this.fLayer);
             this.map.addLoaderToLayer(this.fLayer);
 
@@ -162,7 +153,7 @@ define([
                 }
 
                 const query = new Query();
-                query.where = `${config.fieldNames.STATION_ID} IN ('${stationIds.join('\', \'')}')`;
+                query.where = queryHelpers.getStationQueryFromIds(stationIds);
                 this.fLayer.selectFeatures(query);
             });
 
@@ -180,54 +171,19 @@ define([
                 <b>Type:</b> ${data[config.fieldNames.STREAM_TYPE]}`;
             this.popup.set('content', content);
             domStyle.set(this.popup.domNode, 'opacity', config.popupOpacity);
+            const buffer = 5;
             dijitPopup.open({
                 popup: this.popup,
-                x: evt.pageX,
-                y: evt.pageY
+                x: evt.pageX + buffer,
+                y: evt.pageY + buffer
             });
         },
-        onMapClick: function (evt) {
+        onMapClick: function () {
             // summary:
-            //      user clicks on the map
-            //      query for feature from dynamic service and update selection accordingly
-            // evt: Event Object
+            //      user clicks on the map, clear any station selection
             console.log('app.mapController:onMapClick', arguments);
 
-            var that = this;
-
-            if (this.map.getScale() >= config.minFeatureLayerScale) {
-                var identifyParams = new IdentifyParameters();
-                lang.mixin(identifyParams, {
-                    geometry: evt.mapPoint,
-                    height: this.map.height,
-                    layerDefinitions: this.dLayer.layerDefinitions,
-                    layerIds: [0],
-                    mapExtent: this.map.extent,
-                    returnGeometry: true,
-                    tolerance: 7,
-                    width: this.map.width
-                });
-
-                if (!this.identifyTask) {
-                    this.identifyTask = new IdentifyTask(config.urls.mapService);
-                    this.identifyTask.on('complete', function processResults(resultsEvt) {
-                        that.clearStationSelection();
-                        if (resultsEvt.results.length > 0) {
-                            that.selectStation(resultsEvt.results[0].feature);
-                        } else {
-                            that.clearStationSelection();
-                        }
-                    });
-                    this.identifyTask.on('error', function processError(errorEvt) {
-                        console.error(errorEvt.error);
-                        that.clearStationSelection();
-                    });
-                }
-
-                this.identifyTask.execute(identifyParams);
-            } else {
-                this.clearStationSelection();
-            }
+            this.clearStationSelection();
         },
         clearStationSelection: function () {
             // summary:
@@ -235,26 +191,32 @@ define([
             // param or return
             console.log('app.mapController:clearStationSelection', arguments);
 
-            if (this.map.graphics) {
-                this.map.graphics.clear();
+            if (!this.fLayer.visible) {
+                return;
             }
-            this.selectedStationId = null;
-            this.updateLayerDefs([{
-                table: config.tableNames.stations,
-                where: this.fLayer.getDefinitionExpression()
-            }]);
-            this.fLayer.clearSelection();
-        },
-        selectStation: function (feature) {
-            // summary:
-            //      description
-            // param or return
-            console.log('app.mapController:selectStation', arguments);
 
-            this.map.graphics.add(new Graphic(feature.geometry, config.selectionSymbol));
-            this.selectedStationId = feature.attributes[config.fieldNames.STATION_ID];
-            // TODO - fix this
-            this.updateLayerDefs(this.fLayer.getDefinitionExpression() || config.showAllQuery);
+            this.selectedStationIds = [];
+
+            this.fLayer.clearSelection();
+
+            topic.publish(config.topics.mapSelectionChanged, this.selectedStationIds);
+        },
+        onStationClick: function (event) {
+            // summary:
+            //      user has clicked on a station point on the map
+            // event: Mouse Click Event Object
+            console.log('app.mapController:onStationClick', arguments);
+
+            event.stopPropagation();
+
+            if (!event.ctrlKey && !event.metaKey) {
+                this.selectedStationIds = [];
+            }
+
+            const id = event.graphic.attributes[config.fieldNames.STATION_ID];
+            this.selectedStationIds.push(id);
+
+            topic.publish(config.topics.mapSelectionChanged, this.selectedStationIds);
         },
         filterFeatures: function (filterQueryInfos, geometry) {
             // summary:
@@ -311,18 +273,18 @@ define([
 
             this.queryFLayer.queryCount(query)
                 .then(count => {
-                if (count > config.stationsDisplayLimit) {
-                    def.reject();
-                } else {
-                    console.log('feature count: ', count);
-                    def.resolve();
-                }
+                    if (count > config.stationsDisplayLimit) {
+                        def.reject();
+                    } else {
+                        console.log('feature count: ', count);
+                        def.resolve();
+                    }
                 }, error => {
                     topic.publish(config.topics.toast, {
                         message: `Error querying features! ${error.message}`,
                         type: 'danger'
                     });
-            });
+                });
 
             return def.promise;
         },
