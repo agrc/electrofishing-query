@@ -39,7 +39,7 @@ define([
             console.log('app.AGSStore:constructor', arguments);
 
             const query = `
-                SELECT e.${config.fieldNames.EVENT_ID},EVENT_DATE,OBSERVERS,e.STATION_ID,
+                SELECT DISTINCT e.${config.fieldNames.EVENT_ID},EVENT_DATE,OBSERVERS,e.STATION_ID,
                     SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
                                      FROM ${config.databaseName}.WILDADMIN.Fish as f
                                      WHERE e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
