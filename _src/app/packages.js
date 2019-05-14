@@ -22,10 +22,6 @@
                 location: './bootstrap',
                 main: 'dist/js/bootstrap'
             }, {
-                name: 'highcharts',
-                location: './highcharts',
-                main: 'highcharts.src'
-            }, {
                 name: 'jquery',
                 location: './jquery/dist',
                 main: 'jquery'
@@ -33,10 +29,6 @@
                 name: 'ladda',
                 location: './ladda-bootstrap',
                 main: 'js/ladda'
-            }, {
-                name: 'mustache',
-                location: './mustache',
-                main: 'mustache'
             }, {
                 name: 'stubmodule',
                 location: './stubmodule',

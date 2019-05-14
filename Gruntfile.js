@@ -70,7 +70,8 @@ module.exports = function (grunt) {
         },
         clean: {
             deploy: ['deploy'],
-            src: ['src/app']
+            src: ['src/app'],
+            dist: ['dist']
         },
         compress: {
             main: {
@@ -260,7 +261,7 @@ module.exports = function (grunt) {
         'watch'
     ]);
     grunt.registerTask('build-prod', [
-        'clean:src',
+        'clean',
         'babel',
         'stylus',
         'copy:src',
@@ -271,7 +272,7 @@ module.exports = function (grunt) {
         'processhtml:main'
     ]);
     grunt.registerTask('build-stage', [
-        'clean:src',
+        'clean',
         'babel',
         'stylus',
         'copy:src',

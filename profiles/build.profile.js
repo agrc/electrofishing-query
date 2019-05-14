@@ -29,9 +29,6 @@ profile = {
         }
     },
     packages: [{
-        name: 'bootstrap-css-only',
-        location: './bootstrap-css-only'
-    }, {
         name: 'spinjs',
         resourceTags: {
             copyOnly: function (filename, mid) {
