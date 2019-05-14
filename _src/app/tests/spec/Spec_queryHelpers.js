@@ -55,6 +55,15 @@ require([
                 const results = queryHelpers.getStationQuery(input);
                 expect(results).toBe(expected);
             });
+            it('handles tables that require an extra join back to stations', () => {
+                const input = [{
+                    where: '1 = 1',
+                    table: config.tableNames.fish
+                }];
+                const expected = `${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.events} WHERE ${config.fieldNames.EVENT_ID} IN (SELECT ${config.fieldNames.EVENT_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish} WHERE 1 = 1))`;
+
+                expect(queryHelpers.getStationQuery(input)).toBe(expected);
+            });
         });
 
         describe('getGridQuery', () => {
@@ -77,6 +86,15 @@ require([
 
                 const results = queryHelpers.getGridQuery(input);
                 expect(results).toBe(expected);
+            });
+        });
+
+        describe('removeIrrelevantWhiteSpace', () => {
+            it('removes newlines and double spaces', () => {
+                const input = `testing
+                    testing    testing`;
+
+                expect(queryHelpers.removeIrrelevantWhiteSpace(input)).toBe('testing testing testing');
             });
         });
     });

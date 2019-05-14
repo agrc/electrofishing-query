@@ -182,8 +182,8 @@ define([
                 columns: columns,
                 noDataMessage: 'No data found.',
                 loadingMessage: 'Loading data...',
-                minRowsPerPage: 100,
-                maxRowsPerPage: 500
+                minRowsPerPage: 1000,
+                maxRowsPerPage: 5000
             }, div);
             grid.startup();
 

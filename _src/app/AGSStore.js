@@ -1,5 +1,6 @@
 define([
     'app/config',
+    'app/queryHelpers',
 
     'dojo/request/xhr',
     'dojo/when',
@@ -10,6 +11,7 @@ define([
     'dstore/RequestMemory'
 ], function (
     config,
+    queryHelpers,
 
     request,
     when,
@@ -38,7 +40,7 @@ define([
             // }
             console.log('app.AGSStore:constructor', arguments);
 
-            const query = `
+            let query = `
                 SELECT DISTINCT e.${config.fieldNames.EVENT_ID},EVENT_DATE,OBSERVERS,e.STATION_ID,
                     SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
                                      FROM ${config.databaseName}.WILDADMIN.Fish as f
@@ -56,7 +58,7 @@ define([
                 WHERE ${options.where}
             `;
             console.log(query);
-            query.replace(/\n/g, ''); // SQL doesn't like newline characters
+            query = queryHelpers.removeIrrelevantWhiteSpace(query);
 
             // push options to url query and build url
             // this is using a dynamic layer so that the query can be more specific (prevents a full table scan)
@@ -69,7 +71,7 @@ define([
                         dataSource: {
                             type: 'queryTable',
                             workspaceId: config.dynamicWorkspaceId,
-                            query: query,
+                            query,
                             oidFields: options.idProperty
                         }
                     }

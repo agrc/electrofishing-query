@@ -22,7 +22,7 @@ define([
 
             const query = Object.keys(tables).reduce((previous, current, currentIndex) => {
                 // concat where clauses for table
-                const where = tables[current].join(' AND ');
+                let where = tables[current].join(' AND ');
 
                 // support multiple table queries
                 if (currentIndex > 0) {
@@ -34,13 +34,19 @@ define([
                     return `${previous}${where}`;
                 }
 
-                previous += `${config.fieldNames.STATION_ID} IN (`;
+                if (current === config.tableNames.fish) {
+                    // fish table requires an additional join
+                    current = config.tableNames.events;
+                    where = `${config.fieldNames.EVENT_ID} IN (SELECT ${config.fieldNames.EVENT_ID}
+                        FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish}
+                        WHERE ${where})`;
+                }
 
-                return `${previous}SELECT ${config.fieldNames.STATION_ID} ` +
-                    `FROM ${config.databaseName}.WILDADMIN.${current} WHERE ${where})`;
+                return `${previous}${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID}
+                    FROM ${config.databaseName}.WILDADMIN.${current} WHERE ${where})`;
             }, '');
 
-            return query;
+            return this.removeIrrelevantWhiteSpace(query);
         },
         getGridQuery(queryInfos) {
             // summary:
@@ -55,6 +61,9 @@ define([
         },
         getStationQueryFromIds(ids) {
             return `${config.fieldNames.STATION_ID} IN ('${ids.join('\', \'')}')`;
+        },
+        removeIrrelevantWhiteSpace(text) {
+            return text.replace(/\n/g, '').replace(/ +/g, ' '); // SQL doesn't like newline characters
         }
     };
 });
