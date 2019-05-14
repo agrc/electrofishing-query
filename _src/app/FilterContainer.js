@@ -5,6 +5,7 @@ define([
     // 'app/filters/FreeTypeFilter',
     'app/filters/ListFilter',
     // 'app/filters/ShapeFilter',
+    'app/filters/SpeciesLengthFilter',
 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetBase',
@@ -23,6 +24,7 @@ define([
     // FreeTypeFilter,
     ListFilter,
     // ShapeFilter,
+    SpeciesLengthFilter,
 
     _TemplatedMixin,
     _WidgetBase,
@@ -68,6 +70,10 @@ define([
                     name: 'Date Range',
                     parent: this.container,
                     fieldName: config.fieldNames.EVENT_DATE
+                }),
+                new SpeciesLengthFilter({
+                    name: 'Species & Size',
+                    parent: this.container
                 })
                 // new ShapeFilter({
                 //     name: 'Polygon',

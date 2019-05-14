@@ -129,6 +129,8 @@ define([
 
             // Fish
             SPECIES: 'SPECIES', // dynamic field created via SQL query in AGSStores
+            SPECIES_CODE: 'SPECIES_CODE',
+            LENGTH: 'LENGTH',
 
             // Equipment
             TYPES: 'TYPES', // dynamic field created via SQL query in AGSStores
@@ -139,14 +141,16 @@ define([
 
         tableNames: {
             events: 'SamplingEvents',
-            stations: 'Stations'
+            stations: 'Stations',
+            fish: 'Fish'
         },
 
         layerIndexes: {
             stations: 0,
             events: 1,
             streams: 0,
-            lakes: 1
+            lakes: 1,
+            fish: 2
         },
 
         topics: {

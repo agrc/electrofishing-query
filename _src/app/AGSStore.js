@@ -39,18 +39,20 @@ define([
             console.log('app.AGSStore:constructor', arguments);
 
             const query = `
-                SELECT e.EVENT_ID,EVENT_DATE,OBSERVERS,e.STATION_ID,
+                SELECT e.${config.fieldNames.EVENT_ID},EVENT_DATE,OBSERVERS,e.STATION_ID,
                     SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
                                      FROM ${config.databaseName}.WILDADMIN.Fish as f
-                                     WHERE e.EVENT_ID = f.EVENT_ID
+                                     WHERE e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
                                      FOR XML PATH ('')),
                                      1, 1, ''),
                     TYPES = STUFF((SELECT DISTINCT ', ' + eq.TYPE
                                    FROM ${config.databaseName}.WILDADMIN.Equipment as eq
-                                   WHERE e.EVENT_ID = eq.EVENT_ID
+                                   WHERE e.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
                                    FOR XML PATH ('')),
                                    1, 1, '')
                 FROM ${config.databaseName}.WILDADMIN.SamplingEvents as e
+                INNER JOIN ${config.databaseName}.WILDADMIN.Fish as f
+                ON e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
                 WHERE ${options.where}
             `;
             console.log(query);

@@ -146,7 +146,7 @@ module.exports = function (grunt) {
             main: {
                 src: ['src/app/run.js'],
                 options: {
-                    specs: ['src/app/**/Spec*.js'],
+                    specs: ['src/app/**/spec/Spec*.js'],
                     vendor: [
                         'src/jasmine-favicon-reporter/vendor/favico.js',
                         'src/jasmine-favicon-reporter/jasmine-favicon-reporter.js',
