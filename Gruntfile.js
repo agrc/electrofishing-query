@@ -181,16 +181,29 @@ module.exports = function (grunt) {
                     dest: './'
                 }],
                 options: {
-                    host: '<%= secrets.stageHost %>'
+                    createDirectories: true
                 }
             },
+            appPackageOnly: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/app',
+                    src: deployFiles,
+                    dest: './app'
+                }, {
+                    expand: true,
+                    cwd: 'dist',
+                    src: ['*.html'],
+                    dest: './'
+                }]
+            },
             options: {
+                host: '<%= secrets.stageHost %>',
                 path: `./${deployDir}/`,
                 srcBasePath: 'dist/',
-                username: '<%= secrets.username %>',
-                password: '<%= secrets.password %>',
                 showProgress: true,
-                createDirectories: true
+                username: '<%= secrets.username %>',
+                password: '<%= secrets.password %>'
             }
         },
         stylus: {
@@ -287,8 +300,10 @@ module.exports = function (grunt) {
         'compress:main'
     ]);
     grunt.registerTask('deploy-stage', [
-        'clean:deploy',
         'sftp:stage'
+    ]);
+    grunt.registerTask('deploy-app-only', [
+        'sftp:appPackageOnly'
     ]);
     grunt.registerTask('test', [
         'babel',
