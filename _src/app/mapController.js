@@ -14,11 +14,9 @@ define([
     'dijit/TooltipDialog',
 
     'esri/graphic',
-    'esri/graphicsUtils',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
     'esri/renderers/SimpleRenderer',
-    'esri/tasks/IdentifyParameters', 'esri/tasks/IdentifyTask',
     'esri/tasks/query',
 
     'layer-selector/LayerSelector'
@@ -38,12 +36,9 @@ define([
     TooltipDialog,
 
     Graphic,
-    graphicsUtils,
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
     SimpleRenderer,
-    IdentifyParameters,
-    IdentifyTask,
     Query,
 
     LayerSelector
@@ -250,7 +245,7 @@ define([
                 this.map.hideLoader();
             }
         },
-        checkLimit: function (defQuery, geometry) {
+        checkLimit(defQuery, geometry) {
             // summary:
             //      checks to see if the filtered results are more than the limit
             // defQuery[optional]: String
@@ -271,12 +266,13 @@ define([
 
             var def = new Deferred();
 
-            this.queryFLayer.queryCount(query)
-                .then(count => {
+            this.queryFLayer.queryExtent(query)
+                .then(({ count, extent }) => {
                     if (count > config.stationsDisplayLimit) {
                         def.reject();
                     } else {
                         console.log('feature count: ', count);
+                        this.map.setExtent(extent, true);
                         def.resolve();
                     }
                 }, error => {
@@ -316,11 +312,6 @@ define([
             if (filterQueryInfos) {
                 this.fLayer.setDefinitionExpression(queryHelpers.getStationQuery(filterQueryInfos));
                 this.fLayer.setVisibility(true);
-
-                const handler = this.fLayer.on('update-end', () => {
-                    this.map.setExtent(graphicsUtils.graphicsExtent(this.fLayer.graphics), true);
-                    handler.remove();
-                });
 
                 topic.publish(config.topics.queryIdsComplete, queryHelpers.getGridQuery(filterQueryInfos));
             } else {
