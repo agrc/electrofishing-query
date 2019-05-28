@@ -75,7 +75,8 @@ define([
             this.streamsSherlock = new Sherlock({
                 placeHolder: 'stream name',
                 provider: streamsProvider,
-                map: mapController.map
+                map: mapController.map,
+                preserveGraphics: true
             }, this.streamsSherlockDiv);
             const lakesProvider = new MapService(
                 `${config.urls.referenceService}/${config.layerIndexes.lakes}`,
