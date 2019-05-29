@@ -283,7 +283,10 @@ define([
                         def.reject();
                     } else {
                         console.log('feature count: ', count);
-                        this.map.setExtent(extent, true);
+
+                        if (count > 0) {
+                            this.map.setExtent(extent, true);
+                        }
                         def.resolve();
                     }
                 }, error => {
