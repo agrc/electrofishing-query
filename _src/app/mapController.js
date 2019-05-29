@@ -17,6 +17,7 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/FeatureLayer',
     'esri/renderers/SimpleRenderer',
+    'esri/symbols/PictureMarkerSymbol',
     'esri/tasks/query',
 
     'layer-selector/LayerSelector'
@@ -39,6 +40,7 @@ define([
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
     SimpleRenderer,
+    PictureMarkerSymbol,
     Query,
 
     LayerSelector
@@ -127,8 +129,17 @@ define([
                 outFields: [config.fieldNames.STATION_ID, config.fieldNames.NAME, config.fieldNames.STREAM_TYPE],
                 visible: false
             });
-            this.fLayer.setRenderer(new SimpleRenderer(config.stationSymbol));
-            this.fLayer.setSelectionSymbol(config.selectionSymbol);
+
+            this.fLayer.setRenderer(new SimpleRenderer(new PictureMarkerSymbol({
+                url: 'app/resources/images/marker-icon.png',
+                width: 25,
+                height: 41
+            })));
+            this.fLayer.setSelectionSymbol(new PictureMarkerSymbol({
+                url: 'app/resources/images/selected-icon.png',
+                width: 25,
+                height: 41
+            }));
             this.layerEventHandlers.push(this.fLayer.on('click', this.onStationClick.bind(this)));
             this.map.addLayer(this.fLayer);
             this.map.addLoaderToLayer(this.fLayer);

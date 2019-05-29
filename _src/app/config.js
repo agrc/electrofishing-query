@@ -7,7 +7,6 @@ define([
     'esri/config',
     'esri/symbols/SimpleFillSymbol',
     'esri/symbols/SimpleLineSymbol',
-    'esri/symbols/SimpleMarkerSymbol',
 
     'dojo/domReady!'
 ], function (
@@ -17,8 +16,7 @@ define([
     Color,
     esriConfig,
     SimpleFillSymbol,
-    SimpleLineSymbol,
-    SimpleMarkerSymbol
+    SimpleLineSymbol
 ) {
     let agsDomain = 'udwrgis.utah.gov';
     let apiKey;
@@ -54,9 +52,6 @@ define([
 
     const baseUrl = `${window.location.protocol}//${agsDomain}/arcgis/rest/services/${servicesFolder}`;
     const drawingColor = [51, 160, 44];
-    const selectionColor = [52, 208, 231];
-    const stationColor = [253, 160, 73];
-    const stationSymbolSize = 12;
     const STATION_ID = 'STATION_ID';
     window.AGRC = {
         // app: app.App
@@ -106,12 +101,6 @@ define([
                 .setColor(new Color(drawingColor)),
             new Color(drawingColor.concat([0.25]))
         ),
-        selectionSymbol: new SimpleMarkerSymbol()
-            .setColor(new Color(selectionColor))
-            .setSize(stationSymbolSize),
-        stationSymbol: new SimpleMarkerSymbol()
-            .setColor(new Color(stationColor))
-            .setSize(stationSymbolSize),
 
         fieldNames: {
             // common
