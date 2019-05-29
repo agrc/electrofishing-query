@@ -22,12 +22,12 @@ require([
                     where: '1 = 4',
                     table: 'TableThree'
                 }];
-                const expected = `${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne
-                        WHERE 1 = 1 AND 1 = 2)
-                    AND ${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableTwo
-                        WHERE 1 = 3)
-                    AND ${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableThree
-                        WHERE 1 = 4)`.replace(/  +/g, '').replace(/\n/g, ' ');
+                const expected = `(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne
+                        WHERE 1 = 1 AND 1 = 2))
+                    AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableTwo
+                        WHERE 1 = 3))
+                    AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableThree
+                        WHERE 1 = 4))`.replace(/  +/g, '').replace(/\n/g, ' ');
 
                 const results = queryHelpers.getStationQuery(input);
                 expect(results).toBe(expected);
@@ -40,7 +40,7 @@ require([
                     where: '1 = 2',
                     table: 'TableOne'
                 }];
-                const expected = `1 = 1 AND ${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne WHERE 1 = 2)`;
+                const expected = `(1 = 1) AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne WHERE 1 = 2))`;
 
                 const results = queryHelpers.getStationQuery(input);
                 expect(results).toBe(expected);
@@ -50,7 +50,7 @@ require([
                     where: '1 = 1',
                     table: config.tableNames.stations
                 }];
-                const expected = '1 = 1';
+                const expected = '(1 = 1)';
 
                 const results = queryHelpers.getStationQuery(input);
                 expect(results).toBe(expected);
@@ -60,7 +60,7 @@ require([
                     where: '1 = 1',
                     table: config.tableNames.fish
                 }];
-                const expected = `${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.events} WHERE ${config.fieldNames.EVENT_ID} IN (SELECT ${config.fieldNames.EVENT_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish} WHERE 1 = 1))`;
+                const expected = `(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.events} WHERE ${config.fieldNames.EVENT_ID} IN (SELECT ${config.fieldNames.EVENT_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish} WHERE 1 = 1)))`;
 
                 expect(queryHelpers.getStationQuery(input)).toBe(expected);
             });
@@ -82,7 +82,7 @@ require([
                     table: 'TableThree'
                 }];
 
-                const expected = '1 = 1 AND 1 = 2 AND 1 = 3 AND 1 = 4';
+                const expected = '(1 = 1) AND (1 = 2) AND (1 = 3) AND (1 = 4)';
 
                 const results = queryHelpers.getGridQuery(input);
                 expect(results).toBe(expected);

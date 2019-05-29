@@ -31,7 +31,7 @@ define([
 
                 // no need for join on stations table query
                 if (current === config.tableNames.stations) {
-                    return `${previous}${where}`;
+                    return `${previous}(${where})`;
                 }
 
                 if (current === config.tableNames.fish) {
@@ -42,8 +42,8 @@ define([
                         WHERE ${where})`;
                 }
 
-                return `${previous}${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID}
-                    FROM ${config.databaseName}.WILDADMIN.${current} WHERE ${where})`;
+                return `${previous}(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID}
+                    FROM ${config.databaseName}.WILDADMIN.${current} WHERE ${where}))`;
             }, '');
 
             return this.removeIrrelevantWhiteSpace(query);
@@ -53,11 +53,11 @@ define([
             //      Returns a query that selects rows in the grid
             console.log('app/queryHelpers:getGridQuery', arguments);
 
-            return queryInfos.reduce((previous, current) => {
+            return `(${queryInfos.reduce((previous, current) => {
                 previous.push(current.where);
 
                 return previous;
-            }, []).join(' AND ');
+            }, []).join(') AND (')})`;
         },
         getStationQueryFromIds(ids) {
             return `${config.fieldNames.STATION_ID} IN ('${ids.join('\', \'')}')`;
