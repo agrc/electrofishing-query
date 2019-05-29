@@ -1,7 +1,7 @@
 <div>
     <div data-dojo-attach-point="invalidMessage" class="hidden">
         <div class="alert alert-danger">
-            Value must be a whole number!
+            Value must be a positive, whole number!
         </div>
     </div>
     <div data-dojo-attach-point="minMaxMessage" class="hidden">
@@ -17,13 +17,13 @@
             <td>
                 <div class="input-group">
                     <div class="input-group-addon">Min</div>
-                    <input type="number" class="form-control" data-dojo-attach-point="min" />
+                    <input type="number" min="0" class="form-control" data-dojo-attach-point="min" />
                 </div>
             </td>
             <td>
                 <div class="input-group">
                     <div class="input-group-addon">Max</div>
-                    <input type="number" class="form-control" data-dojo-attach-point="max" />
+                    <input type="number" min="0" class="form-control" data-dojo-attach-point="max" />
                 </div>
             </td>
         </tr>

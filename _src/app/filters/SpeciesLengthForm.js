@@ -58,7 +58,7 @@ define([
             domClass.add(this.minMaxMessage, 'hidden');
 
             const value = event.currentTarget.value;
-            if (!this.isWholeNumber(value)) {
+            if (!this.isPositiveWholeNumber(value)) {
                 domClass.remove(this.invalidMessage, 'hidden');
 
                 return;
@@ -73,14 +73,16 @@ define([
 
             this.onChange();
         },
-        isWholeNumber(value) {
-            return value.length === 0 || (!isNaN(value) && Number.isInteger(parseFloat(value, RADIX)));
+        isPositiveWholeNumber(value) {
+            const parsedValue = parseFloat(value, RADIX);
+
+            return value.length === 0 || (!isNaN(value) && Number.isInteger(parsedValue) && parsedValue >= 0);
         },
         isValid() {
             console.log('app/filters/SpeciesLengthForm:isValid', arguments);
 
             if (this.min.value.length || this.max.value.length) {
-                return this.isWholeNumber(this.min.value) && this.isWholeNumber(this.max.value);
+                return this.isPositiveWholeNumber(this.min.value) && this.isPositiveWholeNumber(this.max.value);
             }
 
             return true;

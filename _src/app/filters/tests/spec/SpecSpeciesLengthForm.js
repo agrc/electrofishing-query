@@ -32,14 +32,15 @@ require([
             widget.destroy();
         });
 
-        describe('isWholeNumber', () => {
-            it('handles strings and decimals', () => {
-                expect(widget.isWholeNumber('1')).toBe(true);
-                expect(widget.isWholeNumber('1234')).toBe(true);
-                expect(widget.isWholeNumber(1234)).toBe(true);
-                expect(widget.isWholeNumber('12.3')).toBe(false);
-                expect(widget.isWholeNumber('12a')).toBe(false);
-                expect(widget.isWholeNumber('a')).toBe(false);
+        describe('isPositiveWholeNumber', () => {
+            it('handles strings, negative numbers and decimals', () => {
+                expect(widget.isPositiveWholeNumber('1')).toBe(true);
+                expect(widget.isPositiveWholeNumber('1234')).toBe(true);
+                expect(widget.isPositiveWholeNumber(1234)).toBe(true);
+                expect(widget.isPositiveWholeNumber('12.3')).toBe(false);
+                expect(widget.isPositiveWholeNumber('12a')).toBe(false);
+                expect(widget.isPositiveWholeNumber('a')).toBe(false);
+                expect(widget.isPositiveWholeNumber('-1')).toBe(false);
             });
         });
         describe('getQuery', () => {
