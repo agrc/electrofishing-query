@@ -8,3 +8,9 @@ A web application for viewing and querying electrofishing data.
 1. Update `Electrofishing/MapService`:
     * Check "Allow per request modification of layer order and symbology" and register the SDE database as a dynamic workspace with the an ID of "ElectrofishingQuery".
     * Update Parameters -> Max Number of Records Returns from 1000 to 5000.
+
+# Cutting a New Release
+1. Update `src/ChangeLog.html`
+1. `grunt bump`
+1. `grunt build-prod/stage`
+1. `grunt deploy-prod/stage/app-only`
