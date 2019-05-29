@@ -13,8 +13,8 @@ define([
     'dijit/_WidgetBase',
     'dijit/_WidgetsInTemplateMixin',
 
-    'dojo/date/locale',
     'dojo/dom-class',
+    'dojo/on',
     'dojo/text!app/templates/Grid.html',
     'dojo/topic',
     'dojo/_base/declare',
@@ -35,8 +35,8 @@ define([
     _WidgetBase,
     _WidgetsInTemplateMixin,
 
-    locale,
     domClass,
+    on,
     template,
     topic,
     declare
@@ -187,9 +187,11 @@ define([
             }, div);
             grid.startup();
 
+            this.onGridSelectHandler = on.pausable(grid, 'dgrid-select', this.onGridSelectionChange.bind(this));
+            this.onGridDeselectHandler = on.pausable(grid, 'dgrid-deselect', this.onGridSelectionChange.bind(this));
             this.own(
-                grid.on('dgrid-select', this.onGridSelectionChange.bind(this)),
-                grid.on('dgrid-deselect', this.onGridSelectionChange.bind(this)),
+                this.onGridSelectHandler,
+                this.onGridDeselectHandler,
                 topic.subscribe(config.topics.mapSelectionChanged, this.onMapSelectionChange.bind(this))
             );
 
@@ -222,10 +224,18 @@ define([
             const filter = new this.grid.collection.Filter().in(config.fieldNames.STATION_ID, stationIds);
             const subset = this.grid.collection.filter(filter);
 
+            this.onGridSelectHandler.pause();
+            this.onGridDeselectHandler.pause();
+
             this.grid.clearSelection();
             subset.forEach(row => {
                 this.grid.select(row);
             });
+
+            this.onGridSelectHandler.resume();
+            this.onGridDeselectHandler.resume();
+
+            this.onGridSelectionChange();
         }
     });
 });

@@ -153,18 +153,24 @@ define([
                 this.fLayer.on('mouse-out', () => dijitPopup.close(this.popup))
             );
 
-            topic.subscribe(config.topics.gridSelectionChanged, stationIds => {
-                if (stationIds.length === 0) {
-                    return;
-                }
-
-                const query = new Query();
-                query.where = queryHelpers.getStationQueryFromIds(stationIds);
-                this.fLayer.selectFeatures(query);
-            });
+            topic.subscribe(config.topics.gridSelectionChanged, this.onGridSelectionChanged.bind(this));
 
             this.popup = new TooltipDialog();
             this.popup.startup();
+        },
+        onGridSelectionChanged(stationIds) {
+            // summary:
+            //      fires when the selection in the grid changes
+            //      updates the station feature layer selection accordingly
+            console.log('app/mapController:onGridSelectionChanged', arguments);
+
+            if (stationIds.length === 0) {
+                return;
+            }
+
+            const query = new Query();
+            query.where = queryHelpers.getStationQueryFromIds(stationIds);
+            this.fLayer.selectFeatures(query);
         },
         onMouseOverStationGraphic(evt) {
             // summary:
