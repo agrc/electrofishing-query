@@ -42,7 +42,11 @@ define([
                 this.species,
                 `${config.urls.mapService}/${config.layerIndexes.fish}`,
                 config.fieldNames.SPECIES_CODE
-            );
+            ).then(() => {
+                const firstOption = this.species.childNodes[0];
+                firstOption.innerHTML = '(none)';
+                firstOption.value = '';
+            });
 
             this.own(
                 on(this.min, 'keyup', this.validateNumericInput.bind(this)),
