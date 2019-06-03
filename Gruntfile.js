@@ -195,6 +195,11 @@ module.exports = function (grunt) {
                     cwd: 'dist',
                     src: ['*.html'],
                     dest: './'
+                }, {
+                    expand: true,
+                    cwd: 'dist/dojo',
+                    src: 'dojo.*',
+                    dest: './dojo'
                 }]
             },
             options: {
