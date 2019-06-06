@@ -6,12 +6,19 @@
             class="center"
             data-dojo-props="region: 'center', splitter: false">
             <div class="navbar navbar-fixed-top navbar-main navbar-inverse">
-                <ul class="nav navbar-nav">
-                    <li class="navbar-brand">
-                        Electrofishing Rivers and Streams Data Queries
-                        <a data-dojo-attach-point="version" class="version" href="ChangeLog.html"></a>
-                    </li>
-                </ul>
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-brand">
+                            Electrofishing Rivers and Streams Data Queries
+                            <a data-dojo-attach-point="version" class="version" href="ChangeLog.html"></a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/dwrefdb/dataentry" target="_blank">Enter Data</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div data-dojo-attach-point="mapDiv" class="map-div">
                 <div data-dojo-attach-point="filterDiv"></div>
