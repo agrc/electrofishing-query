@@ -330,7 +330,9 @@ define([
             console.log('app.mapController:updateLayerDefs', arguments);
 
             if (filterQueryInfos) {
-                this.fLayer.setDefinitionExpression(queryHelpers.getStationQuery(filterQueryInfos));
+                const stationQuery = queryHelpers.getStationQuery(filterQueryInfos);
+                console.log('station query:', stationQuery);
+                this.fLayer.setDefinitionExpression(stationQuery);
                 this.fLayer.setVisibility(true);
 
                 topic.publish(config.topics.queryIdsComplete, queryHelpers.getGridQuery(filterQueryInfos));

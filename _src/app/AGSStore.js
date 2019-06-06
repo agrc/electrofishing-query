@@ -57,7 +57,7 @@ define([
                 ON e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
                 WHERE ${options.where}
             `;
-            console.log(query);
+            console.log('grid query:', query);
             query = queryHelpers.removeIrrelevantWhiteSpace(query);
 
             // push options to url query and build url

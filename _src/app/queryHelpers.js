@@ -13,6 +13,18 @@ define([
 
             // organize where clauses by table
             queryInfos.forEach(info => {
+                // make sure that we don't mutate this object and mess up the grid query
+                info = Object.assign({}, info);
+
+                if (info.table === config.tableNames.fish) {
+                    // fish table requires an additional join
+                    info.table = config.tableNames.events;
+                    info.where = `${config.fieldNames.EVENT_ID} IN (
+                        SELECT ${config.fieldNames.EVENT_ID} FROM
+                        ${config.databaseName}.WILDADMIN.${config.tableNames.fish}
+                        WHERE ${info.where})`;
+                }
+
                 if (tables[info.table]) {
                     tables[info.table].push(info.where);
                 } else {
@@ -32,14 +44,6 @@ define([
                 // no need for join on stations table query
                 if (current === config.tableNames.stations) {
                     return `${previous}(${where})`;
-                }
-
-                if (current === config.tableNames.fish) {
-                    // fish table requires an additional join
-                    current = config.tableNames.events;
-                    where = `${config.fieldNames.EVENT_ID} IN (SELECT ${config.fieldNames.EVENT_ID}
-                        FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish}
-                        WHERE ${where})`;
                 }
 
                 return `${previous}(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID}
@@ -63,7 +67,11 @@ define([
             return `${config.fieldNames.STATION_ID} IN ('${ids.join('\', \'')}')`;
         },
         removeIrrelevantWhiteSpace(text) {
-            return text.replace(/\n/g, '').replace(/ +/g, ' '); // SQL doesn't like newline characters
+            return text
+                .replace(/\n/g, '') // SQL doesn't like newline characters
+                .replace(/ +/g, ' ') // multiple whitespaces
+                .replace(/\(\s/g, '(') // spaces around parenthesis
+                .replace(/\s\)/g, ')'); // ''
         }
     };
 });
