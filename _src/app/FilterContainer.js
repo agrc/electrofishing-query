@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 define([
-    'agrc/modules/formatting',
+    'agrc/modules/Formatting',
 
     'app/config',
     'app/filters/DateFilter',
