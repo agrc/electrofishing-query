@@ -7,6 +7,7 @@ define([
     'dijit/_TemplatedMixin',
 
     'dojo/_base/declare',
+    'dojo/debounce',
     'dojo/dom-class',
     'dojo/on',
     'dojo/text!app/filters/templates/SpeciesLengthForm.html'
@@ -19,6 +20,7 @@ define([
     _TemplatedMixin,
 
     declare,
+    debounce,
     domClass,
     on,
     template
@@ -49,19 +51,22 @@ define([
             });
 
             this.own(
-                on(this.min, 'keyup', this.validateNumericInput.bind(this)),
-                on(this.max, 'keyup', this.validateNumericInput.bind(this)),
+                on(this.min, 'keyup', event => {
+                    this.validateNumericInput(event.currentTarget.value);
+                }),
+                on(this.max, 'keyup', event => {
+                    this.validateNumericInput(event.currentTarget.value);
+                }),
                 on(this.species, 'change', this.onChange.bind(this))
             );
         },
-        validateNumericInput(event) {
+        validateNumericInput: debounce(function (value) {
             console.log('app/filters/SpeciesLengthForm:validateNumericInput', arguments);
 
             // reset error messages
             domClass.add(this.invalidMessage, 'hidden');
             domClass.add(this.minMaxMessage, 'hidden');
 
-            const value = event.currentTarget.value;
             if (!this.isPositiveWholeNumber(value)) {
                 domClass.remove(this.invalidMessage, 'hidden');
 
@@ -76,7 +81,7 @@ define([
             }
 
             this.onChange();
-        },
+        }, config.validateDelay),
         isPositiveWholeNumber(value) {
             const parsedValue = parseFloat(value, RADIX);
 
