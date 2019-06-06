@@ -85,6 +85,15 @@ define([
 
             this.inherited(arguments);
         },
+        close() {
+            // summary:
+            //      collapses the filter body
+            console.log('app/_Filter:close', arguments);
+
+            $(this.body).collapse('hide');
+
+            this.inherited(arguments);
+        },
         getQuery: function () {
             // summary:
             //      to be implemented by sub class

@@ -194,6 +194,8 @@ define([
             //      builds a query from all of the filters
             console.log('app/FilterContainer:submit', arguments);
 
+            this.filters.forEach(f => f.close());
+
             topic.publish(config.topics.filterFeatures, this.wheres, this.geo);
         },
         clear() {
