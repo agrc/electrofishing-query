@@ -213,7 +213,7 @@ define([
 
             topic.publish(config.topics.mapSelectionChanged, this.selectedStationIds);
         },
-        onStationClick: function (event) {
+        onStationClick(event) {
             // summary:
             //      user has clicked on a station point on the map
             // event: Mouse Click Event Object
@@ -221,12 +221,18 @@ define([
 
             event.stopPropagation();
 
-            if (!event.ctrlKey && !event.metaKey) {
-                this.selectedStationIds = [];
-            }
-
             const id = event.graphic.attributes[config.fieldNames.STATION_ID];
-            this.selectedStationIds.push(id);
+            const index = this.selectedStationIds.indexOf(id);
+            if (!event.ctrlKey && !event.metaKey) {
+                // clear any previous selections
+                this.selectedStationIds = [id];
+            } else if (index > -1) {
+                // remove station from selection
+                this.selectedStationIds.splice(index, 1);
+            } else {
+                // add station to existing selection
+                this.selectedStationIds.push(id);
+            }
 
             topic.publish(config.topics.mapSelectionChanged, this.selectedStationIds);
         },
