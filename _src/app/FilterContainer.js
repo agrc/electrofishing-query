@@ -1,5 +1,7 @@
 /* eslint-disable no-alert */
 define([
+    'agrc/modules/formatting',
+
     'app/config',
     'app/filters/DateFilter',
     // 'app/filters/FreeTypeFilter',
@@ -19,6 +21,8 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang'
 ], function (
+    formatting,
+
     config,
     DateFilter,
     // FreeTypeFilter,
@@ -56,6 +60,8 @@ define([
             // summary:
             //      init's all filters and add's them to the drop down
             console.log('app/FilterContainer:postCreate', arguments);
+
+            this.limitSpan.innerHTML = formatting.addCommas(config.stationsDisplayLimit);
 
             this.filters = [
                 new ListFilter({
