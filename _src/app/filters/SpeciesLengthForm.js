@@ -63,9 +63,7 @@ define([
         validateNumericInput: debounce(function (value) {
             console.log('app/filters/SpeciesLengthForm:validateNumericInput', arguments);
 
-            // reset error messages
-            domClass.add(this.invalidMessage, 'hidden');
-            domClass.add(this.minMaxMessage, 'hidden');
+            this.hideErrorMessages();
 
             if (!this.isPositiveWholeNumber(value)) {
                 domClass.remove(this.invalidMessage, 'hidden');
@@ -126,6 +124,12 @@ define([
             this.species.value = '';
             this.min.value = '';
             this.max.value = '';
+
+            this.hideErrorMessages();
+        },
+        hideErrorMessages() {
+            domClass.add(this.invalidMessage, 'hidden');
+            domClass.add(this.minMaxMessage, 'hidden');
         }
     });
 });
