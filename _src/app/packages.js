@@ -30,6 +30,10 @@
                 location: './ladda-bootstrap',
                 main: 'js/ladda'
             }, {
+                name: 'lodash',
+                location: './lodash/dist',
+                main: 'lodash'
+            }, {
                 name: 'stubmodule',
                 location: './stubmodule',
                 main: 'src/stub-module'

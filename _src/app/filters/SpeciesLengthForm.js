@@ -7,10 +7,11 @@ define([
     'dijit/_TemplatedMixin',
 
     'dojo/_base/declare',
-    'dojo/debounce',
     'dojo/dom-class',
     'dojo/on',
-    'dojo/text!app/filters/templates/SpeciesLengthForm.html'
+    'dojo/text!app/filters/templates/SpeciesLengthForm.html',
+
+    'lodash'
 ], function (
     config,
 
@@ -20,10 +21,11 @@ define([
     _TemplatedMixin,
 
     declare,
-    debounce,
     domClass,
     on,
-    template
+    template,
+
+    _
 ) {
     const RADIX = 10;
 
@@ -50,23 +52,32 @@ define([
                 firstOption.value = '';
             });
 
+            const minDebouncedValidation = _.debounce(this.validateNumericInput.bind(this), config.validateDelay);
+            const maxDebouncedValidation = _.debounce(this.validateNumericInput.bind(this), config.validateDelay);
             this.own(
-                on(this.min, 'keyup', event => {
-                    this.validateNumericInput(event.currentTarget.value);
+                on(this.min, 'keyup', event => minDebouncedValidation(event.currentTarget)),
+                on(this.max, 'keyup', event => maxDebouncedValidation(event.currentTarget)),
+                on(this.min, 'focus', event => {
+                    this.validateNumericInput(event.currentTarget);
                 }),
-                on(this.max, 'keyup', event => {
-                    this.validateNumericInput(event.currentTarget.value);
+                on(this.max, 'focus', event => {
+                    this.validateNumericInput(event.currentTarget);
                 }),
                 on(this.species, 'change', this.onChange.bind(this))
             );
         },
-        validateNumericInput: debounce(function (value) {
+        validateNumericInput(currentTarget) {
             console.log('app/filters/SpeciesLengthForm:validateNumericInput', arguments);
 
-            this.hideErrorMessages();
+            this.hideErrorMessages(currentTarget);
 
-            if (!this.isPositiveWholeNumber(value)) {
+            const makeInvalid = () => {
+                domClass.add(currentTarget.parentElement, 'has-error');
+            };
+
+            if (!this.isPositiveWholeNumber(currentTarget.value)) {
                 domClass.remove(this.invalidMessage, 'hidden');
+                makeInvalid();
 
                 return;
             }
@@ -74,12 +85,13 @@ define([
             if (this.min.value.length && this.max.value.length &&
                 !(parseInt(this.min.value, RADIX) < parseInt(this.max.value, RADIX))) {
                 domClass.remove(this.minMaxMessage, 'hidden');
+                makeInvalid();
 
                 return;
             }
 
             this.onChange();
-        }, config.validateDelay),
+        },
         isPositiveWholeNumber(value) {
             const parsedValue = parseFloat(value, RADIX);
 
@@ -125,11 +137,13 @@ define([
             this.min.value = '';
             this.max.value = '';
 
-            this.hideErrorMessages();
+            this.hideErrorMessages(this.min);
+            this.hideErrorMessages(this.max);
         },
-        hideErrorMessages() {
+        hideErrorMessages(currentTarget) {
             domClass.add(this.invalidMessage, 'hidden');
             domClass.add(this.minMaxMessage, 'hidden');
+            domClass.remove(currentTarget.parentElement, 'has-error');
         }
     });
 });
