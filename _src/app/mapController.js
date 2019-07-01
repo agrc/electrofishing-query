@@ -335,6 +335,7 @@ define([
             // filterQueryInfos: Object
             console.log('app.mapController:updateLayerDefs', arguments);
 
+            this.fLayer.clearSelection();
             if (filterQueryInfos) {
                 const stationQuery = queryHelpers.getStationQuery(filterQueryInfos);
                 console.log('station query:', stationQuery);
