@@ -5,3 +5,5 @@ dist/
 node_modules/
 secrets.json
 src/
+secrets.py
+*.pyc

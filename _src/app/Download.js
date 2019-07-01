@@ -1,29 +1,31 @@
 define([
     'app/config',
+    'app/queryHelpers',
     'app/_GPMixin',
     'app/_ResultsQueryMixin',
 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetBase',
 
-    'dojo/dom-attr',
     'dojo/dom-class',
     'dojo/text!app/templates/Download.html',
+    'dojo/topic',
     'dojo/_base/declare',
     'dojo/_base/lang',
 
     'ladda'
 ], function (
     config,
+    queryHelpers,
     _GPMixin,
     _ResultsQueryMixin,
 
     _TemplatedMixin,
     _WidgetBase,
 
-    domAttr,
     domClass,
     template,
+    topic,
     declare,
     lang,
 
@@ -36,6 +38,10 @@ define([
         baseClass: 'download',
 
         // Properties to be sent into constructor
+
+        // grid: dgrid
+        grid: null,
+
 
         initSpinner: function () {
             // summary:
@@ -53,16 +59,33 @@ define([
 
             this.initSpinner();
 
-            if (!this.checkForCurrentQuery()) {
+            const noRows = () => {
+                topic.publish(config.topics.toast, {
+                    message: 'No records are available for download!',
+                    type: 'danger'
+                });
+            };
+
+            if (!this.grid.grid) {
+                noRows();
+
                 return;
             }
 
-            this.reset();
-            this.spinner.start();
+            this.grid.grid.collection.fetch().then(rows => {
+                if (rows.length === 0) {
+                    noRows();
 
-            this.submitJob({
-                format: this.formatSelect.value,
-                query: this.convertToResultsQuery(this.currentQuery)
+                    return;
+                }
+
+                this.reset();
+                this.spinner.start();
+
+                this.submitJob({
+                    // eslint-disable-next-line camelcase
+                    Event_Ids: queryHelpers.getIdsFromGridSelection(rows, this.grid.grid.selection)
+                });
             });
         },
         initGP: function () {
@@ -71,13 +94,6 @@ define([
             this.inherited(arguments);
 
             this.gp.on('error', this.reset.bind(this));
-        },
-        onFormatChange: function () {
-            // summary:
-            //      type changed
-            console.log('app.Download:onFormatChange');
-
-            this.btn.disabled = this.formatSelect.value === '-1';
         },
         reset: function () {
             // summary:
@@ -104,7 +120,7 @@ define([
             // results: Event Object
             console.log('app.Download:onJobComplete', arguments);
 
-            this.gp.getResultData(results.jobInfo.jobId, 'zipfile', lang.hitch(this, 'onDownloadGPComplete'));
+            this.gp.getResultData(results.jobInfo.jobId, 'Zip_File', lang.hitch(this, 'onDownloadGPComplete'));
         }
     });
 });

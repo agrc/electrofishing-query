@@ -17,31 +17,6 @@ define([
 ) {
     return declare(null, {
         // summary:
-        //      Shared logic between app/Download and app/ChartContainer
-        postCreate: function () {
-            var that = this;
-            this.own(
-                topic.subscribe(config.topics.queryIdsComplete, function (newQuery) {
-                    that.currentQuery = newQuery;
-                })
-            );
-
-            this.inherited(arguments);
-        },
-        checkForCurrentQuery: function () {
-            // summary:
-            //      description
-            // returns: Boolean
-            console.log('app._GPMixin:checkForCurrentQuery', arguments);
-
-            if (!this.currentQuery || '') {
-                topic.publish(config.topics.toast, 'You must add at least one filter.');
-
-                return false;
-            }
-
-            return true;
-        },
         submitJob: function (data) {
             // summary:
             //      kicks off the gp task

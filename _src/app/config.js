@@ -89,7 +89,7 @@ define([
             baseUrl,
             mapService: baseUrl + '/MapService/MapServer',
             referenceService: baseUrl + '/Reference/MapServer',
-            download: baseUrl + '/Toolbox/GPServer/Download',
+            download: baseUrl + '/Download/GPServer/Download',
             esriStreets: '//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
         },
 

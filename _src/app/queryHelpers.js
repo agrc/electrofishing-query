@@ -72,6 +72,16 @@ define([
                 .replace(/ +/g, ' ') // multiple whitespaces
                 .replace(/\(\s/g, '(') // spaces around parenthesis
                 .replace(/\s\)/g, ')'); // ''
+        },
+        getIdsFromGridSelection(rows, selection) {
+            const selectedIds = Object.keys(selection);
+            if (selectedIds.length > 0) {
+                rows = rows.filter(row => selectedIds.indexOf(row[config.fieldNames.EVENT_ID]) > -1);
+            }
+
+            return rows
+                .map(row => row[config.fieldNames.EVENT_ID])
+                .join(';');
         }
     };
 });

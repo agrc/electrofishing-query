@@ -113,5 +113,27 @@ require([
                 expect(queryHelpers.removeIrrelevantWhiteSpace(input)).toBe('(test) hello');
             });
         });
+
+        describe('getIdsFromGridSelection', () => {
+            const rows = [{
+                EVENT_ID: '1'
+            }, {
+                EVENT_ID: '2'
+            }, {
+                EVENT_ID: '3'
+            }];
+
+            it('returns all ids if there is no selection', () => {
+                expect(queryHelpers.getIdsFromGridSelection(rows, {})).toEqual('1;2;3');
+            });
+            it('returns selected ids', () => {
+                const selection = {
+                    1: true,
+                    3: true
+                };
+
+                expect(queryHelpers.getIdsFromGridSelection(rows, selection)).toEqual('1;3');
+            });
+        });
     });
 });

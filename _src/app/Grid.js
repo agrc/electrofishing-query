@@ -66,12 +66,13 @@ define([
             //      set up listeners
             console.log('app.Grid::postCreate', arguments);
 
-            var that = this;
-            this.download = new Download({}, this.downloadDiv);
+            this.download = new Download({ grid: this }, this.downloadDiv);
             this.own(
                 topic.subscribe(config.topics.queryIdsComplete, this.populateGrid.bind(this)),
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
-                    that.populateGrid(that.lastDefQuery);
+                $('a.sampling-events-tab').on('shown.bs.tab', () => {
+                    if (this.grid) {
+                        this.grid.resize();
+                    }
                 }),
                 this.download
             );
@@ -93,6 +94,10 @@ define([
             //      Populate the grid with a newly created store based upon defQuery
             // defQuery: String
             console.log('app/Grid:populateGrid', arguments);
+
+            if (!defQuery) {
+                return;
+            }
 
             domClass.toggle(
                 this.clearSelectionBtnContainer,

@@ -1,18 +1,10 @@
 <div>
     <p>This can take a few minutes to process...</p>
     <div class="form-inline">
-        <select data-dojo-attach-point="formatSelect"
-            data-dojo-attach-event='change: onFormatChange' class="form-control">
-            <option value="-1">select a format...</option>
-            <option value="kml">KML (stations) + CSV (results)</option>
-            <option value="shapefile">Shapefile (stations) + CSV (results)</option>
-            <option value="csv">CSV (stations and results)</option>
-        </select>
         <button class="btn btn-primary ladda-button"
             data-style='zoom-out'
             data-dojo-attach-event='click: onClick'
-            data-dojo-attach-point='btn'
-            disabled>
+            data-dojo-attach-point='btn'>
             <span class='ladda-label'>Download</span>
         </button>
     </div>
