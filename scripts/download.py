@@ -16,7 +16,7 @@ from shutil import rmtree
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import arcpy
-import pyodbc
+import pypyodbc
 
 
 def main(ids):
@@ -27,11 +27,11 @@ def main(ids):
 
   current_folder = dirname(realpath(__file__))
   sql_directory = join(current_folder, 'sql')
-  output_folder = arcpy.env.scratchFolder
-  zip_file_path = join(output_folder, 'data.zip')
-  connection = pyodbc.connect(
-    'DRIVER={SQL Server};SERVER=(local);DATABASE=ELECTROFISHING;' + 'UID={0};PWD={1}'.format(
-      secrets.USERNAME, secrets.PASSWORD))
+  zip_file_path = join(arcpy.env.scratchFolder, 'data.zip')
+  arcpy.AddMessage('scratch folder: ' + arcpy.env.scratchFolder)
+  connection = pypyodbc.connect(
+    'DRIVER={ODBC Driver 17 for SQL Server};' + 'SERVER={};DATABASE={};UID={};PWD={}'.format(
+      secrets.SERVER, secrets.DATABASE, secrets.USERNAME, secrets.PASSWORD))
   cursor = connection.cursor()
 
   with ZipFile(zip_file_path, 'w', ZIP_DEFLATED) as zip_file:
@@ -39,19 +39,26 @@ def main(ids):
       csv_name = basename(query_file).replace('sql', 'csv')
       arcpy.AddMessage(csv_name)
       with open(query_file, 'r') as file:
-        query = file.read().replace('\'<ids>\'', '\'{}\''.format('\',\''.join(ids)))
+        query = file.read().format(secrets.DATABASE, '\'{}\''.format('\',\''.join(ids)))
         cursor.execute(query)
 
-        csv_file_path = join(output_folder, csv_name)
-        with open(csv_file_path, 'wb') as csv_file:
+        csv_file_path = join(arcpy.env.scratchFolder, csv_name)
+        with open(csv_file_path, 'w') as csv_file:
           writer = csv.writer(csv_file)
+
+          #: write headers
           writer.writerow([x[0] for x in cursor.description])
+
           for row in cursor:
             writer.writerow(row)
 
       zip_file.write(csv_file_path, csv_name)
 
   arcpy.AddMessage(zip_file_path)
+
+  connection.close()
+  del connection
+
   return zip_file_path
 
 

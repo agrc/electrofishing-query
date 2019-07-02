@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "args": ["d526a4e4-c276-4eca-8e64-dbab3e4e80bf;796725e8-efd3-4d3f-85f8-b4fff105b256"]
+      "args": ["{20019A4F-B613-4B8F-89F9-A60841BE06C7};{1E52285A-BA0B-4846-8433-F95CDD87ADE5};{B9A2FCC2-2AC6-4695-8277-6038E82CCAFD};{78443830-A674-4313-8ECA-8DC2712E1813};{D526A4E4-C276-4ECA-8E64-DBAB3E4E80BF}"]
     }
   ]
 }

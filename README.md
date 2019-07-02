@@ -12,6 +12,8 @@ A web application for viewing and querying electrofishing data.
     * asynchronous
     * `pip install -r scripts/requirements.txt`
     * Copy `scripts/secrets.py`, `scripts/download.py`, & `scripts/sql/*` to `C:\arcgisserver\directories\arcgissystem\arcgisinput\Electrofishing\Download.GPServer\extracted\v101\scripts`
+    * Update `secrets.py` to reflect the environment that you have published to.
+    * Download and install [Microsoft ODBC Driver 17 for SQL Server](https://www.microsoft.com/en-us/download/details.aspx?id=56567).
 
 # Cutting a New Release
 1. Update `src/ChangeLog.html`

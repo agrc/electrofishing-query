@@ -109,7 +109,7 @@ define([
             // result: esri/tasks/ParameterValue
             console.log('app.Download:onDownloadGPComplete', arguments);
 
-            this.link.href = result.value.url;
+            this.link.href = result.value.url.replace('http:', 'https:');
 
             domClass.remove(this.linkContainer, 'hidden');
             this.spinner.stop();
