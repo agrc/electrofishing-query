@@ -165,6 +165,8 @@ define([
             console.log('app/mapController:onGridSelectionChanged', arguments);
 
             if (stationIds.length === 0) {
+                this.fLayer.clearSelection();
+
                 return;
             }
 
