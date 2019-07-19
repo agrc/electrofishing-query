@@ -7,3 +7,4 @@ secrets.json
 src/
 secrets.py
 *.pyc
+scripts/DATABASE.sde
