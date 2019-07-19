@@ -95,7 +95,7 @@ define([
 
         minFeatureLayerScale: 500000,
         popupOpacity: 0.85,
-        validateDelay: 750,
+        validateDelay: 300,
         drawingSymbol: new SimpleFillSymbol(
             SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol()

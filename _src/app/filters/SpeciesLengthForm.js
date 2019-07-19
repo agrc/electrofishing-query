@@ -52,32 +52,43 @@ define([
                 firstOption.value = '';
             });
 
-            const minDebouncedValidation = _.debounce(this.validateNumericInput.bind(this), config.validateDelay);
-            const maxDebouncedValidation = _.debounce(this.validateNumericInput.bind(this), config.validateDelay);
+            const minDebouncedValidation = _.debounce(this.validateNumericInputs.bind(this), config.validateDelay);
+            const maxDebouncedValidation = _.debounce(this.validateNumericInputs.bind(this), config.validateDelay);
             this.own(
                 on(this.min, 'keyup', event => minDebouncedValidation(event.currentTarget)),
                 on(this.max, 'keyup', event => maxDebouncedValidation(event.currentTarget)),
                 on(this.min, 'focus', event => {
-                    this.validateNumericInput(event.currentTarget);
+                    this.validateNumericInputs(event.currentTarget);
                 }),
                 on(this.max, 'focus', event => {
-                    this.validateNumericInput(event.currentTarget);
+                    this.validateNumericInputs(event.currentTarget);
                 }),
                 on(this.species, 'change', this.onChange.bind(this))
             );
         },
-        validateNumericInput(currentTarget) {
-            console.log('app/filters/SpeciesLengthForm:validateNumericInput', arguments);
+        validateNumericInputs(currentTarget) {
+            console.log('app/filters/SpeciesLengthForm:validateNumericInputs', arguments);
 
-            this.hideErrorMessages(currentTarget);
+            const inputs = [this.min, this.max];
 
-            const makeInvalid = () => {
-                domClass.add(currentTarget.parentElement, 'has-error');
+            const makeInvalid = input => {
+                domClass.add(input.parentElement, 'has-error');
             };
 
-            if (!this.isPositiveWholeNumber(currentTarget.value)) {
+            let hasPositiveWholeNumberIssue = false;
+            inputs.forEach(input => {
+                this.hideErrorMessages(input);
+
+                const isPositiveWholeNumber = this.isPositiveWholeNumber(input.value);
+                if (!isPositiveWholeNumber) {
+                    hasPositiveWholeNumberIssue = true;
+                    makeInvalid(input);
+                }
+            });
+
+            // validate positive, whole numbers
+            if (hasPositiveWholeNumberIssue) {
                 domClass.remove(this.invalidMessage, 'hidden');
-                makeInvalid();
 
                 return;
             }
@@ -85,7 +96,7 @@ define([
             if (this.min.value.length && this.max.value.length &&
                 !(parseInt(this.min.value, RADIX) < parseInt(this.max.value, RADIX))) {
                 domClass.remove(this.minMaxMessage, 'hidden');
-                makeInvalid();
+                makeInvalid(currentTarget);
 
                 return;
             }
