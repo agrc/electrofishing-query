@@ -98,7 +98,7 @@ def main(ids):
                 cursor.execute(query)
 
                 csv_file_path = join(arcpy.env.scratchFolder, csv_name)
-                with open(csv_file_path, 'w') as csv_file:
+                with open(csv_file_path, 'wb') as csv_file:
                     writer = csv.writer(csv_file)
 
                     #: write headers
