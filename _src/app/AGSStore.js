@@ -41,20 +41,41 @@ define([
             console.log('app.AGSStore:constructor', arguments);
 
             let query = `
-                SELECT DISTINCT e.${config.fieldNames.EVENT_ID},EVENT_DATE,OBSERVERS,e.STATION_ID,
-                    SPECIES = STUFF((SELECT DISTINCT ', ' + f.SPECIES_CODE
-                                     FROM ${config.databaseName}.WILDADMIN.Fish as f
-                                     WHERE e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
+                SELECT DISTINCT
+                    se.${config.fieldNames.EVENT_ID},
+                    ${config.fieldNames.EVENT_DATE},
+                    ${config.fieldNames.OBSERVERS},
+                    l.${config.fieldNames.WaterName} as ${config.fieldNames.WaterName}_Lake,
+                    l.${config.fieldNames.Permanent_Identifier} as ${config.fieldNames.Permanent_Identifier}_Lake,
+                    l.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Lake,
+                    st.${config.fieldNames.WaterName} as ${config.fieldNames.WaterName}_Stream,
+                    st.${config.fieldNames.Permanent_Identifier} as ${config.fieldNames.Permanent_Identifier}_Stream,
+                    st.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Stream,
+                    se.${config.fieldNames.STATION_ID},
+                    SPECIES = STUFF((SELECT DISTINCT ', ' + f.${config.fieldNames.SPECIES_CODE}
+                                     FROM ${config.databaseName}.WILDADMIN.Fish_evw as f
+                                     WHERE se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
                                      FOR XML PATH ('')),
                                      1, 1, ''),
                     TYPES = STUFF((SELECT DISTINCT ', ' + eq.TYPE
-                                   FROM ${config.databaseName}.WILDADMIN.Equipment as eq
-                                   WHERE e.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
+                                   FROM ${config.databaseName}.WILDADMIN.Equipment_evw as eq
+                                   WHERE se.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
                                    FOR XML PATH ('')),
                                    1, 1, '')
-                FROM ${config.databaseName}.WILDADMIN.SamplingEvents as e
-                INNER JOIN ${config.databaseName}.WILDADMIN.Fish as f
-                ON e.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
+                FROM ${config.databaseName}.WILDADMIN.SamplingEvents_evw as se
+
+                INNER JOIN ${config.databaseName}.WILDADMIN.Fish_evw as f
+                ON se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
+
+                INNER JOIN ${config.databaseName}.WILDADMIN.Stations_evw as s
+                ON s.${config.fieldNames.STATION_ID} = se.${config.fieldNames.STATION_ID}
+
+                LEFT OUTER JOIN ${config.databaseName}.WILDADMIN.UDWRLakes_evw as l
+                ON l.${config.fieldNames.Permanent_Identifier} = s.${config.fieldNames.WATER_ID}
+
+                LEFT OUTER JOIN ${config.databaseName}.WILDADMIN.UDWRStreams_evw as st
+                ON st.${config.fieldNames.Permanent_Identifier} = s.${config.fieldNames.WATER_ID}
+
                 WHERE ${options.where}
             `;
             console.log('grid query:', query);

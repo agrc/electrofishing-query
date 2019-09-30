@@ -110,6 +110,7 @@ define([
             // Stations
             NAME: 'NAME',
             STREAM_TYPE: 'STREAM_TYPE',
+            WATER_ID: 'WATER_ID',
 
             // SamplingEvents
             EVENT_ID: 'EVENT_ID',
@@ -125,8 +126,11 @@ define([
             // Equipment
             TYPES: 'TYPES', // dynamic field created via SQL query in AGSStores
 
-            // Streams
-            WaterName: 'WaterName'
+            // Streams/Lakes
+            WaterName: 'WaterName',
+            // eslint-disable-next-line camelcase
+            Permanent_Identifier: 'Permanent_Identifier',
+            ReachCode: 'ReachCode'
         },
 
         tableNames: {

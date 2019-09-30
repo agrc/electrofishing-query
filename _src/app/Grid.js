@@ -121,6 +121,12 @@ define([
                         fn.EVENT_ID,
                         fn.EVENT_DATE,
                         fn.OBSERVERS,
+                        `${fn.WaterName}_Lake`,
+                        `${fn.Permanent_Identifier}_Lake`,
+                        `${fn.ReachCode}_Lake`,
+                        `${fn.WaterName}_Stream`,
+                        `${fn.Permanent_Identifier}_Stream`,
+                        `${fn.ReachCode}_Stream`,
                         fn.STATION_ID,
                         fn.SPECIES,
                         fn.TYPES
@@ -161,6 +167,24 @@ define([
                 }, {
                     field: fn.OBSERVERS,
                     label: 'Observers'
+                }, {
+                    field: `${fn.WaterName}_Lake`,
+                    label: 'Water Name (Lake)'
+                }, {
+                    field: `${fn.Permanent_Identifier}_Lake`,
+                    label: 'Permanent Id (Lake)'
+                }, {
+                    field: `${fn.ReachCode}_Lake`,
+                    label: 'Reach Code (Lake)'
+                }, {
+                    field: `${fn.WaterName}_Stream`,
+                    label: 'Water Name (Stream)'
+                }, {
+                    field: `${fn.Permanent_Identifier}_Stream`,
+                    label: 'Permanent Id (Stream)'
+                }, {
+                    field: `${fn.ReachCode}_Stream`,
+                    label: 'Reach Code (Stream)'
                 }, {
                     field: fn.STATION_ID,
                     label: 'Station ID'
