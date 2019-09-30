@@ -4,9 +4,7 @@ define([
 
     'app/config',
     'app/filters/DateFilter',
-    // 'app/filters/FreeTypeFilter',
     'app/filters/ListFilter',
-    // 'app/filters/ShapeFilter',
     'app/filters/SpeciesLengthFilter',
 
     'dijit/_TemplatedMixin',
@@ -25,9 +23,7 @@ define([
 
     config,
     DateFilter,
-    // FreeTypeFilter,
     ListFilter,
-    // ShapeFilter,
     SpeciesLengthFilter,
 
     _TemplatedMixin,
@@ -81,22 +77,6 @@ define([
                     name: 'Species & Size',
                     parent: this.container
                 })
-                // new ShapeFilter({
-                //     name: 'Polygon',
-                //     parent: this.container
-                // }),
-                // new FreeTypeFilter({
-                //     name: 'Site ID',
-                //     parent: this.container,
-                //     fieldName: config.fieldNames.StationId
-                // }),
-                // new ListFilter({
-                //     name: 'State',
-                //     items: config.states,
-                //     parent: this.container,
-                //     fieldName: config.fieldNames.StateCode,
-                //     fieldType: ListFilter.TYPE_NUMBER
-                // })
             ];
 
             var that = this;
