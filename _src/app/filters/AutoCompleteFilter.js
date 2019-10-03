@@ -29,6 +29,8 @@ define([
                 afterSelect: this.afterSelect.bind(this),
                 items: 15
             });
+
+            this.inherited(arguments);
         },
         getDisplayText(item) {
             return `${item.attributes[config.fieldNames.WaterName]} (${item.attributes[config.fieldNames.COUNTY]})`;
