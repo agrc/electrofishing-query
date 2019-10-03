@@ -130,13 +130,16 @@ define([
             WaterName: 'WaterName',
             // eslint-disable-next-line camelcase
             Permanent_Identifier: 'Permanent_Identifier',
-            ReachCode: 'ReachCode'
+            ReachCode: 'ReachCode',
+            COUNTY: 'COUNTY'
         },
 
         tableNames: {
             events: 'SamplingEvents',
             stations: 'Stations',
-            fish: 'Fish'
+            fish: 'Fish',
+            streams: 'UDWRStreams',
+            lakes: 'UDWRLakes'
         },
 
         layerIndexes: {

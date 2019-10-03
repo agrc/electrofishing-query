@@ -11,13 +11,13 @@ define([
 ], function (
     _TemplatedMixin,
     _WidgetBase,
-    _WidgetsInTempalteMixin,
+    _WidgetsInTemplateMixin,
 
     Evented,
     on,
     declare
 ) {
-    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTempalteMixin, Evented], {
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
         // description:
         //      A base class for filters that are included in FilterContainer
 

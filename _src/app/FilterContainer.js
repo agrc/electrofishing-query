@@ -3,6 +3,7 @@ define([
     'agrc/modules/Formatting',
 
     'app/config',
+    'app/filters/AutoCompleteFilter',
     'app/filters/DateFilter',
     'app/filters/ListFilter',
     'app/filters/SpeciesLengthFilter',
@@ -22,6 +23,7 @@ define([
     formatting,
 
     config,
+    AutoCompleteFilter,
     DateFilter,
     ListFilter,
     SpeciesLengthFilter,
@@ -75,6 +77,10 @@ define([
                 }),
                 new SpeciesLengthFilter({
                     name: 'Species & Size',
+                    parent: this.container
+                }),
+                new AutoCompleteFilter({
+                    name: 'Location',
                     parent: this.container
                 })
             ];
@@ -174,6 +180,8 @@ define([
             this.submitBtn.disabled = this.wheres.length === 0 && !this.geo;
 
             domClass.add(this.limitWarning, 'hidden');
+
+            console.log('wheres', this.wheres);
         },
         submit() {
             // summary:
