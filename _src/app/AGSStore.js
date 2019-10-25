@@ -46,10 +46,10 @@ define([
                     ${config.fieldNames.EVENT_DATE},
                     ${config.fieldNames.OBSERVERS},
                     l.${config.fieldNames.WaterName} as ${config.fieldNames.WaterName}_Lake,
-                    l.${config.fieldNames.Permanent_Identifier} as ${config.fieldNames.Permanent_Identifier}_Lake,
+                    l.${config.fieldNames.DWR_WaterID} as ${config.fieldNames.DWR_WaterID}_Lake,
                     l.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Lake,
                     st.${config.fieldNames.WaterName} as ${config.fieldNames.WaterName}_Stream,
-                    st.${config.fieldNames.Permanent_Identifier} as ${config.fieldNames.Permanent_Identifier}_Stream,
+                    st.${config.fieldNames.DWR_WaterID} as ${config.fieldNames.DWR_WaterID}_Stream,
                     st.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Stream,
                     se.${config.fieldNames.STATION_ID},
                     SPECIES = STUFF((SELECT DISTINCT ', ' + f.${config.fieldNames.SPECIES_CODE}

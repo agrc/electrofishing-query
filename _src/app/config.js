@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-magic-numbers */
+/* eslint-disable max-len, no-magic-numbers, camelcase */
 define([
     'dojo/has',
     'dojo/request/xhr',
@@ -128,6 +128,7 @@ define([
 
             // Streams/Lakes
             WaterName: 'WaterName',
+            DWR_WaterID: 'DWR_WaterID',
             // eslint-disable-next-line camelcase
             Permanent_Identifier: 'Permanent_Identifier',
             ReachCode: 'ReachCode',
