@@ -8,6 +8,7 @@ define([
     'dijit/_WidgetBase',
 
     'dojo/dom-class',
+    'dojo/has',
     'dojo/text!app/templates/Download.html',
     'dojo/topic',
     'dojo/_base/declare',
@@ -24,6 +25,7 @@ define([
     _WidgetBase,
 
     domClass,
+    has,
     template,
     topic,
     declare,
@@ -84,7 +86,8 @@ define([
 
                 this.submitJob({
                     // eslint-disable-next-line camelcase
-                    Event_Ids: queryHelpers.getIdsFromGridSelection(rows, this.grid.grid.selection)
+                    Event_Ids: queryHelpers.getIdsFromGridSelection(rows, this.grid.grid.selection),
+                    Format: this.formatSelect.value
                 });
             });
         },
@@ -109,8 +112,13 @@ define([
             // result: esri/tasks/ParameterValue
             console.log('app.Download:onDownloadGPComplete', arguments);
 
-            this.link.href = result.value.url.replace('http:', 'https:');
+            let url = result.value.url;
+            if (has('agrc-build')) {
+                // force https in staging and production
+                url = url.replace('http:', 'https:');
+            }
 
+            this.link.href = url;
             domClass.remove(this.linkContainer, 'hidden');
             this.spinner.stop();
         },
