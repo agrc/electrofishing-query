@@ -10,6 +10,7 @@ A web application for viewing and querying electrofishing data.
     * Update Parameters -> Max Number of Records Returns from 1000 to 5000.
 1. Publish `scripts/Download.tbx/Download` as `Electrofishing/Download`:
     * asynchronous
+    * max time a client can use the service: `300`
     * `pip install -r scripts/requirements.txt`
     * Copy `scripts/secrets.py`, `scripts/download.py`, & `scripts/sql/*` to `C:\arcgisserver\directories\arcgissystem\arcgisinput\Electrofishing\Download.GPServer\extracted\v101\scripts`
     * Update `secrets.py` to reflect the environment that you have published to.
