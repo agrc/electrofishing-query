@@ -36,9 +36,14 @@ def zip_fgdb(path, zip):
                         'error zipping file geodatabase: {}'.format(e))
     return None
 
+cardinality_lookup = {
+    'OneToOne': 'ONE_TO_ONE',
+    'OneToMany': 'ONE_TO_MANY'
+}
 
-def main(ids):
+def main(ids, type):
     #: ids: string
+    #: type: string (csv or fgdb)
     #: returns a path to the zip file
     ids = ids.split(';')
     arcpy.AddMessage('ids: {}'.format(ids))
@@ -69,45 +74,102 @@ def main(ids):
     cursor = connection.cursor()
 
     with ZipFile(zip_file_path, 'w', ZIP_DEFLATED) as zip_file:
-        #: fgdb
-        arcpy.AddMessage('creating file geodatabase')
-        fgdb = join(arcpy.env.scratchFolder, 'geometry.gdb')
-        if arcpy.Exists(fgdb):
-            arcpy.management.Delete(fgdb)
-        arcpy.management.CreateFileGDB(dirname(fgdb), basename(fgdb))
+        if type == 'fgdb':
+            #: fgdb
+            arcpy.AddMessage('creating file geodatabase')
+            fgdb = join(arcpy.env.scratchFolder, 'data.gdb')
+            if arcpy.Exists(fgdb):
+                arcpy.management.Delete(fgdb)
+            arcpy.management.CreateFileGDB(dirname(fgdb), basename(fgdb))
 
-        arcpy.AddMessage('copying sampling events feature class')
-        events_where = 'EVENT_ID IN ({})'.format(formatted_ids)
-        events_layer = arcpy.management.MakeFeatureLayer(join(sde, 'SamplingEvents'), 'events_layer', events_where)
-        arcpy.management.CopyFeatures(events_layer, join(fgdb, 'SamplingEvents'))
+            arcpy.AddMessage('copying sampling events feature class')
+            events_where = 'EVENT_ID IN ({})'.format(formatted_ids)
+            events_layer = arcpy.management.MakeFeatureLayer(join(sde, 'SamplingEvents'), 'events_layer', events_where)
+            arcpy.management.CopyFeatures(events_layer, join(fgdb, 'SamplingEvents'))
 
-        arcpy.AddMessage('copying stations feature class')
-        stations_where = 'STATION_ID IN (SELECT STATION_ID FROM {}.WILDADMIN.SamplingEvents_evw where {})'.format(
-            secrets.DATABASE, events_where)
-        stations_layer = arcpy.management.MakeFeatureLayer(join(sde, 'Stations'), 'stations_layer', stations_where)
-        arcpy.management.CopyFeatures(stations_layer, join(fgdb, 'Stations'))
+            arcpy.AddMessage('copying stations feature class')
+            stations_where = 'STATION_ID IN (SELECT STATION_ID FROM {}.WILDADMIN.SamplingEvents_evw where {})'.format(
+                secrets.DATABASE, events_where)
+            stations_layer = arcpy.management.MakeFeatureLayer(join(sde, 'Stations'), 'stations_layer', stations_where)
+            arcpy.management.CopyFeatures(stations_layer, join(fgdb, 'Stations'))
 
-        zip_fgdb(fgdb, zip_file)
+            arcpy.AddMessage('copying streams feature class')
+            stations_where = 'Permanent_Identifier IN (SELECT WATER_ID FROM {}.WILDADMIN.Stations_evw where {})'.format(
+                secrets.DATABASE, stations_where)
+            streams_layer = arcpy.management.MakeFeatureLayer(join(sde, 'UDWRStreams'), 'streams_layer', stations_where)
+            arcpy.management.CopyFeatures(streams_layer, join(fgdb, 'UDWRStreams'))
 
-        #: csvs
-        for query_file in glob(sql_directory + '\*.sql'):
-            csv_name = basename(query_file).replace('sql', 'csv')
-            arcpy.AddMessage(csv_name)
-            with open(query_file, 'r') as file:
-                query = file.read().format(secrets.DATABASE, formatted_ids)
-                cursor.execute(query)
+            arcpy.AddMessage('copying lakes feature class')
+            stations_where = 'Permanent_Identifier IN (SELECT WATER_ID FROM {}.WILDADMIN.Stations_evw where {})'.format(
+                secrets.DATABASE, stations_where)
+            lakes_layer = arcpy.management.MakeFeatureLayer(join(sde, 'UDWRLakes'), 'lakes_layer', stations_where)
+            arcpy.management.CopyFeatures(lakes_layer, join(fgdb, 'UDWRLakes'))
 
-                csv_file_path = join(arcpy.env.scratchFolder, csv_name)
-                with open(csv_file_path, 'wb') as csv_file:
-                    writer = csv.writer(csv_file)
+            def copy_related_tables(dataset):
+                relationship_classes = arcpy.Describe(join(sde, dataset)).relationshipClassNames
+                for relationship_class in relationship_classes:
+                    describe = arcpy.Describe(join(sde, relationship_class))
 
-                    #: write headers
-                    writer.writerow([x[0] for x in cursor.description])
+                    destination = describe.destinationClassNames[0]
 
-                    for row in cursor:
-                        writer.writerow(row)
+                    primary_key = describe.originClassKeys[0][0]
+                    foreign_key = describe.originClassKeys[1][0]
+                    destination_is_table = arcpy.Describe(join(sde, destination)).datasetType == 'Table'
+                    if destination.split('.')[-1] != dataset and destination_is_table:
+                        arcpy.AddMessage('copying {} table'.format(destination))
+                        where = '{} IN (SELECT {} FROM {}.WILDADMIN.{} where {})'.format(
+                            foreign_key, primary_key, secrets.DATABASE, dataset, events_where)
+                        layer = arcpy.management.MakeTableView(join(sde, destination), destination + '_layer', where)
+                        arcpy.management.CopyRows(layer, join(fgdb, destination))
 
-            zip_file.write(csv_file_path, csv_name)
+                    if arcpy.Exists(join(fgdb, relationship_class.split('.')[-1])):
+                        continue
+                    arcpy.AddMessage('creating {} relationship class'.format(relationship_class))
+                    arcpy.env.workspace = fgdb
+                    origin = describe.originClassNames[0].split('.')[-1]
+                    cardinality = describe.cardinality
+                    arcpy.management.CreateRelationshipClass(
+                        origin,
+                        destination.split('.')[-1],
+                        relationship_class.split('.')[-1],
+                        'SIMPLE',
+                        describe.forwardPathLabel,
+                        describe.backwardPathLabel,
+                        message_direction='BOTH',
+                        cardinality=cardinality_lookup[cardinality],
+                        origin_primary_key=primary_key,
+                        origin_foreign_key=foreign_key
+                    )
+                    arcpy.env.workspace = None
+
+                    if destination_is_table:
+                        copy_related_tables(destination.split('.')[-1])
+
+            copy_related_tables('SamplingEvents')
+            copy_related_tables('Stations')
+
+            zip_fgdb(fgdb, zip_file)
+
+        else:
+            #: csvs
+            for query_file in glob(sql_directory + '\*.sql'):
+                csv_name = basename(query_file).replace('sql', 'csv')
+                arcpy.AddMessage(csv_name)
+                with open(query_file, 'r') as file:
+                    query = file.read().format(secrets.DATABASE, formatted_ids)
+                    cursor.execute(query)
+
+                    csv_file_path = join(arcpy.env.scratchFolder, csv_name)
+                    with open(csv_file_path, 'wb') as csv_file:
+                        writer = csv.writer(csv_file)
+
+                        #: write headers
+                        writer.writerow([x[0] for x in cursor.description])
+
+                        for row in cursor:
+                            writer.writerow(row)
+
+                zip_file.write(csv_file_path, csv_name)
 
     arcpy.AddMessage(zip_file_path)
 
@@ -118,4 +180,4 @@ def main(ids):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])

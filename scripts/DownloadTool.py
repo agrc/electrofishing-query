@@ -16,4 +16,4 @@ from arcpy import GetParameterAsText, SetParameterAsText
 from download import main
 
 
-SetParameterAsText(1, main(GetParameterAsText(0)))
+SetParameterAsText(2, main(GetParameterAsText(0), GetParameterAsText(1)))
