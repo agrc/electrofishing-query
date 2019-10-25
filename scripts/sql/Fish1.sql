@@ -4,9 +4,11 @@ SELECT
 
   l.WaterName as WaterName_Lake,
   l.Permanent_Identifier as Permanent_Identifier_Lake,
+  l.DWR_WaterID as DWR_WaterID_Lake,
   l.ReachCode as ReachCode_Lake,
   st.WaterName as WaterName_Stream,
   st.Permanent_Identifier as Permanent_Identifier_Stream,
+  st.DWR_WaterID as DWR_WaterID_Stream,
   st.ReachCode as ReachCode_Stream,
 
   s.NAME,
