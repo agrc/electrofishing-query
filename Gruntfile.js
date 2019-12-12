@@ -76,7 +76,7 @@ module.exports = function (grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'deploy/deploy.zip'
+                    archive: 'deploy/query.zip'
                 },
                 files: [{
                     src: deployFiles,
