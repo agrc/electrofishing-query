@@ -22,7 +22,7 @@ define([
     let apiKey;
     let quadWord = 'patent-window-address-asia';
     let servicesFolder = 'Electrofishing';
-    let databaseName = 'Wildlife';
+    let databaseName = 'Electrofishing';
     if (has('agrc-build') === 'prod') {
         // dwrapps.utah.gov
         apiKey = 'AGRC-2E4D1DBA263288';
@@ -30,10 +30,10 @@ define([
         // dwrapps.dev.utah.gov
         apiKey = 'AGRC-FC693CC1911383';
         servicesFolder = 'ElectrofishingTest';
+        databaseName = 'Wildlife';
     } else {
         // localhost
         agsDomain = window.location.host;
-        databaseName = 'Electrofishing';
 
         xhr(require.baseUrl + 'secrets.json', {
             handleAs: 'json',
