@@ -31,7 +31,7 @@ module.exports = function (grunt) {
         '!stubmodule/**',
         '!util/**'
     ];
-    var deployDir = 'dwrefdb/query';
+    var deployDir = 'fishsample/query';
     var secrets;
     try {
         secrets = grunt.file.readJSON('secrets.json');
