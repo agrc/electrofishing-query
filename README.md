@@ -3,6 +3,10 @@
 
 A web application for viewing and querying electrofishing data.
 
+Staging: [https://dwrapps.dev.utah.gov/dwrefdb/query/](https://dwrapps.dev.utah.gov/dwrefdb/query/)
+
+Production: [https://dwrapps.utah.gov/dwrefdb/query/](https://dwrapps.utah.gov/dwrefdb/query/)
+
 # Deployment
 1. [Disable standardized queries in ArcGIS Server](https://enterprise.arcgis.com/en/server/10.5/administer/windows/about-standardized-queries.htm).
 1. Update `Electrofishing/MapService`:
