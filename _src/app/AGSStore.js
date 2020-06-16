@@ -64,7 +64,7 @@ define([
                                    1, 1, '')
                 FROM ${config.databaseName}.WILDADMIN.SamplingEvents_evw as se
 
-                INNER JOIN ${config.databaseName}.WILDADMIN.Fish_evw as f
+                LEFT OUTER JOIN ${config.databaseName}.WILDADMIN.Fish_evw as f
                 ON se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
 
                 INNER JOIN ${config.databaseName}.WILDADMIN.Stations_evw as s
