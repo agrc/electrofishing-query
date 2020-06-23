@@ -136,9 +136,9 @@ define([
         },
 
         tableNames: {
-            events: 'SamplingEvents',
-            stations: 'Stations',
-            fish: 'Fish',
+            events: 'SamplingEvents_evw',
+            stations: 'Stations_evw',
+            fish: 'Fish_evw',
             streams: 'UDWRStreams',
             lakes: 'UDWRLakes'
         },

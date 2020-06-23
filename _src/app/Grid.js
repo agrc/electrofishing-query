@@ -115,7 +115,7 @@ define([
                 (this.grid.collection && this.grid.collection.where !== defQuery)) {
                 const store = new AGSStore({
                     target: this.mapServiceUrl + '/dynamicLayer/query',
-                    tableName: 'SamplingEvents',
+                    tableName: config.tableNames.events,
                     idProperty: config.fieldNames.EVENT_ID,
                     outFields: [
                         fn.EVENT_ID,
