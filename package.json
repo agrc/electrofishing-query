@@ -6,6 +6,18 @@
     "type": "git",
     "url": "https://github.com/agrc/electrofishing-query.git"
   },
+  "scripts": {
+    "test": "grunt travis",
+    "postinstall": "npm install -g bower && bower install",
+    "start": "grunt"
+  },
+  "eslintConfig": {
+    "extends": "agrc",
+    "globals": {
+      "AGRC": "writable",
+      "Set": "readonly"
+    }
+  },
   "devDependencies": {
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "babel-preset-latest": "6.24.1",
