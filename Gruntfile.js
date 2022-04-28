@@ -107,16 +107,13 @@ module.exports = function (grunt) {
                 options: {
                     specs: ['src/app/**/spec/Spec*.js'],
                     vendor: [
-                        'src/jasmine-favicon-reporter/vendor/favico.js',
-                        'src/jasmine-favicon-reporter/jasmine-favicon-reporter.js',
-                        'src/jasmine-jsreporter/jasmine-jsreporter.js',
                         'src/app/tests/jasmineTestBootstrap.js',
                         'src/dojo/dojo.js',
                         'src/app/packages.js',
-                        'src/app/tests/jsReporterSanitizer.js',
                         'src/app/tests/jasmineAMDErrorChecking.js'
                     ],
-                    host: 'http://localhost:8000'
+                    host: 'http://localhost:8000',
+                    version: '2.5.1'
                 }
             }
         },
@@ -224,9 +221,8 @@ module.exports = function (grunt) {
         'connect',
         'jasmine'
     ]);
-    grunt.registerTask('lint-test-build', [
+    grunt.registerTask('ci-tests', [
         'eslint',
-        'test',
-        'build-stage'
+        'test'
     ]);
 };

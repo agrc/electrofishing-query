@@ -6,8 +6,6 @@
     "agrc-jasmine-matchers": "0.1.0",
     "bootstrap": "3.3.6",
     "esri": "arcgis-js-api#3.28.0",
-    "jasmine-favicon-reporter": "*",
-    "jasmine-jsreporter": "0.1.2",
     "stubmodule": "0.6.1",
     "toaster": "agrc-toaster#1.0.1",
     "bootstrap3-typeahead": "4.0.2",
