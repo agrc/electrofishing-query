@@ -2,9 +2,11 @@
   "python.formatting.provider": "yapf",
   "cSpell.words": [
     "ABES",
-    "UDWR",
-    "WILDADMIN",
     "fishsample",
-    "udwrgis"
+    "nonwritable",
+    "UDWR",
+    "udwrgis",
+    "WILDADMIN",
+    "wrimaps"
   ]
 }
