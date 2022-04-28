@@ -224,7 +224,7 @@ module.exports = function (grunt) {
         'connect',
         'jasmine'
     ]);
-    grunt.registerTask('ci', [
+    grunt.registerTask('lint-test-build', [
         'eslint',
         'test',
         'build-stage'

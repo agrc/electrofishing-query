@@ -7,7 +7,7 @@
     "url": "https://github.com/agrc/electrofishing-query.git"
   },
   "scripts": {
-    "test": "grunt travis",
+    "test": "grunt lint-test-build",
     "postinstall": "npm install -g bower && bower install",
     "start": "grunt",
     "build:stage": "grunt build-stage",
