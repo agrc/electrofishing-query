@@ -16,34 +16,6 @@ module.exports = function (grunt) {
         '_src/app/package.json',
         '_src/app/config.js'
     ];
-    var deployFiles = [
-        '**',
-        '!**/*.uncompressed.js',
-        '!**/*consoleStripped.js',
-        '!**/bootstrap/less/**',
-        '!**/bootstrap/test-infra/**',
-        '!**/tests/**',
-        '!build-report.txt',
-        '!components-jasmine/**',
-        '!favico.js/**',
-        '!jasmine-favicon-reporter/**',
-        '!jasmine-jsreporter/**',
-        '!stubmodule/**',
-        '!util/**'
-    ];
-    var deployDir = 'fishsample/query';
-    var secrets;
-    try {
-        secrets = grunt.file.readJSON('secrets.json');
-    } catch (e) {
-        // swallow for build server
-        secrets = {
-            stageHost: '',
-            prodHost: '',
-            username: '',
-            password: ''
-        };
-    }
 
     grunt.initConfig({
         babel: {
@@ -69,22 +41,8 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            deploy: ['deploy'],
             src: ['src/app'],
             dist: ['dist']
-        },
-        compress: {
-            main: {
-                options: {
-                    archive: 'deploy/query.zip'
-                },
-                files: [{
-                    src: deployFiles,
-                    dest: './',
-                    cwd: 'dist/',
-                    expand: true
-                }]
-            }
         },
         connect: {
             uses_defaults: {}
@@ -101,7 +59,7 @@ module.exports = function (grunt) {
             src: {
                 expand: true,
                 cwd: '_src',
-                src: ['**/*.html', '**/*.png', '**/*.jpg', 'secrets.json', 'app/package.json'],
+                src: ['**/*.html', '**/*.png', '**/*.jpg', 'app/package.json'],
                 dest: 'src'
             }
         },
@@ -169,46 +127,6 @@ module.exports = function (grunt) {
                 files: {
                     'dist/index.html': ['src/index.html']
                 }
-            }
-        },
-        secrets: secrets,
-        sftp: {
-            stage: {
-                files: [{
-                    expand: true,
-                    cwd: 'dist',
-                    src: deployFiles,
-                    dest: './'
-                }],
-                options: {
-                    createDirectories: true
-                }
-            },
-            appPackageOnly: {
-                files: [{
-                    expand: true,
-                    cwd: 'dist/app',
-                    src: deployFiles,
-                    dest: './app'
-                }, {
-                    expand: true,
-                    cwd: 'dist',
-                    src: ['*.html'],
-                    dest: './'
-                }, {
-                    expand: true,
-                    cwd: 'dist/dojo',
-                    src: 'dojo.*',
-                    dest: './dojo'
-                }]
-            },
-            options: {
-                host: '<%= secrets.stageHost %>',
-                path: `./${deployDir}/`,
-                srcBasePath: 'dist/',
-                showProgress: true,
-                username: '<%= secrets.username %>',
-                password: '<%= secrets.password %>'
             }
         },
         stylus: {
@@ -300,23 +218,13 @@ module.exports = function (grunt) {
         'copy:dist',
         'processhtml:main'
     ]);
-    grunt.registerTask('deploy-prod', [
-        'clean:deploy',
-        'compress:main'
-    ]);
-    grunt.registerTask('deploy-stage', [
-        'sftp:stage'
-    ]);
-    grunt.registerTask('deploy-app-only', [
-        'sftp:appPackageOnly'
-    ]);
     grunt.registerTask('test', [
         'babel',
         'copy:src',
         'connect',
         'jasmine'
     ]);
-    grunt.registerTask('travis', [
+    grunt.registerTask('ci', [
         'eslint',
         'test',
         'build-stage'

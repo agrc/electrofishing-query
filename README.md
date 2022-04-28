@@ -24,5 +24,4 @@ Production: [https://dwrapps.utah.gov/dwrefdb/query/](https://dwrapps.utah.gov/d
 
 1. Update `src/ChangeLog.html`
 1. `grunt bump`
-1. `grunt build-prod/stage`
-1. `grunt deploy-prod/stage/app-only`
+1. Pushing to `dev` or `main` triggers a deploy to Firebase.
