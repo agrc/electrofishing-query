@@ -8,3 +8,8 @@ src/
 secrets.py
 *.pyc
 scripts/DATABASE.sde
+
+# pro project
+maps/maps.gdb
+maps/scratch
+maps/Index
