@@ -1,4 +1,3 @@
-/* global JasmineFaviconReporter, jasmineRequire */
 /* eslint-disable no-unused-vars */
 var dojoConfig = {
     // isDebug: false,
@@ -15,7 +14,3 @@ var dojoConfig = {
         'dojo-undef-api': true
     }
 };
-
-// for jasmine-favicon-reporter
-jasmine.getEnv().addReporter(new JasmineFaviconReporter());
-jasmine.getEnv().addReporter(new jasmineRequire.JSReporter2());
