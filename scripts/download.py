@@ -7,17 +7,16 @@ A script that downloads CSVs of electrofishing data for a given
 set of sampling event ids.
 '''
 import csv
-import secrets
 import sys
 from glob import glob
-from os import mkdir, walk, sep
-from os.path import basename, dirname, exists, join, realpath, normpath
-from shutil import rmtree
+from os import sep, walk
+from os.path import basename, dirname, join, normpath, realpath
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import arcpy
 import pypyodbc
 
+import swq_secrets as secrets
 
 def zip_fgdb(path, zip):
     path = normpath(path)
@@ -160,7 +159,7 @@ def main(ids, type):
                     cursor.execute(query)
 
                     csv_file_path = join(arcpy.env.scratchFolder, csv_name)
-                    with open(csv_file_path, 'wb') as csv_file:
+                    with open(csv_file_path, 'w', newline='') as csv_file:
                         writer = csv.writer(csv_file)
 
                         #: write headers
