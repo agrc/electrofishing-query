@@ -14,7 +14,7 @@ from os.path import basename, dirname, join, normpath, realpath
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import arcpy
-import pypyodbc
+import pyodbc
 
 import swq_secrets as secrets
 
@@ -66,7 +66,7 @@ def main(ids, type):
             password=secrets.PASSWORD,
             database=secrets.DATABASE)
 
-    connection = pypyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};' +
+    connection = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};' +
                                   'SERVER={};DATABASE={};UID={};PWD={}'.format(
                                       secrets.SERVER, secrets.DATABASE,
                                       secrets.USERNAME, secrets.PASSWORD))
