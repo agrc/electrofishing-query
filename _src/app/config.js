@@ -18,22 +18,26 @@ define([
     SimpleFillSymbol,
     SimpleLineSymbol
 ) {
-    let agsDomain = 'udwrgis.utah.gov';
-    let apiKey;
-    let quadWord = 'patent-window-address-asia';
+    let agsDomain;
+    // electrofishing-query.*.utah.gov
+    let apiKey = 'AGRC-E029C84C956966';
+    let quadWord;
     let servicesFolder = 'Electrofishing';
     let databaseName = 'Electrofishing';
     if (has('agrc-build') === 'prod') {
-        // dwrapps.utah.gov
-        apiKey = 'AGRC-2E4D1DBA263288';
+        // *.ugrc.utah.gov
+        quadWord = 'dinner-oregano-india-bahama';
+        agsDomain = 'wrimaps.utah.gov';
     } else if (has('agrc-build') === 'stage') {
-        // dwrapps.dev.utah.gov
-        apiKey = 'AGRC-FC693CC1911383';
+        // *.dev.utah.gov
+        quadWord = 'wedding-tactic-enrico-yes';
+        agsDomain = 'wrimaps.at.utah.gov';
         servicesFolder = 'ElectrofishingTest';
         databaseName = 'Wildlife';
     } else {
         // localhost
-        agsDomain = window.location.host;
+        // agsDomain = window.location.host;
+        agsDomain = 'wrimaps.at.utah.gov';
 
         xhr(require.baseUrl + 'secrets.json', {
             handleAs: 'json',
@@ -47,10 +51,10 @@ define([
     }
 
     // force api to use CORS on udwrgis thus removing the test request on app load
-    // e.g. http://udwrgis.utah.gov/ArcGIS/rest/info?f=json
+    // e.g. http://wrimaps.utah.gov/ArcGIS/rest/info?f=json
     esriConfig.defaults.io.corsEnabledServers.push(agsDomain);
 
-    const baseUrl = `${window.location.protocol}//${agsDomain}/arcgis/rest/services/${servicesFolder}`;
+    const baseUrl = `https://${agsDomain}/arcgis/rest/services/${servicesFolder}`;
     const drawingColor = [51, 160, 44];
     const STATION_ID = 'STATION_ID';
     window.AGRC = {
