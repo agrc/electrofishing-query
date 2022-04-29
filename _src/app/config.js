@@ -32,7 +32,6 @@ define([
         // *.dev.utah.gov
         quadWord = 'wedding-tactic-enrico-yes';
         agsDomain = 'wrimaps.at.utah.gov';
-        servicesFolder = 'ElectrofishingTest';
         databaseName = 'Wildlife';
     } else {
         // localhost
