@@ -24,6 +24,7 @@ define([
     let quadWord;
     let servicesFolder = 'Electrofishing';
     let databaseName = 'Electrofishing';
+    let dataEntryApp = 'https://electrofishing.ugrc.utah.gov';
     if (has('agrc-build') === 'prod') {
         // *.ugrc.utah.gov
         quadWord = 'dinner-oregano-india-bahama';
@@ -33,6 +34,7 @@ define([
         quadWord = 'wedding-tactic-enrico-yes';
         agsDomain = 'wrimaps.at.utah.gov';
         databaseName = 'Wildlife';
+        dataEntryApp = 'https://electrofishing.dev.utah.gov';
     } else {
         // localhost
         // agsDomain = window.location.host;
@@ -62,6 +64,8 @@ define([
         app: null,
 
         agsDomain,
+
+        dataEntryApp,
 
         databaseName,
 

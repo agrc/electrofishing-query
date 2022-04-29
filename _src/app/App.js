@@ -10,9 +10,7 @@ define([
 
     'dojo/dom-construct',
     'dojo/text!app/templates/App.html',
-    'dojo/topic',
     'dojo/_base/declare',
-    'dojo/_base/lang',
 
     'sherlock/Sherlock',
     'sherlock/providers/MapService',
@@ -32,9 +30,7 @@ define([
 
     domConstruct,
     template,
-    topic,
     declare,
-    lang,
 
     Sherlock,
     MapService,
@@ -55,6 +51,9 @@ define([
             console.info('app.App::constructor', arguments);
 
             AGRC.app = this;
+        },
+        postCreate: function () {
+            this.dataEntryAppLink.href = config.dataEntryApp;
         },
         startup: function () {
             // summary:
