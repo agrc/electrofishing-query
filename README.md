@@ -2,9 +2,9 @@
 
 A web application for viewing and querying electrofishing data.
 
-Staging: [https://dwrapps.dev.utah.gov/dwrefdb/query/](https://dwrapps.dev.utah.gov/dwrefdb/query/)
+Staging: [https://electrofishing-query.dev.utah.gov](https://electrofishing-query.dev.utah.gov)
 
-Production: [https://dwrapps.utah.gov/dwrefdb/query/](https://dwrapps.utah.gov/dwrefdb/query/)
+Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-query.ugrc.utah.gov)
 
 ## Deployment
 
