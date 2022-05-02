@@ -2,8 +2,12 @@
   "python.formatting.provider": "yapf",
   "cSpell.words": [
     "ABES",
+    "autoplay",
     "fishsample",
+    "fullscreen",
     "nonwritable",
+    "nosniff",
+    "SAMEORIGIN",
     "UDWR",
     "udwrgis",
     "WILDADMIN",
