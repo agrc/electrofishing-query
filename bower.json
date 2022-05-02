@@ -1,6 +1,6 @@
 {
   "name": "electrofishing-query",
-  "version": "1.0.1",
+  "version": "1.0.2-0",
   "dependencies": {
     "agrc": "agrc-widgets#6.1.5",
     "agrc-jasmine-matchers": "0.1.0",
