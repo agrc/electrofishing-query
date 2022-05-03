@@ -14,7 +14,7 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
 1. Publish `scripts/Download.tbx/Download` as `Electrofishing/Download`:
     * asynchronous
     * max time a client can use the service: `300`
-    * Copy `scripts/secrets.py`, `scripts/download.py`, & `scripts/sql/*` to `C:\arcgisserver\directories\arcgissystem\arcgisinput\Electrofishing\Download.GPServer\extracted\p20\scripts`
+    * Copy `scripts/swq_secrets.py`, `scripts/__init__.py`, `scripts/download.py`, & `scripts/sql/*` to `C:\arcgisserver\directories\arcgissystem\arcgisinput\Electrofishing\Download.GPServer\extracted\p20\scripts`
     * Update `swq_secrets.py` to reflect the environment that you have published to.
     * Download and install [Microsoft ODBC Driver 17 for SQL Server](https://www.microsoft.com/en-us/download/details.aspx?id=56567).
 
