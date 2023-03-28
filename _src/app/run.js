@@ -15,7 +15,7 @@
             return window.Worker;
         });
 
-        if (!window.dojoConfig.isJasmineTestRunner) {
+        if (!window?.dojoConfig.isJasmineTestRunner) {
             window.firebase.initializeApp(JSON.parse(process.env.FIREBASE_CONFIG));
             console.log('firebase app initialized');
         }
