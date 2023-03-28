@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-5](https://github.com/agrc/electrofishing-query/compare/v1.2.0-4...v1.2.0-5) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* include service worker in build ([7a1cb74](https://github.com/agrc/electrofishing-query/commit/7a1cb748b00547b391e56e3116f5d4217374068b))
+
 ## [1.2.0-4](https://github.com/agrc/electrofishing-query/compare/v1.2.0-3...v1.2.0-4) (2023-03-28)
 
 
