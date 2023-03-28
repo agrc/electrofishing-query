@@ -1,7 +1,6 @@
 /* eslint-disable max-len, no-magic-numbers, camelcase */
 define([
     'dojo/has',
-    'dojo/request/xhr',
 
     'esri/Color',
     'esri/config',
@@ -11,7 +10,6 @@ define([
     'dojo/domReady!'
 ], function (
     has,
-    xhr,
 
     Color,
     esriConfig,
@@ -22,39 +20,35 @@ define([
     // electrofishing-query.*.utah.gov
     let apiKey = 'AGRC-E029C84C956966';
     let quadWord;
-    let servicesFolder = 'Electrofishing';
     let databaseName = 'Electrofishing';
     let dataEntryApp = 'https://electrofishing.ugrc.utah.gov';
+    let baseUrl;
+    const projectId = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
     if (has('agrc-build') === 'prod') {
         // *.ugrc.utah.gov
         quadWord = 'dinner-oregano-india-bahama';
         agsDomain = 'wrimaps.utah.gov';
+        baseUrl = `https://us-central1-${projectId}.cloudfunctions.net/maps`;
     } else if (has('agrc-build') === 'stage') {
         // *.dev.utah.gov
         quadWord = 'wedding-tactic-enrico-yes';
         agsDomain = 'wrimaps.at.utah.gov';
         dataEntryApp = 'https://electrofishing.dev.utah.gov';
+        baseUrl = `https://us-central1-${projectId}.cloudfunctions.net/maps`;
     } else {
         // localhost
         // agsDomain = window.location.host;
-        agsDomain = 'wrimaps.at.utah.gov';
+        agsDomain = 'localhost:5001';
+        baseUrl = `http://${agsDomain}/${projectId}/us-central1/maps`;
 
-        xhr(require.baseUrl + 'secrets.json', {
-            handleAs: 'json',
-            sync: true
-        }).then(function (secrets) {
-            quadWord = secrets.quadWord;
-            apiKey = secrets.apiKey;
-        }, function () {
-            throw 'Error getting secrets!';
-        });
+        quadWord = process.env.QUAD_WORD;
+        apiKey = process.env.API_KEY;
     }
 
     // force api to use CORS on udwrgis thus removing the test request on app load
     // e.g. http://wrimaps.utah.gov/ArcGIS/rest/info?f=json
     esriConfig.defaults.io.corsEnabledServers.push(agsDomain);
 
-    const baseUrl = `https://${agsDomain}/arcgis/rest/services/${servicesFolder}`;
     const drawingColor = [51, 160, 44];
     const STATION_ID = 'STATION_ID';
     window.AGRC = {
@@ -93,9 +87,9 @@ define([
 
         urls: {
             baseUrl,
-            mapService: baseUrl + '/MapService/MapServer',
-            referenceService: baseUrl + '/Reference/MapServer',
-            download: baseUrl + '/Download/GPServer/Download',
+            mapService: baseUrl + '/mapservice',
+            referenceService: baseUrl + '/reference',
+            download: baseUrl + '/toolbox/Download',
             esriStreets: '//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
         },
 
