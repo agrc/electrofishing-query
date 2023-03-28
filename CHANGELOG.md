@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-1](https://github.com/agrc/electrofishing-query/compare/v1.2.0-0...v1.2.0-1) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* install functions deps during deploy ([4eb9900](https://github.com/agrc/electrofishing-query/commit/4eb9900fab8d7db00d3240317dc058fca46a5115))
+
 ## [1.2.0-0](https://github.com/agrc/electrofishing-query/compare/v1.0.2-0...v1.2.0-0) (2023-03-28)
 
 
