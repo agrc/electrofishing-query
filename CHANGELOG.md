@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-4](https://github.com/agrc/electrofishing-query/compare/v1.2.0-3...v1.2.0-4) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* trigger release ([beca4d0](https://github.com/agrc/electrofishing-query/commit/beca4d064481d36c06db1fd969a0e52585337212))
+
 ## [1.2.0-3](https://github.com/agrc/electrofishing-query/compare/v1.2.0-2...v1.2.0-3) (2023-03-28)
 
 
