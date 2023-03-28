@@ -3,16 +3,21 @@
   "cSpell.words": [
     "ABES",
     "autoplay",
+    "firestore",
     "fishsample",
     "fullscreen",
     "hostingchannels",
+    "mapservice",
     "nonwritable",
     "nosniff",
+    "oidc",
+    "outfile",
     "prebuild",
     "SAMEORIGIN",
     "setversion",
     "UDWR",
     "udwrgis",
+    "utahid",
     "WILDADMIN",
     "wrimaps"
   ]

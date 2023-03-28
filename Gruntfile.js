@@ -22,15 +22,26 @@ module.exports = function (grunt) {
             options: {
                 sourceMap: true,
                 presets: ['latest'],
-                plugins: ['transform-remove-strict-mode']
+                plugins: [
+                    'transform-remove-strict-mode',
+                    ['transform-inline-environment-variables', {
+                        include: [
+                            'API_KEY',
+                            'FIREBASE_CONFIG',
+                            'QUAD_WORD'
+                        ]
+                    }]
+                ]
             },
             src: {
-                files: [{
-                    expand: true,
-                    cwd: '_src/app/',
-                    src: ['**/*.js'],
-                    dest: 'src/app/'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '_src/app/',
+                        src: ['**/*.js'],
+                        dest: 'src/app/'
+                    }
+                ]
             }
         },
         bump: {
@@ -49,12 +60,14 @@ module.exports = function (grunt) {
         },
         copy: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'src/',
-                    src: ['*.html'],
-                    dest: 'dist/'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/',
+                        src: ['*.html'],
+                        dest: 'dist/'
+                    }
+                ]
             },
             src: {
                 expand: true,
@@ -66,12 +79,18 @@ module.exports = function (grunt) {
         dojo: {
             prod: {
                 options: {
-                    profiles: ['profiles/prod.build.profile.js', 'profiles/build.profile.js']
+                    profiles: [
+                        'profiles/prod.build.profile.js',
+                        'profiles/build.profile.js'
+                    ]
                 }
             },
             stage: {
                 options: {
-                    profiles: ['profiles/stage.build.profile.js', 'profiles/build.profile.js']
+                    profiles: [
+                        'profiles/stage.build.profile.js',
+                        'profiles/build.profile.js'
+                    ]
                 }
             },
             options: {
@@ -92,13 +111,15 @@ module.exports = function (grunt) {
                 options: {
                     optimizationLevel: 3
                 },
-                files: [{
-                    expand: true,
-                    cwd: 'src/',
-                    // exclude tests because some images in dojox throw errors
-                    src: ['**/*.{png,jpg,gif}', '!**/tests/**/*.*'],
-                    dest: 'src/'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/',
+                        // exclude tests because some images in dojox throw errors
+                        src: ['**/*.{png,jpg,gif}', '!**/tests/**/*.*'],
+                        dest: 'src/'
+                    }
+                ]
             }
         },
         jasmine: {
@@ -132,13 +153,15 @@ module.exports = function (grunt) {
                     compress: false,
                     'resolve url': true
                 },
-                files: [{
-                    expand: true,
-                    cwd: '_src/',
-                    src: ['app/resources/App.styl'],
-                    dest: 'src/',
-                    ext: '.css'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '_src/',
+                        src: ['app/resources/App.styl'],
+                        dest: 'src/',
+                        ext: '.css'
+                    }
+                ]
             }
         },
         uglify: {
@@ -161,12 +184,14 @@ module.exports = function (grunt) {
                 dest: 'dist/dojo/dojo.js'
             },
             prod: {
-                files: [{
-                    expand: true,
-                    cwd: 'dist',
-                    src: ['**/*.js', '!proj4/**/*.js'],
-                    dest: 'dist'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist',
+                        src: ['**/*.js', '!proj4/**/*.js'],
+                        dest: 'dist'
+                    }
+                ]
             }
         },
         watch: {

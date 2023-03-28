@@ -48,15 +48,25 @@ html,
         text-decoration none
     .version:hover
         text-decoration underline !important
-    .logoutDiv a
-        margin 0
+
+    /* AUTH PANE */
+    .auth-pane
+        top: 50px
+        background-color: $background-grey
+        min-height: 34px;
+        border-radius: 0;
+        border-bottom: 1px solid $border-color;
+        .navbar-text, .navbar-btn
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 6px 0;
 
     /* CENTER (MAP) */
     .center
         padding 0
     .map-div
         width 100%
-        top 50px
+        top 100px
         bottom 0
         position absolute
         .esriSimpleSliderTL
