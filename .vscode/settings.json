@@ -20,5 +20,9 @@
     "utahid",
     "WILDADMIN",
     "wrimaps"
+  ],
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/pull_request.yml",
+    ".github/workflows/push.yml"
   ]
 }
