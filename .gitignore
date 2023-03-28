@@ -20,3 +20,4 @@ functions/.secret.local
 # firebase
 *-debug.log
 emulator_data/
+firestore_export*
