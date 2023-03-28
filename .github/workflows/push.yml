@@ -55,6 +55,7 @@ jobs:
           prebuild-command: |
             npx grunt bump --setversion=${{ needs.release.outputs.released_version }}
             cd functions
+            npm ci
             echo "ENVIRONMENT=stage" > .env
             echo "AGS_HOST=https://wrimaps.at.utah.gov" >> .env
           build-command: npm run build:stage
@@ -80,6 +81,7 @@ jobs:
           prebuild-command: |
             npx grunt bump --setversion=${{ needs.release.outputs.released_version }}
             cd functions
+            npm ci
             echo "ENVIRONMENT=prod" > .env
             echo "AGS_HOST=https://wrimaps.utah.gov" >> .env
           project-id: ${{ secrets.PROJECT_ID }}
