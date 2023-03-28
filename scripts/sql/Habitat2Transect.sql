@@ -18,8 +18,7 @@ SELECT
   t.BWID,
   t.WWID,
   t.STARTING_BANK,
-  t.TRANSECT_ID,
-  t.TRANSECT_NUM
+  t.TRANSECT_ID
 
 FROM {0}.WILDADMIN.SamplingEvents_evw as se
 
