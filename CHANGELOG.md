@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-3](https://github.com/agrc/electrofishing-query/compare/v1.2.0-2...v1.2.0-3) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* handle missing dojo config correctly ([f5666d7](https://github.com/agrc/electrofishing-query/commit/f5666d7ced6635f587035864afccb98200666527))
+
 ## [1.2.0-2](https://github.com/agrc/electrofishing-query/compare/v1.2.0-1...v1.2.0-2) (2023-03-28)
 
 
