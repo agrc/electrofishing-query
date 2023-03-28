@@ -23,7 +23,9 @@ define([
     let databaseName = 'Electrofishing';
     let dataEntryApp = 'https://electrofishing.ugrc.utah.gov';
     let baseUrl;
-    const projectId = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+
+    const projectId = window.dojoConfig.isJasmineTestRunner ? 'test' :
+        JSON.parse(process.env.FIREBASE_CONFIG).projectId;
     if (has('agrc-build') === 'prod') {
         // *.ugrc.utah.gov
         quadWord = 'dinner-oregano-india-bahama';
