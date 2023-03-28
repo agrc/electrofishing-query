@@ -8,6 +8,29 @@
     <link rel="shortcut icon" href="https://gis.utah.gov/images/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js';
+
+        import {
+            getAuth,
+            OAuthProvider,
+            signInWithPopup,
+            signOut,
+            connectAuthEmulator,
+            getIdToken
+        } from 'https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js';
+
+        window.firebase = {
+            initializeApp,
+            getAuth,
+            OAuthProvider,
+            signInWithPopup,
+            signOut,
+            connectAuthEmulator,
+            getIdToken
+        };
+    </script>
+
     <!-- CSS -->
     <link rel='stylesheet' href='app/resources/App.css'>
 </head>
@@ -33,6 +56,5 @@
 
         gtag('config', 'UA-11849964-64');
     </script>
-
 </body>
 </html>
