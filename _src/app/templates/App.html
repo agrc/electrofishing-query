@@ -20,6 +20,33 @@
                     </ul>
                 </div>
             </div>
+            <div class="navbar auth-pane">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <button
+                                data-dojo-attach-point="loginButton"
+                                data-dojo-attach-event="onClick: login"
+                                class="btn btn-link navbar-btn">
+                                Login
+                            </button>
+
+                            <button
+                                data-dojo-attach-point="logoutButton"
+                                data-dojo-attach-event="onClick: logout"
+                                class="btn btn-link navbar-btn"
+                                style="display: none;">
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <span data-dojo-attach-point="userSpan" class="navbar-text"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div data-dojo-attach-point="mapDiv" class="map-div">
                 <div data-dojo-attach-point="filterDiv"></div>
                 <div data-dojo-attach-point="streamsSherlockDiv"></div>
