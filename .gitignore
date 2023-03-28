@@ -13,3 +13,10 @@ scripts/DATABASE.sde
 maps/maps.gdb
 maps/scratch
 maps/Index
+
+.env
+functions/.secret.local
+
+# firebase
+*-debug.log
+emulator_data/

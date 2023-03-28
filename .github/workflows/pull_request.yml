@@ -47,5 +47,11 @@ jobs:
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           project-id: ${{ secrets.PROJECT_ID }}
           preview: yes
+          prebuild-command: |
+            cd functions
+            echo "ENVIRONMENT=stage" > .env
+            echo "AGS_HOST=https://wrimaps.at.utah.gov" >> .env
           build-command: npm run build:stage
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}

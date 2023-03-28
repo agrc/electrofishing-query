@@ -9,8 +9,11 @@ define([
     'dijit/_WidgetsInTemplateMixin',
 
     'dojo/dom-construct',
+    'dojo/has',
     'dojo/text!app/templates/App.html',
     'dojo/_base/declare',
+
+    'esri/request',
 
     'sherlock/Sherlock',
     'sherlock/providers/MapService',
@@ -29,8 +32,11 @@ define([
     _WidgetsInTemplateMixin,
 
     domConstruct,
+    has,
     template,
     declare,
+
+    esriRequest,
 
     Sherlock,
     MapService,
@@ -54,13 +60,89 @@ define([
         },
         postCreate: function () {
             this.dataEntryAppLink.href = config.dataEntryApp;
+
+            this.auth = window.firebase.getAuth();
+
+            if (!has('agrc-build')) {
+                // comment out this and the auth config in firebase.json to hit utahid directly
+                window.firebase.connectAuthEmulator(this.auth, 'http://127.0.0.1:9099');
+            }
+
+            this.auth.onAuthStateChanged((user) => {
+                if (user) {
+                    this.initializeUser(user);
+                }
+            });
+
+            this.initServiceWorker();
         },
-        startup: function () {
+        initServiceWorker: function () {
+            if ('serviceWorker' in navigator === false) {
+                // eslint-disable-next-line no-alert
+                window.alert('This browser does not support service workers. Please use a more modern browser.');
+
+                return;
+            }
+
+            try {
+                navigator.serviceWorker.register('ServiceWorker.js');
+            } catch (error) {
+                console.error('Service worker registration failed', error);
+            }
+        },
+        login: function () {
+            const provider = new window.firebase.OAuthProvider('oidc.utahid');
+            provider.addScope('app:DWRElectroFishing');
+
+            window.firebase.signInWithPopup(this.auth, provider);
+        },
+        initializeUser: function (user) {
+            console.log('initializeUser', user);
+            user.getIdTokenResult().then((response) => {
+                if (this.checkClaims(response.claims)) {
+                    this.user = user;
+                    this.loginButton.style.display = 'none';
+                    this.logoutButton.style.display = 'block';
+                    this.userSpan.innerHTML = user.email;
+
+                    this.initApp();
+                } else {
+                    // eslint-disable-next-line no-alert
+                    window.alert(`${user.email} is not authorized to use this app.`);
+                }
+            });
+        },
+        checkClaims: function (claims) {
+            if (!has('agrc-build')) {
+                return true;
+            }
+
+            const utahIDEnvironments = {
+                prod: 'Prod',
+                stage: 'AT',
+                development: 'Dev',
+                test: 'Test'
+            };
+
+            return (
+                claims.firebase?.sign_in_attributes?.['DWRElectroFishing:AccessGranted'] &&
+                claims.firebase.sign_in_attributes['DWRElectroFishing:AccessGranted'].includes(
+                    utahIDEnvironments[has('agrc-build') || 'development']
+                )
+            );
+        },
+        logout: function () {
+            window.firebase.signOut(this.auth);
+            this.loginButton.style.display = 'block';
+            this.logoutButton.style.display = 'none';
+            this.userSpan.innerHTML = '';
+
+            window.location.reload();
+        },
+        initApp: function () {
             // summary:
             //      Fires when
-            console.log('app.App::startup', arguments);
-
-            this.inherited(arguments);
+            console.log('app.App::initApp', arguments);
 
             mapController.initMap(this.mapDiv);
 
