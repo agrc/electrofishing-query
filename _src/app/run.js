@@ -6,8 +6,7 @@
     var config = {
         baseUrl: (
             typeof window !== 'undefined' &&
-            window.dojoConfig &&
-            window.dojoConfig.isJasmineTestRunner
+            window.dojoConfig?.isJasmineTestRunner
         ) ? '/src' : './'
     };
     require(config, ['dojo/has', 'dojo/parser', 'jquery', 'dojo/domReady!'], function (has, parser) {
@@ -15,7 +14,7 @@
             return window.Worker;
         });
 
-        if (!window?.dojoConfig.isJasmineTestRunner) {
+        if (!window.dojoConfig?.isJasmineTestRunner) {
             window.firebase.initializeApp(JSON.parse(process.env.FIREBASE_CONFIG));
             console.log('firebase app initialized');
         }
