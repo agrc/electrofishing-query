@@ -49,6 +49,7 @@ jobs:
           preview: yes
           prebuild-command: |
             cd functions
+            npm ci
             echo "ENVIRONMENT=stage" > .env
             echo "AGS_HOST=https://wrimaps.at.utah.gov" >> .env
           build-command: npm run build:stage
