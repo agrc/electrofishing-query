@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-2](https://github.com/agrc/electrofishing-query/compare/v1.2.0-1...v1.2.0-2) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* handle missing dojoConfig in deployed app ([e23badb](https://github.com/agrc/electrofishing-query/commit/e23badbee62992ebd472529a6eb3856624a8b06c))
+
 ## [1.2.0-1](https://github.com/agrc/electrofishing-query/compare/v1.2.0-0...v1.2.0-1) (2023-03-28)
 
 
