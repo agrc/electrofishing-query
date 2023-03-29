@@ -4,16 +4,16 @@
     // since it runs on node, it doesn't have a window object. The basePath for the build system
     // is defined in build.profile.js
     var config = {
-        baseUrl: (
-            typeof window !== 'undefined' &&
-            window.dojoConfig?.isJasmineTestRunner
-        ) ? '/src' : './'
+        baseUrl:
+      typeof window !== 'undefined' && window.dojoConfig?.isJasmineTestRunner ?
+          '/src' :
+          './'
     };
-    require(config, ['dojo/has', 'dojo/parser', 'jquery', 'dojo/domReady!'], function (has, parser) {
-        has.add('web-workers', function () {
-            return window.Worker;
-        });
-
+    require(config, [
+        'dojo/parser',
+        'jquery',
+        'dojo/domReady!'
+    ], function (parser) {
         if (!window.dojoConfig?.isJasmineTestRunner) {
             window.firebase.initializeApp(JSON.parse(process.env.FIREBASE_CONFIG));
             console.log('firebase app initialized');
