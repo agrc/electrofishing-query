@@ -12,7 +12,7 @@
     "start": "npm run build:sw && concurrently \"npm run start:app\" \"npm run start:firebase-emulators\"",
     "start:app": "dotenv grunt",
     "start:firebase-emulators": "firebase emulators:start --import emulator_data --export-on-exit --only functions,auth,ui,firestore",
-    "build:stage": "npm run build:sw && grunt build-stage",
+    "build:stage": "npm run build:sw && grunt build-stage -v",
     "build:prod": "npm run build:sw && grunt build-prod",
     "build:sw": "esbuild _src/ServiceWorker.js --bundle --outfile=src/ServiceWorker.js --define:process.env.FIREBASE_CONFIG=$(npx dotenv -p FIREBASE_CONFIG)"
   },
