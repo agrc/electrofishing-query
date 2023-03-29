@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0-6](https://github.com/agrc/electrofishing-query/compare/v1.2.0-5...v1.2.0-6) (2023-03-29)
+
+
+### 🐛 Bug Fixes
+
+* add correct domain to esri cors config ([38ae8f8](https://github.com/agrc/electrofishing-query/commit/38ae8f830ea284223ba7eea047e18f333adca03f))
+* bump esri package ([cd51408](https://github.com/agrc/electrofishing-query/commit/cd514084c863bc20857b47219c2415bf1a708578))
+
 ## [1.2.0-5](https://github.com/agrc/electrofishing-query/compare/v1.2.0-4...v1.2.0-5) (2023-03-28)
 
 
