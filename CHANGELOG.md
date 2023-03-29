@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-7](https://github.com/agrc/electrofishing-query/compare/v1.2.0-6...v1.2.0-7) (2023-03-29)
+
+
+### 🐛 Bug Fixes
+
+* add verbose flag so that we can see what's failing ([ad628e4](https://github.com/agrc/electrofishing-query/commit/ad628e44e2101b9fdc0afcd066dfbb688cc96be5))
+
 ## [1.2.0-6](https://github.com/agrc/electrofishing-query/compare/v1.2.0-5...v1.2.0-6) (2023-03-29)
 
 
