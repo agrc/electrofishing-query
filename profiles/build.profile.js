@@ -38,6 +38,10 @@ profile = {
     }, {
         name: 'moment',
         main: 'moment',
+        trees: [
+            // don't bother with .hidden, tests, min, src, and templates
+            ['.', '.', /(\/\.)|(~$)|(test|txt|src|min|templates|dist)/]
+        ],
         resourceTags: {
             amd: function (filename) {
                 return /\.js$/.test(filename);
