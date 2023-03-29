@@ -16,27 +16,23 @@ define([
     SimpleFillSymbol,
     SimpleLineSymbol
 ) {
-    let agsDomain;
     // electrofishing-query.*.utah.gov
     let apiKey = 'AGRC-E029C84C956966';
     let quadWord;
     let databaseName = 'Electrofishing';
     let dataEntryApp = 'https://electrofishing.ugrc.utah.gov';
-    let baseUrl;
 
     const projectId = window.dojoConfig?.isJasmineTestRunner ? 'test' :
         JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+    let agsDomain = `us-central1-${projectId}.cloudfunctions.net`;
+    let baseUrl = `https://${agsDomain}/maps`;
     if (has('agrc-build') === 'prod') {
         // *.ugrc.utah.gov
         quadWord = 'dinner-oregano-india-bahama';
-        agsDomain = 'wrimaps.utah.gov';
-        baseUrl = `https://us-central1-${projectId}.cloudfunctions.net/maps`;
     } else if (has('agrc-build') === 'stage') {
         // *.dev.utah.gov
         quadWord = 'wedding-tactic-enrico-yes';
-        agsDomain = 'wrimaps.at.utah.gov';
         dataEntryApp = 'https://electrofishing.dev.utah.gov';
-        baseUrl = `https://us-central1-${projectId}.cloudfunctions.net/maps`;
     } else {
         // localhost
         // agsDomain = window.location.host;
@@ -57,8 +53,6 @@ define([
         // app: app.App
         //      global reference to App
         app: null,
-
-        agsDomain,
 
         dataEntryApp,
 
