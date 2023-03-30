@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-9](https://github.com/agrc/electrofishing-query/compare/v1.2.0-7...v1.2.0-9) (2023-03-30)
+
+
+### 🐛 Bug Fixes
+
+* add missing dependency ([c050cdb](https://github.com/agrc/electrofishing-query/commit/c050cdb7c3d2e74a47adce76f388dcbfcbeb0033))
+
 ## [1.2.0-7](https://github.com/agrc/electrofishing-query/compare/v1.2.0-6...v1.2.0-7) (2023-03-29)
 
 
