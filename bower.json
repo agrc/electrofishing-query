@@ -13,7 +13,8 @@
     "dijit-themes": "https://github.com/dojo/dijit-themes.git#1.14.0",
     "ladda-bootstrap": "^0.1.0",
     "sherlock": "agrc-sherlock#1.2.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "moment": "^2.29.4"
   },
   "resolutions": {
     "agrc": "6.1.5",
