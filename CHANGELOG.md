@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/agrc/electrofishing-query/compare/v1.3.0...v1.3.1) (2023-07-04)
+
+
+### 🐛 Bug Fixes
+
+* Q3 Dependency Bumps 🌲 ([12ddd6f](https://github.com/agrc/electrofishing-query/commit/12ddd6fc2918ee0d0b42e18c828e034a7ec2b329))
+
 ## [1.3.0](https://github.com/agrc/electrofishing-query/compare/v1.0.2-0...v1.3.0) (2023-04-05)
 
 
