@@ -70,6 +70,6 @@
     "uglify-js": "^3.17.4"
   },
   "dependencies": {
-    "firebase": "^9.23.0"
+    "firebase": "^10.1.0"
   }
 }
