@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/agrc/electrofishing-query/compare/v1.3.1...v1.3.2) (2023-09-26)
+
+
+### 🐛 Bug Fixes
+
+* **functions:** bump deps ([73be300](https://github.com/agrc/electrofishing-query/commit/73be300fe01c4267b5bf04f8c4c6e06ca12de7a4))
+
 ## [1.3.1](https://github.com/agrc/electrofishing-query/compare/v1.3.0...v1.3.1) (2023-07-04)
 
 
