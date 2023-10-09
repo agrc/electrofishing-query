@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.3](https://github.com/agrc/electrofishing-query/compare/v1.3.2...v1.3.3) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* use new GA4 analytics id and snippet ([f1d0c83](https://github.com/agrc/electrofishing-query/commit/f1d0c83e497f664359b979a12610d73f3126ab00))
+
+
+### 🌲 Dependencies
+
+* bump the ci-dependencies group with 1 update ([#130](https://github.com/agrc/electrofishing-query/issues/130)) ([74a9bcc](https://github.com/agrc/electrofishing-query/commit/74a9bccd50f2a8477a54ec087d846191eab407fe))
+* bump word-wrap from 1.2.3 to 1.2.5 in /functions ([01dbc64](https://github.com/agrc/electrofishing-query/commit/01dbc649e2618ca9a7679e087a26c6de0251d970))
+* **dev:** bump the safe-app-dependencies group with 7 updates ([e4cc878](https://github.com/agrc/electrofishing-query/commit/e4cc878e6e03399ad7fe7c35d2b82dd3e05c5419))
+
 ## [1.3.2](https://github.com/agrc/electrofishing-query/compare/v1.3.1...v1.3.2) (2023-09-26)
 
 
