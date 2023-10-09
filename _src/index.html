@@ -47,14 +47,19 @@
     <script src='app/run.js'></script>
     <!-- /build -->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-11849964-64"></script>
-    <script>
+    <!-- Google Analytics -->
+    <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-2DZDCJS6E7"
+      ></script>
+      <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+        function gtag() {
+          dataLayer.push(arguments);
+        }
         gtag('js', new Date());
-
-        gtag('config', 'UA-11849964-64');
+    
+        gtag('config', 'G-2DZDCJS6E7', { debug_mode: window.location.hostname === 'localhost' });
     </script>
 </body>
 </html>
