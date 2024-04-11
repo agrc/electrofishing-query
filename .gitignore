@@ -21,3 +21,4 @@ functions/.secret.local
 *-debug.log
 emulator_data/
 firestore_export*
+scripts/swq_secrets.py
