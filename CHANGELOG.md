@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.4.0](https://github.com/agrc/electrofishing-query/compare/v1.0.1...v1.4.0) (2024-04-11)
+
+
+### 🚀 Features
+
+* implement security via UtahID/Firebase ([6035914](https://github.com/agrc/electrofishing-query/commit/603591429ab667c2db1e03168a10e9c2f73a7d57)), closes [#67](https://github.com/agrc/electrofishing-query/issues/67)
+
+
+### 🐛 Bug Fixes
+
+* add correct domain to esri cors config ([ea566b5](https://github.com/agrc/electrofishing-query/commit/ea566b5a612ecf1923bf200e13e81c95cab0bccf))
+* add missing dependency ([d1bf4ff](https://github.com/agrc/electrofishing-query/commit/d1bf4ff64afe1f99587a4823e8bf566d569f6614))
+* add verbose flag so that we can see what's failing ([dadb2eb](https://github.com/agrc/electrofishing-query/commit/dadb2eba7c64d067da56e73e508bcba28d765aa1))
+* **build:** less specific action version ([6148785](https://github.com/agrc/electrofishing-query/commit/61487853d55150dddbe728c2e3d135e165716401))
+* bump esri package ([ec93d3b](https://github.com/agrc/electrofishing-query/commit/ec93d3b8f9d0861446a5da30269706be619f32ed))
+* bump functions deps and add dependabot config ([a64f392](https://github.com/agrc/electrofishing-query/commit/a64f392ede720b3587726dc57c13e9d46de5acfc))
+* **ci:** fix build script names ([b33cc54](https://github.com/agrc/electrofishing-query/commit/b33cc545eb3cdd15e43085f4fe63cf46e2d4bf1e))
+* **ci:** fix firebase config ([f8da8f9](https://github.com/agrc/electrofishing-query/commit/f8da8f916fce151576ead89ccf404cfae3365863))
+* **ci:** fix test grunt command name ([3264012](https://github.com/agrc/electrofishing-query/commit/3264012a80f16b777c309cff0b655bdcd679bdfc))
+* clean up and fix tests ([e814599](https://github.com/agrc/electrofishing-query/commit/e814599fbec968acbc676b39b766136ffe51e263))
+* database name in staging ([bfe4ff1](https://github.com/agrc/electrofishing-query/commit/bfe4ff1118e358faea8aa01eef16f69e62a926b2))
+* don't create commit or tag on bump ([1107002](https://github.com/agrc/electrofishing-query/commit/110700200a66e1299ef5d806a4bebbda4900b77d))
+* fix folder name in staging ([45499b4](https://github.com/agrc/electrofishing-query/commit/45499b464ff9af377abbadd7e106d610fa1f677e))
+* fix link to data entry app ([ecb4e17](https://github.com/agrc/electrofishing-query/commit/ecb4e179e9b80b463079257a28e67bc43a2675dc))
+* fix location of node version file ([3c04836](https://github.com/agrc/electrofishing-query/commit/3c04836df279f6bdba4d90ca1002141730a630a2))
+* fix tests ([0e277b8](https://github.com/agrc/electrofishing-query/commit/0e277b8dc5a7c8a94faebaa3eb083a4635aa17ca))
+* **functions:** bump deps ([2c369bf](https://github.com/agrc/electrofishing-query/commit/2c369bfe4db1d50a60bb0a173ab5932aa62605eb))
+* handle missing dojo config correctly ([ff27dd0](https://github.com/agrc/electrofishing-query/commit/ff27dd0739fa57f639d3cbd8364f68a99baa578f))
+* handle missing dojoConfig in deployed app ([1d86a44](https://github.com/agrc/electrofishing-query/commit/1d86a44bd39f96148c54d8b0e7a6cdcba9fe12bb))
+* implement standardized action workflows ([beb73a9](https://github.com/agrc/electrofishing-query/commit/beb73a986a50702f6d70c08a31c19056119600e6)), closes [#68](https://github.com/agrc/electrofishing-query/issues/68)
+* include service worker in build ([64bdb2d](https://github.com/agrc/electrofishing-query/commit/64bdb2dd9a2d5f61ca4fca30bf4e32cb4ca49da3))
+* install functions deps during deploy ([aa099b8](https://github.com/agrc/electrofishing-query/commit/aa099b82b3231451660cdc3c7256e308011c7e25))
+* Q2 Dep Bumps 🌲 ([5c10b7d](https://github.com/agrc/electrofishing-query/commit/5c10b7d12f0c8033dfa008c8b9091328654f4343))
+* Q3 Dependency Bumps 🌲 ([587feb5](https://github.com/agrc/electrofishing-query/commit/587feb5ab83ee6598da1cf6f2ec48d5e36aea38f))
+* remove TRANSECT_NUM field ([64477de](https://github.com/agrc/electrofishing-query/commit/64477dee4a238be051959bc8111dd113fc6215d4))
+* switch to bundled package ([b375dc1](https://github.com/agrc/electrofishing-query/commit/b375dc11ee89fb7a28b844ee3a94f7065eb15a0d))
+* update quad words for new dns and point at wri arcgis server ([bc6779a](https://github.com/agrc/electrofishing-query/commit/bc6779a288d3afd89c0c46c40ec736ee6258da9d))
+* use new GA4 analytics id and snippet ([1330b20](https://github.com/agrc/electrofishing-query/commit/1330b2010920105158e387f9bf5f78a92f51deae))
+
+
+### 🌲 Dependencies
+
+* bump dotenv from 16.3.1 to 16.4.5 in /functions in the safe-function-dependencies group ([#158](https://github.com/agrc/electrofishing-query/issues/158)) ([366fa2d](https://github.com/agrc/electrofishing-query/commit/366fa2d1ba91503596fb357ae2bc6bb60788f4aa))
+* bump express from 4.18.2 to 4.19.2 in /functions ([#150](https://github.com/agrc/electrofishing-query/issues/150)) ([47ed59a](https://github.com/agrc/electrofishing-query/commit/47ed59afd6ae24c7657abc30ec2c9fe46d1847ca))
+* bump follow-redirects from 1.15.2 to 1.15.4 in /functions ([#146](https://github.com/agrc/electrofishing-query/issues/146)) ([7d725b6](https://github.com/agrc/electrofishing-query/commit/7d725b62a63dcb35a174e543aceb2f7337bd0def))
+* bump follow-redirects from 1.15.4 to 1.15.6 in /functions ([#154](https://github.com/agrc/electrofishing-query/issues/154)) ([acede37](https://github.com/agrc/electrofishing-query/commit/acede377c65957043771a0f4028bc4e7d1bba0ee))
+* bump jose from 4.13.1 to 4.15.5 in /functions ([#155](https://github.com/agrc/electrofishing-query/issues/155)) ([cfb052e](https://github.com/agrc/electrofishing-query/commit/cfb052ed01cb146b74c838c4ec3afea203e17ca9))
+* bump protobufjs, firebase-admin and firebase-auth-arcgis-server-proxy in /functions ([#153](https://github.com/agrc/electrofishing-query/issues/153)) ([9eee0fb](https://github.com/agrc/electrofishing-query/commit/9eee0fb35f5d57393d0b8106762abf50c4ce9974))
+* bump the ci-dependencies group with 1 update ([#130](https://github.com/agrc/electrofishing-query/issues/130)) ([123e211](https://github.com/agrc/electrofishing-query/commit/123e211e280156e9e745211d30dd4b46bf7afd6a))
+* bump the safe-app-dependencies group with 5 updates ([#157](https://github.com/agrc/electrofishing-query/issues/157)) ([5aa46f7](https://github.com/agrc/electrofishing-query/commit/5aa46f78c795c5e8121d2d4a55da034f5b9057a5))
+* bump word-wrap from 1.2.3 to 1.2.5 in /functions ([09ad72c](https://github.com/agrc/electrofishing-query/commit/09ad72c7ee8429114ff8bd5285d848ffa60344b9))
+* **dev:** bump @babel/traverse from 7.23.0 to 7.23.2 ([8d530ba](https://github.com/agrc/electrofishing-query/commit/8d530ba4c7b7e07cf01ac124652b6dafaa603bd3))
+* **dev:** bump ip from 2.0.0 to 2.0.1 ([#149](https://github.com/agrc/electrofishing-query/issues/149)) ([fee7951](https://github.com/agrc/electrofishing-query/commit/fee79519b475d6cc82d2909f4cc61395d69767e5))
+* **dev:** bump the safe-app-dependencies group with 7 updates ([45cb7a6](https://github.com/agrc/electrofishing-query/commit/45cb7a6ee3fa3b8641d152283f9e5cd91ff04ab6))
+
+
+### 📖 Documentation Improvements
+
+* add additional copy files ([dc554c2](https://github.com/agrc/electrofishing-query/commit/dc554c2670a17832524e5cb93f295af40ba74e92))
+* remove travis badge ([a151c73](https://github.com/agrc/electrofishing-query/commit/a151c73b26e3c84e28222de61b2124bd6c6872d1))
+* update deploy instructions ([760f855](https://github.com/agrc/electrofishing-query/commit/760f855aff24282a9a2b6f363acb81dad66f10a2))
+* update prod & staging URLs ([89e58c6](https://github.com/agrc/electrofishing-query/commit/89e58c66d2395c02a476ddd5c9db7c3fabeab938))
+
 ## [1.3.3](https://github.com/agrc/electrofishing-query/compare/v1.3.2...v1.3.3) (2023-10-09)
 
 
