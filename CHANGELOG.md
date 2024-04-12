@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.4](https://github.com/agrc/electrofishing-query/compare/v1.3.3...v1.3.4) (2024-04-12)
+
+
+### 🌲 Dependencies
+
+* bump dotenv from 16.3.1 to 16.4.5 in /functions in the safe-function-dependencies group ([#158](https://github.com/agrc/electrofishing-query/issues/158)) ([366fa2d](https://github.com/agrc/electrofishing-query/commit/366fa2d1ba91503596fb357ae2bc6bb60788f4aa))
+* bump express from 4.18.2 to 4.19.2 in /functions ([#150](https://github.com/agrc/electrofishing-query/issues/150)) ([47ed59a](https://github.com/agrc/electrofishing-query/commit/47ed59afd6ae24c7657abc30ec2c9fe46d1847ca))
+* bump follow-redirects from 1.15.2 to 1.15.4 in /functions ([#146](https://github.com/agrc/electrofishing-query/issues/146)) ([7d725b6](https://github.com/agrc/electrofishing-query/commit/7d725b62a63dcb35a174e543aceb2f7337bd0def))
+* bump follow-redirects from 1.15.4 to 1.15.6 in /functions ([#154](https://github.com/agrc/electrofishing-query/issues/154)) ([acede37](https://github.com/agrc/electrofishing-query/commit/acede377c65957043771a0f4028bc4e7d1bba0ee))
+* bump jose from 4.13.1 to 4.15.5 in /functions ([#155](https://github.com/agrc/electrofishing-query/issues/155)) ([cfb052e](https://github.com/agrc/electrofishing-query/commit/cfb052ed01cb146b74c838c4ec3afea203e17ca9))
+* bump protobufjs, firebase-admin and firebase-auth-arcgis-server-proxy in /functions ([#153](https://github.com/agrc/electrofishing-query/issues/153)) ([9eee0fb](https://github.com/agrc/electrofishing-query/commit/9eee0fb35f5d57393d0b8106762abf50c4ce9974))
+* bump the safe-app-dependencies group with 5 updates ([#157](https://github.com/agrc/electrofishing-query/issues/157)) ([5aa46f7](https://github.com/agrc/electrofishing-query/commit/5aa46f78c795c5e8121d2d4a55da034f5b9057a5))
+* **dev:** bump @babel/traverse from 7.23.0 to 7.23.2 ([8d530ba](https://github.com/agrc/electrofishing-query/commit/8d530ba4c7b7e07cf01ac124652b6dafaa603bd3))
+* **dev:** bump ip from 2.0.0 to 2.0.1 ([#149](https://github.com/agrc/electrofishing-query/issues/149)) ([fee7951](https://github.com/agrc/electrofishing-query/commit/fee79519b475d6cc82d2909f4cc61395d69767e5))
+
 ## [1.3.4-0](https://github.com/agrc/electrofishing-query/compare/v1.3.3...v1.3.4-0) (2024-04-11)
 
 
