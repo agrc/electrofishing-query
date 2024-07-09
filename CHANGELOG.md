@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/agrc/electrofishing-query/compare/v1.3.5-0...v1.3.5) (2024-07-09)
+
+
+### Bug Fixes
+
+* add event id label ([5555ebe](https://github.com/agrc/electrofishing-query/commit/5555ebef033389d6b6ee974f6ca040511d1b2c1c))
+
 ## [1.3.5-0](https://github.com/agrc/electrofishing-query/compare/v1.3.4...v1.3.5-0) (2024-07-09)
 
 
