@@ -155,7 +155,8 @@ define([
 
             var resultColumns = [
                 {
-                    field: fn.EVENT_ID
+                    field: fn.EVENT_ID,
+                    label: 'Event ID'
                 }, {
                     field: fn.EVENT_DATE,
                     label: 'Event Date',
