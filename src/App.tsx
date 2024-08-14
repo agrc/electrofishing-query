@@ -1,7 +1,17 @@
 import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
-import { Button, Drawer, Footer, Header, Sherlock, TextField, masqueradeProvider } from '@ugrc/utah-design-system';
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Drawer,
+  Footer,
+  Header,
+  Sherlock,
+  TextField,
+  masqueradeProvider,
+} from '@ugrc/utah-design-system';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useOverlayTrigger } from 'react-aria';
@@ -133,12 +143,14 @@ export default function App() {
               <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
                 <div>
                   <h3 className="text-lg font-semibold">Purpose</h3>
-                  {purpose.map((p) => (
-                    <div key={p} className="ml-2 flex gap-1">
-                      <input type="checkbox" id={p} name={p} value={p} />
-                      <label htmlFor={p}>{p}</label>
-                    </div>
-                  ))}
+                  <CheckboxGroup>
+                    {purpose.map((p) => (
+                      <div key={p} className="ml-2 flex gap-1">
+                        <Checkbox type="checkbox" id={p} name={p} value={p} />
+                        <label htmlFor={p}>{p}</label>
+                      </div>
+                    ))}
+                  </CheckboxGroup>
                 </div>
                 <div className="w-30 flex justify-end">
                   <Button variant="secondary">clear all</Button>
