@@ -78,6 +78,5 @@ jobs:
           build-command: npm run build -- --mode dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
         env:
-          VITE_DISCOVER: ${{ secrets.VITE_DISCOVER }}
-          VITE_WEB_API: ${{ secrets.VITE_WEB_API }}
+          VITE_DISCOVER_QUAD_WORD: ${{ secrets.DISCOVER_QUAD_WORD }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
