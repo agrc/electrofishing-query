@@ -3,7 +3,7 @@ import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import { Button, Drawer, Footer, Header, Sherlock, TextField, masqueradeProvider } from '@ugrc/utah-design-system';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useOverlayTriggerState } from 'react-stately';
@@ -56,7 +56,7 @@ const purpose = ['Depletion estimate', 'Mark-Recapture', 'Disease certification'
 export default function App() {
   const app = useFirebaseApp();
   const logEvent = useAnalytics();
-  const { zoom, placeGraphic, mapView } = useMap();
+  const { zoom, placeGraphic } = useMap();
   const sideBarState = useOverlayTriggerState({ defaultOpen: window.innerWidth >= config.MIN_DESKTOP_WIDTH });
   const sideBarTriggerProps = useOverlayTrigger(
     {
@@ -102,18 +102,18 @@ export default function App() {
     onSherlockMatch: onSherlockMatch,
   };
 
-  const onClick = useCallback(
-    (event: __esri.ViewImmediateClickEvent) => {
-      mapView!.hitTest(event).then(({ results }) => {
-        if (!results.length) {
-          trayState.open();
+  // const onClick = useCallback(
+  //   (event: __esri.ViewImmediateClickEvent) => {
+  //     mapView!.hitTest(event).then(({ results }) => {
+  //       if (!results.length) {
+  //         trayState.open();
 
-          return setInitialIdentifyLocation(event.mapPoint);
-        }
-      });
-    },
-    [mapView, trayState],
-  );
+  //         return setInitialIdentifyLocation(event.mapPoint);
+  //       }
+  //     });
+  //   },
+  //   [mapView, trayState],
+  // );
 
   return (
     <>
@@ -198,7 +198,7 @@ export default function App() {
           <div className="relative flex flex-1 flex-col rounded">
             <div className="relative flex-1 overflow-hidden dark:rounded">
               <ErrorBoundary FallbackComponent={ErrorFallback}>
-                <MapContainer onClick={onClick} />
+                <MapContainer />
               </ErrorBoundary>
               <Drawer
                 type="tray"
