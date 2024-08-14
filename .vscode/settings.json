@@ -1,29 +1,44 @@
 {
-  "python.formatting.provider": "yapf",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+  },
   "cSpell.words": [
-    "ABES",
-    "autoplay",
-    "cloudfunctions",
-    "firestore",
-    "fishsample",
-    "fullscreen",
+    "apos",
+    "arcgis",
+    "basemap",
+    "browserslist",
+    "cadastre",
+    "electrofishing",
+    "escaperegexp",
+    "esrijs",
+    "firebaserc",
+    "geocode",
+    "Geospatial",
+    "gnis",
     "hostingchannels",
-    "mapservice",
-    "nonwritable",
-    "nosniff",
-    "oidc",
-    "outfile",
-    "prebuild",
-    "SAMEORIGIN",
-    "setversion",
-    "UDWR",
-    "udwrgis",
-    "utahid",
-    "WILDADMIN",
-    "wrimaps"
+    "lods",
+    "noopener",
+    "noreferrer",
+    "packagejson",
+    "sgid",
+    "sitla",
+    "srid",
+    "tagname",
+    "tailwindcss",
+    "topo",
+    "ugrc",
+    "usgs",
+    "vite",
+    "wkid"
   ],
-  "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/pull_request.yml",
-    ".github/workflows/push.yml"
-  ]
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "python.languageServer": "Pylance",
+  "python.testing.pytestEnabled": true
 }
