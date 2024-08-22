@@ -1,16 +1,14 @@
-import Polygon from '@arcgis/core/geometry/Polygon';
+import Extent from '@arcgis/core/geometry/Extent';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import EsriMap from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import LayerSelector from '@ugrc/layer-selector';
 import { useEffect, useRef, useState } from 'react';
-import cityExtents from './data/cityExtents';
 import { useMap } from './hooks';
 import { randomize } from './utils';
 
 import '@ugrc/layer-selector/src/LayerSelector.css';
 
-const { item: randomExtent } = randomize<__esri.GraphicProperties>(cityExtents);
 const urls = {
   landownership:
     'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
@@ -29,6 +27,16 @@ type SelectorOptions = {
   overlays?: Array<string | LayerFactory>;
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 };
+
+const statewide = new Extent({
+  xmax: -11762120.612131765,
+  xmin: -13074391.513731329,
+  ymax: 5225035.106177688,
+  ymin: 4373832.359194187,
+  spatialReference: {
+    wkid: 3857,
+  },
+});
 
 export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickEventHandler }) => {
   const mapNode = useRef<HTMLDivElement | null>(null);
@@ -52,7 +60,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
     mapView.current = new MapView({
       container: mapNode.current,
       map: mapComponent.current,
-      extent: new Polygon(randomExtent.geometry).extent,
+      extent: statewide,
       ui: {
         components: ['zoom'],
       },
