@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
@@ -10,7 +10,7 @@
 /dist
 
 # secrets
-.env.local
+*.local
 *.odc
 *.pyc
 *.sde
@@ -29,4 +29,6 @@ yarn-error.log*
 
 # original app
 /_src
-ui-debug.log
+
+# firebase emulators
+*.log
