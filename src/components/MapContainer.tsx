@@ -5,7 +5,6 @@ import MapView from '@arcgis/core/views/MapView';
 import LayerSelector from '@ugrc/layer-selector';
 import { useEffect, useRef, useState } from 'react';
 import { useMap } from './hooks';
-import { randomize } from './utils';
 
 import '@ugrc/layer-selector/src/LayerSelector.css';
 
@@ -71,7 +70,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
     const selectorOptions: SelectorOptions = {
       view: mapView.current,
       quadWord: import.meta.env.VITE_DISCOVER_QUAD_WORD,
-      baseLayers: ['Hybrid', 'Lite', 'Terrain', 'Topo', 'Color IR'],
+      baseLayers: ['Hybrid', { token: 'Lite', selected: true }, 'Terrain', 'Topo', 'Color IR'],
       overlays: [
         'Address Points',
         {
@@ -82,13 +81,6 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
         },
       ],
       position: 'top-right',
-    };
-
-    const { index: randomBaseMapIndex } = randomize(selectorOptions.baseLayers);
-
-    selectorOptions.baseLayers[randomBaseMapIndex] = {
-      token: selectorOptions.baseLayers[randomBaseMapIndex] as string,
-      selected: true,
     };
 
     setSelectorOptions(selectorOptions);
