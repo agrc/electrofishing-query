@@ -1,5 +1,6 @@
 import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import {
   Button,
@@ -24,6 +25,7 @@ import { DnrLogo } from './components/Logo';
 import config from './config';
 
 const version = import.meta.env.PACKAGE_VERSION;
+const secureServiceUrl = import.meta.env.VITE_PROXY_URL;
 
 const ErrorFallback = ({ error }: { error: Error }) => {
   return (
@@ -66,7 +68,7 @@ const purpose = ['Depletion estimate', 'Mark-Recapture', 'Disease certification'
 export default function App() {
   const app = useFirebaseApp();
   const logEvent = useAnalytics();
-  const { zoom, placeGraphic } = useMap();
+  const { zoom, placeGraphic, addLayers } = useMap();
   const sideBarState = useOverlayTriggerState({ defaultOpen: window.innerWidth >= config.MIN_DESKTOP_WIDTH });
   const sideBarTriggerProps = useOverlayTrigger(
     {
@@ -92,6 +94,36 @@ export default function App() {
     }
     initPerformance();
   }, [app]);
+
+  // add public layers
+  useEffect(() => {
+    const streams = new FeatureLayer({
+      url: `${secureServiceUrl}/reference/0`,
+      id: 'streams',
+    });
+
+    const lakes = new FeatureLayer({
+      url: `${secureServiceUrl}/reference/1`,
+      id: 'lakes',
+    });
+
+    const stations = new FeatureLayer({
+      url: `${secureServiceUrl}/mapservice/0`,
+      id: 'stations',
+    });
+
+    const events = new FeatureLayer({
+      url: `${secureServiceUrl}/mapservice/1`,
+      id: 'stations',
+    });
+
+    const fish = new FeatureLayer({
+      url: `${secureServiceUrl}/mapservice/2`,
+      id: 'stations',
+    });
+
+    addLayers([streams, lakes, stations, events, fish]);
+  }, [addLayers]);
 
   const onSherlockMatch = (graphics: Graphic[]) => {
     // summary:
