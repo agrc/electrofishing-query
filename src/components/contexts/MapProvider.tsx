@@ -9,6 +9,7 @@ export const MapContext = createContext<{
   setMapView: (mapView: MapView) => void;
   placeGraphic: (graphic: Graphic | Graphic[] | null) => void;
   zoom: (geometry: __esri.GoToTarget2D) => void;
+  addLayers: (layers: __esri.Layer[]) => void;
 } | null>(null);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
@@ -29,6 +30,16 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
     setGraphic(graphic);
   };
 
+  const addLayers = (layers: __esri.Layer[]): void => {
+    if (!mapView) {
+      console.warn('attempting to add a layer before the mapView is set');
+
+      return;
+    }
+
+    mapView.map.addMany(layers);
+  };
+
   return (
     <MapContext.Provider
       value={{
@@ -36,6 +47,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
         setMapView,
         placeGraphic,
         zoom,
+        addLayers,
       }}
     >
       {children}
