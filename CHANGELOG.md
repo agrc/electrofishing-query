@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0-0](https://github.com/agrc/electrofishing-query/compare/v1.3.6...v2.0.0-0) (2024-08-22)
+
+
+### Bug Fixes
+
+* **functions:** remove unnecessary env var ([6f748d2](https://github.com/agrc/electrofishing-query/commit/6f748d21fd35f0439dec0dfa9fda3ad54ab31e55))
+
+
+### Dependencies
+
+* update packages ([ce2ed03](https://github.com/agrc/electrofishing-query/commit/ce2ed031ab57ecb1d3032d3198348dcb27c3737a))
+
 ## [1.3.8](https://github.com/agrc/electrofishing-query/compare/v1.3.7...v1.3.8) (2024-10-07)
 
 
