@@ -38,6 +38,7 @@ jobs:
         env:
           VITE_DISCOVER: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          AGS_HOST: ${{ secrets.AGS_HOST }}
 
   deploy-prod:
     name: Deploy to production
@@ -68,6 +69,7 @@ jobs:
         env:
           VITE_DISCOVER: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          AGS_HOST: ${{ secrets.AGS_HOST }}
 
   notify:
     name: Notifications
