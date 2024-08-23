@@ -2,7 +2,6 @@ import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import { Button, Drawer, Footer, Header, Sherlock, masqueradeProvider } from '@ugrc/utah-design-system';
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -13,23 +12,11 @@ import Filter from './components/Filter';
 import { useMap } from './components/hooks';
 import { DnrLogo } from './components/Logo';
 import config from './config';
+import ErrorFallback from './ErrorFallback';
 
 const version = import.meta.env.PACKAGE_VERSION;
 
 console.log('application version:', version);
-
-const ErrorFallback = ({ error }: { error: Error }) => {
-  return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre style={{ color: 'red' }}>{error.message}</pre>
-    </div>
-  );
-};
-
-ErrorFallback.propTypes = {
-  error: PropTypes.object,
-};
 
 esriConfig.assetsPath = './assets';
 const links = [
