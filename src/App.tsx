@@ -164,7 +164,7 @@ export default function App() {
           <DnrLogo />
           <div className="flex h-full grow items-center gap-3">
             <h2 className="font-heading text-3xl font-black text-zinc-600 sm:text-5xl dark:text-zinc-100">
-              Electrofishing query
+              Electrofishing Query
             </h2>
           </div>
         </Header>
