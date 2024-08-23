@@ -28,11 +28,13 @@
     "srid",
     "tagname",
     "tailwindcss",
+    "tanstack",
     "topo",
     "ugrc",
     "usgs",
     "vite",
-    "wkid"
+    "wkid",
+    "wrimaps"
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
