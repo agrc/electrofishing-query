@@ -30,6 +30,10 @@ jobs:
           identity-provider: ${{ secrets.IDENTITY_PROVIDER }}
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           project-id: ${{ secrets.PROJECT_ID }}
+          prebuild-command: |
+            cd functions
+            npm ci
+            cd ..
           build-command: npm run build -- --mode dev
         env:
           VITE_DISCOVER: ${{ secrets.DISCOVER }}
@@ -50,6 +54,10 @@ jobs:
           identity-provider: ${{ secrets.IDENTITY_PROVIDER }}
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           project-id: ${{ secrets.PROJECT_ID }}
+          prebuild-command: |
+            cd functions
+            npm ci
+            cd ..
           build-command: npm run build -- --mode production
           service-now-instance: ${{ secrets.SN_INSTANCE }}
           service-now-table: ${{ secrets.SN_TABLE }}
