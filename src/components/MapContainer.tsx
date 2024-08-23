@@ -52,9 +52,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
       return;
     }
 
-    mapComponent.current = new EsriMap({
-      basemap: {},
-    });
+    mapComponent.current = new EsriMap();
 
     mapView.current = new MapView({
       container: mapNode.current,
