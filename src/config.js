@@ -3,6 +3,11 @@ const config = {
   WEB_MERCATOR_WKID: 3857,
   MARKER_FILL_COLOR: [234, 202, 0, 0.5],
   MARKER_OUTLINE_COLOR: [77, 42, 84, 1],
+  fieldNames: {
+    events: {
+      SURVEY_PURPOSE: 'SURVEY_PURPOSE',
+    },
+  },
 };
 
 export default config;
