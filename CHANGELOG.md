@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0-3](https://github.com/agrc/electrofishing-query/compare/v2.0.0-2...v2.0.0-3) (2024-08-23)
+
+
+### Bug Fixes
+
+* set env vars for function via .env file ([199cbbd](https://github.com/agrc/electrofishing-query/commit/199cbbd802186c8e1c29cc30568cd807be977b19))
+
 ## [2.0.0-2](https://github.com/agrc/electrofishing-query/compare/v2.0.0-1...v2.0.0-2) (2024-08-23)
 
 
