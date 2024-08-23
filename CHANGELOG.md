@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0-1](https://github.com/agrc/electrofishing-query/compare/v2.0.0-0...v2.0.0-1) (2024-08-23)
+
+
+### Dependencies
+
+* **dev:** bump eslint-plugin-react-hooks from 5.1.0-rc-fb9a90fa48-20240614 to 5.1.0-rc.0 ([#197](https://github.com/agrc/electrofishing-query/issues/197)) ([873146f](https://github.com/agrc/electrofishing-query/commit/873146f2b7fa4398bef8daed8997769edfe7afd0))
+
 ## [2.0.0-0](https://github.com/agrc/electrofishing-query/compare/v1.3.6...v2.0.0-0) (2024-08-22)
 
 
