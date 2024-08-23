@@ -78,11 +78,11 @@ export default function Filter() {
         <h3 className="text-lg font-semibold">Species and length</h3>
         <div className="flex flex-col gap-2">
           <div className="ml-2 flex gap-1">
-            species <TextField className="w-20" />
+            <TextField label="species" className="w-20" />
           </div>
           <div className="ml-2 flex gap-1">
-            min <TextField className="w-20" />
-            max <TextField className="w-20" />
+            <TextField label="min" className="w-20" />
+            <TextField label="max" className="w-20" />
           </div>
           <div className="w-30 flex justify-end">
             <Button variant="secondary">clear all</Button>
@@ -93,8 +93,8 @@ export default function Filter() {
         <h3 className="text-lg font-semibold">Date range</h3>
         <div className="flex flex-col gap-2">
           <div className="ml-2 flex gap-1">
-            from <TextField className="w-20" />
-            to <TextField className="w-20" />
+            <TextField label="from" className="w-20" />
+            <TextField label="to" className="w-20" />
           </div>
           <div className="w-30 flex justify-end">
             <Button variant="secondary">clear all</Button>
@@ -105,7 +105,7 @@ export default function Filter() {
         <h3 className="text-lg font-semibold">Water body</h3>
         <div className="flex flex-col gap-2">
           <div className="ml-2 flex gap-1">
-            name <TextField className="w-20" />
+            <TextField label="name" className="w-20" />
           </div>
           <div className="w-30 flex justify-end">
             <Button variant="secondary">clear all</Button>
