@@ -1,78 +1,49 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import { useQuery } from '@tanstack/react-query';
-import { Button, Checkbox, CheckboxGroup, TextField } from '@ugrc/utah-design-system';
-import ky from 'ky';
-import { useEffect } from 'react';
-import config from '../config';
+import { Button, TextField } from '@ugrc/utah-design-system';
+import { useEffect, useRef } from 'react';
+import { useFilter } from './contexts/FilterProvider';
+import Purpose from './filters/Purpose';
 import { useMap } from './hooks';
+import { getStationQuery } from './queryHelpers';
 
 const emptyDefinition = '1=0';
 
-type DomainValue = {
-  name: string;
-  code: string;
-};
-type Field = {
-  name: string;
-  domain: {
-    codedValues: DomainValue[];
-  };
-};
-type FeatureLayerDefinition = {
-  fields: Field[];
-};
-
-async function getPurposes(): Promise<DomainValue[]> {
-  // TODO: this should probably come from env var
-  // if we do end up staying with the public service, then it will need to be published to the test server (wrimaps.at.utah.gov)
-  const url = 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/1?f=json';
-  const responseJson = (await ky(url).json()) as FeatureLayerDefinition;
-
-  const purposeField = responseJson.fields.find(
-    (field: Field) => field.name === config.fieldNames.events.SURVEY_PURPOSE,
-  );
-
-  if (!purposeField) {
-    throw new Error(`${config.fieldNames.events.SURVEY_PURPOSE} field not found in ${url}`);
-  }
-
-  return purposeField.domain.codedValues;
-}
-
-export default function Filter() {
+export default function Filter(): JSX.Element {
   const { addLayers, mapView } = useMap();
-  const purposeQuery = useQuery({ queryKey: ['purposes'], queryFn: getPurposes });
+  const stationsLayer = useRef<FeatureLayer>();
+  const { filter } = useFilter();
 
   useEffect(() => {
-    if (!mapView) {
+    if (!mapView || !addLayers) {
       return;
     }
 
-    const stations = new FeatureLayer({
+    stationsLayer.current = new FeatureLayer({
       url: 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/0',
       definitionExpression: emptyDefinition,
     });
-    addLayers([stations]);
+    addLayers([stationsLayer.current]);
   }, [addLayers, mapView]);
+
+  useEffect(() => {
+    if (!stationsLayer.current) {
+      return;
+    }
+
+    if (Object.keys(filter).length > 0) {
+      const newQuery = getStationQuery(Object.values(filter));
+      console.log('new query:', newQuery);
+      stationsLayer.current.definitionExpression = newQuery;
+    } else {
+      stationsLayer.current.definitionExpression = emptyDefinition;
+    }
+  }, [filter]);
 
   return (
     <>
       <h2 className="text-xl font-bold">Map filters</h2>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
-        <div>
-          <h3 className="text-lg font-semibold">Purpose</h3>
-          <CheckboxGroup>
-            {purposeQuery.data?.map(({ name, code }) => (
-              <div key={code} className="ml-2 flex gap-1">
-                <Checkbox type="checkbox" id={code} name={code} value={code} />
-                <label htmlFor={code}>{name}</label>
-              </div>
-            ))}
-          </CheckboxGroup>
-        </div>
-        <div className="w-30 flex justify-end">
-          <Button variant="secondary">clear all</Button>
-        </div>
+        <Purpose />
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
         <h3 className="text-lg font-semibold">Species and length</h3>

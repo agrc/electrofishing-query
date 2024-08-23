@@ -3,10 +3,44 @@ const config = {
   WEB_MERCATOR_WKID: 3857,
   MARKER_FILL_COLOR: [234, 202, 0, 0.5],
   MARKER_OUTLINE_COLOR: [77, 42, 84, 1],
+  databaseName: 'Electrofishing',
   fieldNames: {
-    events: {
-      SURVEY_PURPOSE: 'SURVEY_PURPOSE',
-    },
+    // common
+    STATION_ID: 'STATION_ID',
+
+    // Stations
+    NAME: 'NAME',
+    STREAM_TYPE: 'STREAM_TYPE',
+    WATER_ID: 'WATER_ID',
+
+    // SamplingEvents
+    EVENT_ID: 'EVENT_ID',
+    SURVEY_PURPOSE: 'SURVEY_PURPOSE',
+    EVENT_DATE: 'EVENT_DATE',
+    OBSERVERS: 'OBSERVERS',
+
+    // Fish
+    SPECIES: 'SPECIES', // dynamic field created via SQL query in AGSStores
+    SPECIES_CODE: 'SPECIES_CODE',
+    LENGTH: 'LENGTH',
+
+    // Equipment
+    TYPES: 'TYPES', // dynamic field created via SQL query in AGSStores
+
+    // Streams/Lakes
+    WaterName: 'WaterName',
+    DWR_WaterID: 'DWR_WaterID',
+    Permanent_Identifier: 'Permanent_Identifier',
+    ReachCode: 'ReachCode',
+    COUNTY: 'COUNTY',
+  },
+
+  tableNames: {
+    events: 'SamplingEvents_evw',
+    stations: 'Stations_evw',
+    fish: 'Fish_evw',
+    streams: 'UDWRStreams',
+    lakes: 'UDWRLakes',
   },
 };
 
