@@ -1,15 +1,47 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import { useQuery } from '@tanstack/react-query';
 import { Button, Checkbox, CheckboxGroup, TextField } from '@ugrc/utah-design-system';
+import ky from 'ky';
 import { useEffect } from 'react';
+import config from '../config';
 import { useMap } from './hooks';
 
-const secureServiceUrl = import.meta.env.VITE_PROXY_URL;
+const emptyDefinition = '1=0';
 
-// TODO!: replace partial list with actual list
-const purpose = ['Depletion estimate', 'Mark-Recapture', 'Disease certification', 'Genetics', 'Other'];
+type DomainValue = {
+  name: string;
+  code: string;
+};
+type Field = {
+  name: string;
+  domain: {
+    codedValues: DomainValue[];
+  };
+};
+type FeatureLayerDefinition = {
+  fields: Field[];
+};
+
+async function getPurposes(): Promise<DomainValue[]> {
+  // TODO: this should probably come from env var
+  // if we do end up staying with the public service, then it will need to be published to the test server (wrimaps.at.utah.gov)
+  const url = 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/1?f=json';
+  const responseJson = (await ky(url).json()) as FeatureLayerDefinition;
+
+  const purposeField = responseJson.fields.find(
+    (field: Field) => field.name === config.fieldNames.events.SURVEY_PURPOSE,
+  );
+
+  if (!purposeField) {
+    throw new Error(`${config.fieldNames.events.SURVEY_PURPOSE} field not found in ${url}`);
+  }
+
+  return purposeField.domain.codedValues;
+}
 
 export default function Filter() {
   const { addLayers, mapView } = useMap();
+  const purposeQuery = useQuery({ queryKey: ['purposes'], queryFn: getPurposes });
 
   useEffect(() => {
     if (!mapView) {
@@ -17,8 +49,8 @@ export default function Filter() {
     }
 
     const stations = new FeatureLayer({
-      url: `${secureServiceUrl}/mapservice/0`,
-      id: 'stations',
+      url: 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/0',
+      definitionExpression: emptyDefinition,
     });
     addLayers([stations]);
   }, [addLayers, mapView]);
@@ -30,10 +62,10 @@ export default function Filter() {
         <div>
           <h3 className="text-lg font-semibold">Purpose</h3>
           <CheckboxGroup>
-            {purpose.map((p) => (
-              <div key={p} className="ml-2 flex gap-1">
-                <Checkbox type="checkbox" id={p} name={p} value={p} />
-                <label htmlFor={p}>{p}</label>
+            {purposeQuery.data?.map(({ name, code }) => (
+              <div key={code} className="ml-2 flex gap-1">
+                <Checkbox type="checkbox" id={code} name={code} value={code} />
+                <label htmlFor={code}>{name}</label>
               </div>
             ))}
           </CheckboxGroup>
