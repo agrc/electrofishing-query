@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0-2](https://github.com/agrc/electrofishing-query/compare/v2.0.0-1...v2.0.0-2) (2024-08-23)
+
+
+### Bug Fixes
+
+* add missing env var ([a1083f3](https://github.com/agrc/electrofishing-query/commit/a1083f34df8f44e90db1d83ec69c56f5428bcca5))
+
 ## [2.0.0-1](https://github.com/agrc/electrofishing-query/compare/v2.0.0-0...v2.0.0-1) (2024-08-23)
 
 
