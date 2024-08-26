@@ -1,5 +1,38 @@
 # Changelog
 
+## [2.0.0-4](https://github.com/agrc/electrofishing-query/compare/v2.0.0-3...v2.0.0-4) (2024-08-26)
+
+
+### Features
+
+* add logged out state and refactor filter into it's own component ([212e73e](https://github.com/agrc/electrofishing-query/commit/212e73ef591aefae02b1eeed6f2e355da6debd3d)), closes [#182](https://github.com/agrc/electrofishing-query/issues/182)
+* add root-level error fallback ([990ba22](https://github.com/agrc/electrofishing-query/commit/990ba22754f1f9ba3f64013754c34347135b6f1e))
+* get purpose values from feature service ([06b1fea](https://github.com/agrc/electrofishing-query/commit/06b1fea26f061dbe778fbfb827fbf9e0601fc9e3))
+* implement purpose filter and wire to map ([f8debc7](https://github.com/agrc/electrofishing-query/commit/f8debc73a6fb55824fa21c60cdf57d4f9d02c8b6))
+
+
+### Bug Fixes
+
+* get rid of "failed to load basemap" console error from esri js ([a4c503c](https://github.com/agrc/electrofishing-query/commit/a4c503ca737d45e18e16cc9ec025213bf1a40c3d))
+* get rid of aria label warning in console ([d7cb7cf](https://github.com/agrc/electrofishing-query/commit/d7cb7cf00d49370d765b1f93b320dedd17c63969))
+* title ([7826019](https://github.com/agrc/electrofishing-query/commit/7826019b4560d025268f80a1dac2db5fb0de1bb4))
+
+
+### Dependencies
+
+* package audit fix ([88f18ff](https://github.com/agrc/electrofishing-query/commit/88f18ffbcaa4239ffd11b06571ff7818dc2e0a2a))
+
+
+### Documentation
+
+* add copy step ([855447e](https://github.com/agrc/electrofishing-query/commit/855447e7e39d4b034246a134e774a48a753afab4))
+* add local dev setup instructions ([841513e](https://github.com/agrc/electrofishing-query/commit/841513e120f887a381e704e89edbef54b420818c))
+
+
+### Styles
+
+* add border around light mode map and match bottom border ([01c348b](https://github.com/agrc/electrofishing-query/commit/01c348bbc2ff7564ff7d446e64fd4e9267ce5f4a))
+
 ## [2.0.0-3](https://github.com/agrc/electrofishing-query/compare/v2.0.0-2...v2.0.0-3) (2024-08-23)
 
 
