@@ -15,7 +15,7 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
       info.table = config.tableNames.events;
       info.where = `${config.fieldNames.EVENT_ID} IN (
                       SELECT ${config.fieldNames.EVENT_ID} FROM
-                      ${config.databaseName}.WILDADMIN.${config.tableNames.fish}
+                      ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish}
                       WHERE ${info.where})`;
     }
 
@@ -41,7 +41,7 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
     }
 
     return `${previous}(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID}
-                  FROM ${config.databaseName}.WILDADMIN.${current} WHERE ${where}))`;
+                  FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${current} WHERE ${where}))`;
   }, '');
 
   return removeIrrelevantWhiteSpace(query);
