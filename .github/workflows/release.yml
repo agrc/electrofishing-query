@@ -40,6 +40,7 @@ jobs:
         env:
           VITE_DISCOVER: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          VITE_DATABASE_CONFIG: ${{ secrets.DATABASE_CONFIG }}
 
   deploy-prod:
     name: Deploy to production
@@ -72,6 +73,7 @@ jobs:
         env:
           VITE_DISCOVER: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          VITE_DATABASE_CONFIG: ${{ secrets.DATABASE_CONFIG }}
 
   notify:
     name: Notifications
