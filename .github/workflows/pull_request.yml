@@ -40,6 +40,8 @@ jobs:
   test-unit:
     name: Unit tests
     runs-on: ubuntu-latest
+    env:
+      VITE_DATABASE_CONFIG: '{"databaseName":"DB_NAME","user":"USER"}'
 
     steps:
       - name: ⬇️ Set up code
@@ -84,3 +86,4 @@ jobs:
         env:
           VITE_DISCOVER_QUAD_WORD: ${{ secrets.DISCOVER_QUAD_WORD }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          VITE_DATABASE_CONFIG: ${{ secrets.DATABASE_CONFIG }}
