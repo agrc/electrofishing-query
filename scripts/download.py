@@ -15,8 +15,8 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 import arcpy
 import pyodbc
-
 import swq_secrets as secrets
+
 
 def zip_fgdb(path, zip):
     path = normpath(path)
@@ -87,20 +87,17 @@ def main(ids, type):
             arcpy.management.CopyFeatures(events_layer, join(fgdb, 'SamplingEvents'))
 
             arcpy.AddMessage('copying stations feature class')
-            stations_where = 'STATION_ID IN (SELECT STATION_ID FROM {}.WILDADMIN.SamplingEvents_evw where {})'.format(
-                secrets.DATABASE, events_where)
+            stations_where = f'STATION_ID IN (SELECT STATION_ID FROM {secrets.DATABASE}.{secrets.USERNAME}.SamplingEvents_evw where {events_where})'
             stations_layer = arcpy.management.MakeFeatureLayer(join(sde, 'Stations'), 'stations_layer', stations_where)
             arcpy.management.CopyFeatures(stations_layer, join(fgdb, 'Stations'))
 
             arcpy.AddMessage('copying streams feature class')
-            stations_where = 'Permanent_Identifier IN (SELECT WATER_ID FROM {}.WILDADMIN.Stations_evw where {})'.format(
-                secrets.DATABASE, stations_where)
+            stations_where = f'Permanent_Identifier IN (SELECT WATER_ID FROM {secrets.DATABASE}.{secrets.USERNAME}.Stations_evw where {stations_where})'
             streams_layer = arcpy.management.MakeFeatureLayer(join(sde, 'UDWRStreams'), 'streams_layer', stations_where)
             arcpy.management.CopyFeatures(streams_layer, join(fgdb, 'UDWRStreams'))
 
             arcpy.AddMessage('copying lakes feature class')
-            stations_where = 'Permanent_Identifier IN (SELECT WATER_ID FROM {}.WILDADMIN.Stations_evw where {})'.format(
-                secrets.DATABASE, stations_where)
+            stations_where = f'Permanent_Identifier IN (SELECT WATER_ID FROM {secrets.DATABASE}.{secrets.USERNAME}.Stations_evw where {stations_where})'
             lakes_layer = arcpy.management.MakeFeatureLayer(join(sde, 'UDWRLakes'), 'lakes_layer', stations_where)
             arcpy.management.CopyFeatures(lakes_layer, join(fgdb, 'UDWRLakes'))
 
@@ -116,8 +113,7 @@ def main(ids, type):
                     destination_is_table = arcpy.Describe(join(sde, destination)).datasetType == 'Table'
                     if destination.split('.')[-1] != dataset and destination_is_table:
                         arcpy.AddMessage('copying {} table'.format(destination))
-                        where = '{} IN (SELECT {} FROM {}.WILDADMIN.{} where {})'.format(
-                            foreign_key, primary_key, secrets.DATABASE, dataset, events_where)
+                        where = f'{foreign_key} IN (SELECT {primary_key} FROM {secrets.DATABASE}.{secrets.USERNAME}.{dataset} where {events_where})'
                         layer = arcpy.management.MakeTableView(join(sde, destination), destination + '_layer', where)
                         arcpy.management.CopyRows(layer, join(fgdb, destination))
 
@@ -155,7 +151,7 @@ def main(ids, type):
                 csv_name = basename(query_file).replace('sql', 'csv')
                 arcpy.AddMessage(csv_name)
                 with open(query_file, 'r') as file:
-                    query = file.read().format(secrets.DATABASE, formatted_ids)
+                    query = file.read().format(secrets.DATABASE, formatted_ids, secrets.USERNAME)
                     cursor.execute(query)
 
                     csv_file_path = join(arcpy.env.scratchFolder, csv_name)
