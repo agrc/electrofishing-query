@@ -26,5 +26,6 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
 ### Setup
 
 1. `npm install` from root and functions folders.
+1. `npm run copy:arcgis` to copy the ArcGIS API for JavaScript files to the public folder. This needs to be done anytime the arcgis package is updated.
 1. Create `.env.local` files in root and functions folders using the corresponding `.env` files as examples.
 1. `npm start` to start the development server.
