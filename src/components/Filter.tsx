@@ -19,6 +19,7 @@ export default function Filter(): JSX.Element {
     }
 
     stationsLayer.current = new FeatureLayer({
+      // TODO: this needs to be switched out in favor of the AGS_HOST env var once we have UtahID wired up.
       url: 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/0',
       definitionExpression: emptyDefinition,
     });
