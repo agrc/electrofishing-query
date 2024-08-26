@@ -1,7 +1,7 @@
-if (!process.env.VITE_DATABASE_CONFIG) {
+if (!import.meta.env.VITE_DATABASE_CONFIG) {
   throw new Error('VITE_DATABASE_CONFIG must be set in .env');
 }
-const databaseSecrets: { databaseName: string; user: string } = JSON.parse(process.env.VITE_DATABASE_CONFIG);
+const databaseSecrets: { databaseName: string; user: string } = JSON.parse(import.meta.env.VITE_DATABASE_CONFIG);
 
 const config = {
   MIN_DESKTOP_WIDTH: 768,
