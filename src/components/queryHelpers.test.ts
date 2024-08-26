@@ -23,11 +23,11 @@ describe('getStationQuery', () => {
       },
     ];
     const expected = removeIrrelevantWhiteSpace(
-      `(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne
+      `(${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM DB_NAME.USER.TableOne
                       WHERE 1 = 1 AND 1 = 2))
-                  AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableTwo
+                  AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM DB_NAME.USER.TableTwo
                       WHERE 1 = 3))
-                  AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableThree
+                  AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM DB_NAME.USER.TableThree
                       WHERE 1 = 4))`,
     );
 
@@ -45,7 +45,7 @@ describe('getStationQuery', () => {
         table: 'TableOne',
       },
     ];
-    const expected = `(1 = 1) AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.TableOne WHERE 1 = 2))`;
+    const expected = `(1 = 1) AND (${config.fieldNames.STATION_ID} IN (SELECT ${config.fieldNames.STATION_ID} FROM DB_NAME.USER.TableOne WHERE 1 = 2))`;
 
     const results = getStationQuery(input);
     expect(results).toBe(expected);
@@ -74,9 +74,9 @@ describe('getStationQuery', () => {
       },
     ];
     const expected = removeIrrelevantWhiteSpace(`(${config.fieldNames.STATION_ID} IN (
-                  SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.events}
+                  SELECT ${config.fieldNames.STATION_ID} FROM DB_NAME.USER.${config.tableNames.events}
                   WHERE ${config.fieldNames.EVENT_ID} IN (
-                      SELECT ${config.fieldNames.EVENT_ID} FROM ${config.databaseName}.WILDADMIN.${config.tableNames.fish}
+                      SELECT ${config.fieldNames.EVENT_ID} FROM DB_NAME.USER.${config.tableNames.fish}
                       WHERE 1 = 1
                   ) AND 2 = 2
               ))`);
