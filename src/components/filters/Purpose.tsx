@@ -60,7 +60,7 @@ export default function Purpose(): JSX.Element {
         <h3 className="text-lg font-semibold">Purpose</h3>
         <CheckboxGroup onChange={setSelectedValues} value={selectedValues}>
           {purposesDomain.data?.map(({ name, code }) => (
-            <div key={code} className="ml-2 flex gap-1">
+            <div key={code} className="flex gap-1">
               <Checkbox type="checkbox" id={code} name={code} value={code} />
               <label htmlFor={code}>{name}</label>
             </div>
@@ -69,7 +69,7 @@ export default function Purpose(): JSX.Element {
       </div>
       <div className="w-30 flex justify-end">
         <Button variant="secondary" onPress={() => setSelectedValues([])}>
-          clear all
+          Clear
         </Button>
       </div>
     </>
