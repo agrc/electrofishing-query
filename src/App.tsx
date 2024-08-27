@@ -1,7 +1,16 @@
 import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
-import { Button, Drawer, Footer, Header, Sherlock, masqueradeProvider } from '@ugrc/utah-design-system';
+import {
+  Button,
+  Drawer,
+  ExternalLink,
+  Footer,
+  Header,
+  masqueradeProvider,
+  Sherlock,
+  UtahIdLogin,
+} from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -156,11 +165,26 @@ export default function App() {
           </section>
         ) : (
           <section className="flex flex-1 items-center justify-center">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-center text-2xl font-bold">Please log in to use the application</h2>
-              <Button variant="primary" onClick={() => setIsAuthenticated(true)}>
-                Log in
-              </Button>
+            <div className="flex max-w-lg flex-col gap-4">
+              <h2 className="text-center text-2xl font-bold">How to access this application</h2>
+              <p>
+                The Electrofishing query application requires a Utahid to access protected data. Please visit{' '}
+                <ExternalLink href="https://id.utah.gov/">Utahid</ExternalLink> to register and then return to this page
+                to login. If you already have a Utahid account you may login using the link below.
+              </p>
+              <div className="mx-3 my-3 flex items-center">
+                <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-600"></span>
+                <span className="mx-3 text-xs uppercase tracking-wide">continue with</span>
+                <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-600"></span>
+              </div>
+              <div className="mx-auto">
+                <UtahIdLogin />
+              </div>
+              <div className="mx-auto">
+                <Button variant="primary" onPress={() => setIsAuthenticated(true)}>
+                  Log in
+                </Button>
+              </div>
             </div>
           </section>
         )}
