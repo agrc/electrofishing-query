@@ -1,6 +1,7 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { Button, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useRef } from 'react';
+import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import DateRange from './filters/DateRange';
 import Purpose from './filters/Purpose';
@@ -20,8 +21,7 @@ export default function Filter(): JSX.Element {
     }
 
     stationsLayer.current = new FeatureLayer({
-      // TODO: this needs to be switched out in favor of the AGS_HOST env var once we have UtahID wired up.
-      url: 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/0',
+      url: config.urls.stations,
       definitionExpression: emptyDefinition,
     });
     addLayers([stationsLayer.current]);
