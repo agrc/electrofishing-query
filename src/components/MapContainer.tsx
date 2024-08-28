@@ -7,11 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMap } from './hooks';
 
 import '@ugrc/layer-selector/src/LayerSelector.css';
-
-const urls = {
-  landownership:
-    'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
-};
+import config from '../config';
 
 type LayerFactory = {
   Factory: new () => __esri.Layer;
@@ -73,7 +69,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
         'Address Points',
         {
           Factory: VectorTileLayer,
-          url: urls.landownership,
+          url: config.urls.landownership,
           id: 'Land Ownership',
           opacity: 0.3,
         },
