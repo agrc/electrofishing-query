@@ -1,37 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Button, Checkbox, CheckboxGroup } from '@ugrc/utah-design-system';
-import ky from 'ky';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
-
-type DomainValue = {
-  name: string;
-  code: string;
-};
-type Field = {
-  name: string;
-  domain: {
-    codedValues: DomainValue[];
-  };
-};
-type FeatureLayerDefinition = {
-  fields: Field[];
-};
+import { DomainValue } from './filters.types';
+import { getDomainValues } from './utilities';
 
 async function getPurposes(): Promise<DomainValue[]> {
-  // TODO: this should probably come from env var
-  // if we do end up staying with the public service, then it will need to be published to the test server (wrimaps.at.utah.gov)
-  const url = 'https://wrimaps.utah.gov/arcgis/rest/services/Electrofishing/Public/MapServer/1?f=json';
-  const responseJson = (await ky(url).json()) as FeatureLayerDefinition;
-
-  const purposeField = responseJson.fields.find((field: Field) => field.name === config.fieldNames.SURVEY_PURPOSE);
-
-  if (!purposeField) {
-    throw new Error(`${config.fieldNames.SURVEY_PURPOSE} field not found in ${url}`);
-  }
-
-  return purposeField.domain.codedValues;
+  return await getDomainValues(config.urls.events, config.fieldNames.SURVEY_PURPOSE);
 }
 
 export default function Purpose(): JSX.Element {
@@ -61,7 +37,7 @@ export default function Purpose(): JSX.Element {
         <CheckboxGroup onChange={setSelectedValues} value={selectedValues}>
           {purposesDomain.data?.map(({ name, code }) => (
             <div key={code} className="flex gap-1">
-              <Checkbox type="checkbox" id={code} name={code} value={code} />
+              <Checkbox id={code} name={code} value={code} />
               <label htmlFor={code}>{name}</label>
             </div>
           ))}

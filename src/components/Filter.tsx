@@ -5,6 +5,7 @@ import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import DateRange from './filters/DateRange';
 import Purpose from './filters/Purpose';
+import SpeciesLength from './filters/SpeciesLength';
 import { useMap } from './hooks';
 import { getStationQuery } from './queryHelpers';
 
@@ -51,19 +52,7 @@ export default function Filter(): JSX.Element {
         <DateRange />
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
-        <h3 className="text-lg font-semibold">Species and length</h3>
-        <div className="flex flex-col gap-2">
-          <div className="ml-2 flex gap-1">
-            <TextField label="species" className="w-20" />
-          </div>
-          <div className="ml-2 flex gap-1">
-            <TextField label="min" className="w-20" />
-            <TextField label="max" className="w-20" />
-          </div>
-          <div className="w-30 flex justify-end">
-            <Button variant="secondary">clear all</Button>
-          </div>
-        </div>
+        <SpeciesLength />
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
         <h3 className="text-lg font-semibold">Water body</h3>
