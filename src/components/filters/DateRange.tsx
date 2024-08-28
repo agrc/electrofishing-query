@@ -42,7 +42,7 @@ export default function DateRange() {
         <div className="flex gap-1">
           <TextField
             label="From"
-            className="w-32"
+            className="min-w-0 flex-grow"
             type="date"
             value={dates.from}
             onChange={(newDate: string) => onChange(newDate, 'from')}
@@ -50,7 +50,7 @@ export default function DateRange() {
           />
           <TextField
             label="To"
-            className="w-32"
+            className="min-w-0 flex-grow"
             type="date"
             value={dates.to}
             onChange={(newDate: string) => onChange(newDate, 'to')}
