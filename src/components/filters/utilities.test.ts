@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import config from '../../config';
-import { SpeciesLengthRow } from './filters.types';
+import { SpeciesLengthRow } from './SpeciesLength';
 import { getQuery, isPositiveWholeNumber } from './utilities';
 
 describe('isPositiveWholeNumber', () => {

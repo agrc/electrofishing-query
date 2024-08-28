@@ -3,10 +3,9 @@ import { Button, Checkbox, CheckboxGroup } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
-import { DomainValue } from './filters.types';
 import { getDomainValues } from './utilities';
 
-async function getPurposes(): Promise<DomainValue[]> {
+async function getPurposes() {
   return await getDomainValues(config.urls.events, config.fieldNames.SURVEY_PURPOSE);
 }
 
