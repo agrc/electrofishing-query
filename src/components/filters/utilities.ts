@@ -1,11 +1,15 @@
 import ky from 'ky';
 import config from '../../config';
-import { DomainValue, SpeciesLengthRow } from './filters.types';
+import { SpeciesLengthRow } from './SpeciesLength';
 
 export function isPositiveWholeNumber(value: string): boolean {
   return Number.isInteger(Number(value)) && Number(value) > 0;
 }
 
+type DomainValue = {
+  name: string;
+  code: string;
+};
 type Field = {
   name: string;
   domain: {
