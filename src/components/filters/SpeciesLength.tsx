@@ -4,17 +4,22 @@ import { Button, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
-import { DomainValue, SpeciesLengthRow } from './filters.types';
 import { getDomainValues, getIsInvalidRange, getQuery, isPositiveWholeNumber } from './utilities';
 
-type RowControlsProps = {
+export type SpeciesLengthRow = {
+  species: string;
+  min: string;
+  max: string;
+};
+
+interface RowControlsProps extends SpeciesLengthRow {
   onChange: (newValue: SpeciesLengthRow) => void;
   addRow: () => void;
   removeRow: () => void;
   isLast?: boolean;
-} & SpeciesLengthRow;
+}
 
-async function getSpecies(): Promise<DomainValue[]> {
+async function getSpecies() {
   return await getDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
 }
 
