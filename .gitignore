@@ -33,5 +33,6 @@ yarn-error.log*
 # firebase emulators
 *.log
 emulator_data
+firebase-export*
 
 *storybook.log
