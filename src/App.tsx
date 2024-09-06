@@ -2,7 +2,7 @@ import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import {
-  // Avatar,
+  Avatar,
   Drawer,
   Footer,
   Header,
@@ -136,7 +136,7 @@ export default function App() {
               Electrofishing Query
             </h2>
           </div>
-          {/* <Avatar user={currentUser} /> */}
+          <Avatar user={currentUser} />
         </Header>
         {currentUser ? (
           <section className="relative flex min-h-0 flex-1 gap-2 overflow-x-hidden md:mr-2">
