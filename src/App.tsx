@@ -1,13 +1,21 @@
 import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
-import { Button, Drawer, Footer, Header, Sherlock, masqueradeProvider } from '@ugrc/utah-design-system';
+import {
+  Button,
+  Drawer,
+  Footer,
+  Header,
+  Sherlock,
+  masqueradeProvider,
+  useFirebaseAnalytics,
+  useFirebaseApp,
+} from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useOverlayTriggerState } from 'react-stately';
 import { MapContainer } from './components';
-import { useAnalytics, useFirebaseApp } from './components/contexts';
 import { FilterProvider } from './components/contexts/FilterProvider';
 import Filter from './components/Filter';
 import { useMap } from './components/hooks';
@@ -43,7 +51,7 @@ const wkid = 26912;
 
 export default function App() {
   const app = useFirebaseApp();
-  const logEvent = useAnalytics();
+  const logEvent = useFirebaseAnalytics();
   const { zoom, placeGraphic } = useMap();
   const sideBarState = useOverlayTriggerState({ defaultOpen: window.innerWidth >= config.MIN_DESKTOP_WIDTH });
   const sideBarTriggerProps = useOverlayTrigger(
@@ -102,7 +110,7 @@ export default function App() {
   //   },
   //   [mapView, trayState],
   // );
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
     <>
