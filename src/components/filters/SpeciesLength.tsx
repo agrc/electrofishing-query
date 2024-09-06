@@ -1,6 +1,6 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/16/solid';
 import { useQuery } from '@tanstack/react-query';
-import { Button, TextField } from '@ugrc/utah-design-system';
+import { Button, Select, SelectItem, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
@@ -30,20 +30,19 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
   return (
     <>
       <div className="flex w-full items-end gap-1">
-        {/* TODO: switch this out with a design system component when it's implemented */}
-        <select
-          id="species"
-          className="w-40 flex-grow"
-          value={species}
-          onChange={(e) => onChange({ species: e.target.value, min, max })}
+        <Select
+          className="min-w-28"
+          label="Species"
+          onSelectionChange={(newValue: string) => onChange({ species: newValue, min, max })}
+          placeholder=" "
+          selectedKey={species}
         >
-          <option value=""></option>
           {speciesDomain.data?.map(({ name, code }) => (
-            <option key={code} value={code}>
+            <SelectItem key={code} id={code}>
               {name}
-            </option>
+            </SelectItem>
           ))}
-        </select>
+        </Select>
         <TextField
           label="Min"
           className="min-w-0 flex-grow"
