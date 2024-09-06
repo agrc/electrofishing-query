@@ -89,7 +89,7 @@ export default function App() {
     if (app && import.meta.env.DEV) {
       const auth = getAuth(app);
       console.log('connecting to auth emulator');
-      connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+      connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
     }
   }, [app]);
 
