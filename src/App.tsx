@@ -2,16 +2,19 @@ import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import {
-  Button,
+  // Avatar,
   Drawer,
   Footer,
   Header,
   Sherlock,
+  UtahIdLogin,
   masqueradeProvider,
   useFirebaseAnalytics,
   useFirebaseApp,
+  useFirebaseAuth,
 } from '@ugrc/utah-design-system';
-import { useEffect, useState } from 'react';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import { useEffect } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useOverlayTriggerState } from 'react-stately';
@@ -76,7 +79,18 @@ export default function App() {
 
       return getPerformance(app);
     }
-    initPerformance();
+
+    if (!import.meta.env.DEV) {
+      initPerformance();
+    }
+  }, [app]);
+
+  useEffect(() => {
+    if (app && import.meta.env.DEV) {
+      const auth = getAuth(app);
+      console.log('connecting to auth emulator');
+      connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+    }
   }, [app]);
 
   const onSherlockMatch = (graphics: Graphic[]) => {
@@ -110,7 +124,7 @@ export default function App() {
   //   },
   //   [mapView, trayState],
   // );
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { currentUser } = useFirebaseAuth();
 
   return (
     <>
@@ -122,8 +136,9 @@ export default function App() {
               Electrofishing Query
             </h2>
           </div>
+          {/* <Avatar user={currentUser} /> */}
         </Header>
-        {isAuthenticated ? (
+        {currentUser ? (
           <section className="relative flex min-h-0 flex-1 gap-2 overflow-x-hidden md:mr-2">
             <FilterProvider>
               <Drawer main state={sideBarState} {...sideBarTriggerProps}>
@@ -164,11 +179,11 @@ export default function App() {
           </section>
         ) : (
           <section className="flex flex-1 items-center justify-center">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-4">
               <h2 className="text-center text-2xl font-bold">Please log in to use the application</h2>
-              <Button variant="primary" onClick={() => setIsAuthenticated(true)}>
-                Log in
-              </Button>
+              <div>
+                <UtahIdLogin />
+              </div>
             </div>
           </section>
         )}
