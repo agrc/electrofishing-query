@@ -33,7 +33,7 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
         <Select
           className="min-w-28"
           label="Species"
-          onSelectionChange={(newValue: string) => onChange({ species: newValue, min, max })}
+          onSelectionChange={(newValue) => onChange({ species: newValue as string, min, max })}
           placeholder=" "
           selectedKey={species}
         >
