@@ -6,6 +6,7 @@ const databaseSecrets: { databaseName: string; user: string } = JSON.parse(impor
 // TODO: this should come from an env var once we get UtahID wired up
 const arcgisServerHost = 'wrimaps.utah.gov';
 const mapService = `https://${arcgisServerHost}/arcgis/rest/services/Electrofishing/Public/MapServer`;
+const referenceMapService = `https://${arcgisServerHost}/arcgis/rest/services/Electrofishing/Reference/MapServer`;
 
 const config = {
   MIN_DESKTOP_WIDTH: 768,
@@ -59,6 +60,8 @@ const config = {
     fish: `${mapService}/2`,
     landownership:
       'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
+    streams: `${referenceMapService}/0`,
+    lakes: `${referenceMapService}/1`,
   },
 };
 

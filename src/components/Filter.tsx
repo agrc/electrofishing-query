@@ -1,9 +1,9 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import { Button, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useRef } from 'react';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import DateRange from './filters/DateRange';
+import Location from './filters/Location';
 import Purpose from './filters/Purpose';
 import SpeciesLength from './filters/SpeciesLength';
 import { useMap } from './hooks';
@@ -55,15 +55,7 @@ export default function Filter(): JSX.Element {
         <SpeciesLength />
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
-        <h3 className="text-lg font-semibold">Water body</h3>
-        <div className="flex flex-col gap-2">
-          <div className="ml-2 flex gap-1">
-            <TextField label="name" className="w-20" />
-          </div>
-          <div className="w-30 flex justify-end">
-            <Button variant="secondary">clear all</Button>
-          </div>
-        </div>
+        <Location />
       </div>
     </>
   );

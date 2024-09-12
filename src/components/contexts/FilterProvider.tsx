@@ -6,7 +6,7 @@ export type QueryInfo = {
   table: string;
 };
 type FilterState = Record<string, QueryInfo>;
-type FilterKeys = 'purpose' | 'date' | 'speciesLength';
+type FilterKeys = 'purpose' | 'date' | 'speciesLength' | 'location';
 type Action =
   | {
       type: 'UPDATE_TABLE';
