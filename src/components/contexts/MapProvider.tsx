@@ -37,6 +37,12 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
+    if (!mapView.map) {
+      console.warn('mapView does not have a map property');
+
+      return;
+    }
+
     mapView.map.addMany(layers);
   };
 
