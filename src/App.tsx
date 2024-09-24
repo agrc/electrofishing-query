@@ -2,26 +2,29 @@ import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import Viewpoint from '@arcgis/core/Viewpoint.js';
 import {
-  Button,
   Drawer,
   ExternalLink,
   Footer,
   Header,
   masqueradeProvider,
   Sherlock,
+  useFirebaseAnalytics,
+  useFirebaseApp,
+  useFirebaseAuth,
   UtahIdLogin,
 } from '@ugrc/utah-design-system';
-import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { useEffect } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useOverlayTriggerState } from 'react-stately';
 import { MapContainer } from './components';
-import { useAnalytics, useFirebaseApp } from './components/contexts';
-import { FilterProvider } from './components/contexts/FilterProvider';
+import { FilterProvider } from './components/contexts';
 import Filter from './components/Filter';
 import { useMap } from './components/hooks';
 import { DnrLogo } from './components/Logo';
 import config from './config';
+import { connectToEmulators } from './Emulators';
 import ErrorFallback from './ErrorFallback';
 
 const version = import.meta.env.PACKAGE_VERSION;
@@ -52,7 +55,9 @@ const wkid = 26912;
 
 export default function App() {
   const app = useFirebaseApp();
-  const logEvent = useAnalytics();
+  const auth = getAuth(app);
+  const { currentUser } = useFirebaseAuth();
+  const logEvent = useFirebaseAnalytics();
   const { zoom, placeGraphic } = useMap();
   const sideBarState = useOverlayTriggerState({ defaultOpen: window.innerWidth >= config.MIN_DESKTOP_WIDTH });
   const sideBarTriggerProps = useOverlayTrigger(
@@ -70,6 +75,7 @@ export default function App() {
     trayState,
   );
 
+  connectToEmulators(import.meta.env.DEV, auth, null, null);
   // initialize firebase performance metrics
   useEffect(() => {
     async function initPerformance() {
@@ -111,7 +117,6 @@ export default function App() {
   //   },
   //   [mapView, trayState],
   // );
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <>
@@ -124,7 +129,7 @@ export default function App() {
             </h2>
           </div>
         </Header>
-        {isAuthenticated ? (
+        {currentUser ? (
           <section className="relative flex min-h-0 flex-1 gap-2 overflow-x-hidden md:mr-2">
             <FilterProvider>
               <Drawer main state={sideBarState} {...sideBarTriggerProps}>
@@ -172,18 +177,17 @@ export default function App() {
                 <ExternalLink href="https://id.utah.gov/">Utahid</ExternalLink> to register and then return to this page
                 to login. If you already have a Utahid account you may login using the link below.
               </p>
-              <div className="mx-3 my-3 flex items-center">
+              <p>
+                If you are not authorized to access this application, you will need to contact the electrofishing
+                administrators to gain access.
+              </p>
+              <div className="mx-10 my-3 flex items-center">
                 <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-600"></span>
                 <span className="mx-3 text-xs uppercase tracking-wide">continue with</span>
                 <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-600"></span>
               </div>
               <div className="mx-auto">
                 <UtahIdLogin />
-              </div>
-              <div className="mx-auto">
-                <Button variant="primary" onPress={() => setIsAuthenticated(true)}>
-                  Log in
-                </Button>
               </div>
             </div>
           </section>
