@@ -1,3 +1,2 @@
-export * from './AnalyticsProvider';
-export * from './FirebaseAppProvider';
+export * from './FilterProvider';
 export * from './MapProvider';
