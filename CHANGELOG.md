@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0-5](https://github.com/agrc/electrofishing-query/compare/v2.0.0-4...v2.0.0-5) (2024-09-25)
+
+
+### Features
+
+* add Utahid authentication ([168ef5c](https://github.com/agrc/electrofishing-query/commit/168ef5c345044a11cd98aa3737f849b4e374b919))
+
+
+### Bug Fixes
+
+* set default map to Hybrid ([56f7733](https://github.com/agrc/electrofishing-query/commit/56f77331baeaefda801d932d48102ebb5dac39d0)), closes [#188](https://github.com/agrc/electrofishing-query/issues/188)
+
+
+### Dependencies
+
+* **dev:** bump vite in the npm_and_yarn group across 1 directory ([6b242c0](https://github.com/agrc/electrofishing-query/commit/6b242c002daddb1876f2a0575fc95f728867e271))
+* update packages to access utahid login ([04c27fd](https://github.com/agrc/electrofishing-query/commit/04c27fd5d39fe59d79a594cedb070105bcdf6263))
+
 ## [2.0.0-4](https://github.com/agrc/electrofishing-query/compare/v2.0.0-3...v2.0.0-4) (2024-08-26)
 
 
