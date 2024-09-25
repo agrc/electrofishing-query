@@ -68,7 +68,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
     const selectorOptions: SelectorOptions = {
       view: mapView.current,
       quadWord: import.meta.env.VITE_DISCOVER_QUAD_WORD,
-      baseLayers: ['Hybrid', { token: 'Lite', selected: true }, 'Terrain', 'Topo', 'Color IR'],
+      baseLayers: ['Hybrid', 'Lite', 'Terrain', 'Topo', 'Color IR'],
       overlays: [
         'Address Points',
         {
