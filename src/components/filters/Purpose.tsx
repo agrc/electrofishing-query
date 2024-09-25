@@ -61,7 +61,7 @@ export default function Purpose(): JSX.Element {
         <CheckboxGroup onChange={setSelectedValues} value={selectedValues}>
           {purposesDomain.data?.map(({ name, code }) => (
             <div key={code} className="ml-2 flex gap-1">
-              <Checkbox type="checkbox" id={code} name={code} value={code} />
+              <Checkbox id={code} name={code} value={code} />
               <label htmlFor={code}>{name}</label>
             </div>
           ))}
