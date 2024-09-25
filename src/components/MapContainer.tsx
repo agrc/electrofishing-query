@@ -86,6 +86,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
     return () => {
       mapView.current?.destroy();
       mapComponent.current?.destroy();
+      setMapView(undefined);
     };
   }, [setMapView]);
 

@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import { createContext, ReactNode, useState } from 'react';
 
 export const MapContext = createContext<{
-  mapView: MapView | null;
-  setMapView: (mapView: MapView) => void;
+  mapView?: MapView;
+  setMapView: (mapView: MapView | undefined) => void;
   placeGraphic: (graphic: Graphic | Graphic[] | null) => void;
   zoom: (geometry: __esri.GoToTarget2D) => void;
   addLayers: (layers: __esri.Layer[]) => void;
 } | null>(null);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
-  const [mapView, setMapView] = useState<MapView | null>(null);
+  const [mapView, setMapView] = useState<MapView | undefined>(undefined);
   const { setGraphic } = useGraphicManager(mapView);
 
   const zoom = (geometry: __esri.GoToTarget2D): void => {
