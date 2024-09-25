@@ -37,7 +37,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    mapView.map.addMany(layers);
+    mapView.when(() => mapView.map.addMany(layers));
   };
 
   return (
