@@ -75,7 +75,7 @@ export default function App() {
     trayState,
   );
 
-  connectToEmulators(import.meta.env.DEV, auth, null, null);
+  connectToEmulators(import.meta.env.DEV, auth);
   // initialize firebase performance metrics
   useEffect(() => {
     async function initPerformance() {
