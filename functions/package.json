@@ -13,7 +13,7 @@
     "dotenv": "^16.4.5",
     "firebase-admin": "^12.2.0",
     "firebase-auth-arcgis-server-proxy": "^2.0.2",
-    "firebase-functions": "^5.0.1"
+    "firebase-functions": "^6.0.1"
   },
   "engines": {
     "node": "20"
