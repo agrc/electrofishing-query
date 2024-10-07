@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import initProxy from 'firebase-auth-arcgis-server-proxy';
-import functions from 'firebase-functions';
+import functions from 'firebase-functions/v1';
 
 const options = {
     host: process.env.AGS_HOST,
