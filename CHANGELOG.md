@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.8](https://github.com/agrc/electrofishing-query/compare/v1.3.7...v1.3.8) (2024-10-07)
+
+
+### Bug Fixes
+
+* workaround breaking change in uglify ([6c9026c](https://github.com/agrc/electrofishing-query/commit/6c9026cddb49ae40ca3ffb6bc90b2771b95c67cb))
+
 ## [1.3.7](https://github.com/agrc/electrofishing-query/compare/v1.3.6...v1.3.7) (2024-10-07)
 
 
