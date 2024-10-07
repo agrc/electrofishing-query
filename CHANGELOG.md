@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.7](https://github.com/agrc/electrofishing-query/compare/v1.3.6...v1.3.7) (2024-10-07)
+
+
+### Dependencies
+
+* bump firebase-functions ([57b8f55](https://github.com/agrc/electrofishing-query/commit/57b8f55b87ff4aa289f6097e81a72148ba56c517))
+* bump the npm_and_yarn group in /functions with 7 updates ([5e2b8d0](https://github.com/agrc/electrofishing-query/commit/5e2b8d088eb7091ad81897e65a7ea3deec2da075))
+* bump the npm_and_yarn group with 2 updates ([2988f10](https://github.com/agrc/electrofishing-query/commit/2988f10262d30bea90a4dcb96efd53c0914af2d8))
+* bump the safe-app-dependencies group with 5 updates ([958b578](https://github.com/agrc/electrofishing-query/commit/958b57883bd931a11adb903f129ec00b9eea603c))
+
 ## [1.3.6](https://github.com/agrc/electrofishing-query/compare/v1.3.5...v1.3.6) (2024-07-09)
 
 
