@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.10](https://github.com/agrc/electrofishing-query/compare/v1.3.9...v1.3.10) (2024-10-07)
+
+
+### Bug Fixes
+
+* **functions:** switch to non-default v1 import ([a4f30e6](https://github.com/agrc/electrofishing-query/commit/a4f30e63e5392b7e59346c00bdec2cf3279cf543))
+
 ## [1.3.9](https://github.com/agrc/electrofishing-query/compare/v1.3.8...v1.3.9) (2024-10-07)
 
 
