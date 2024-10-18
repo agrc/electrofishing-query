@@ -1,13 +1,12 @@
 import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
-import Viewpoint from '@arcgis/core/Viewpoint.js';
 import {
   Drawer,
   Footer,
   Header,
   Sherlock,
   UtahIdLogin,
-  masqueradeProvider,
+  featureServiceProvider,
   useFirebaseAnalytics,
   useFirebaseApp,
   useFirebaseAuth,
@@ -48,8 +47,6 @@ const links = [
     action: { url: 'https://gis.utah.gov/' },
   },
 ];
-const url = 'https://masquerade.ugrc.utah.gov/arcgis/rest/services/UtahLocator/GeocodeServer';
-const wkid = 26912;
 
 export default function App() {
   const app = useFirebaseApp();
@@ -101,14 +98,42 @@ export default function App() {
     //      private
     logEvent('sherlock:zoom');
 
-    zoom(new Viewpoint({ scale: 10000, targetGeometry: graphics[0].geometry }));
+    zoom(graphics[0].geometry);
     placeGraphic(graphics);
   };
 
-  const masqueradeSherlockOptions = {
-    provider: masqueradeProvider(url, wkid),
+  const { currentUser } = useFirebaseAuth();
+  const kyOptions = {
+    hooks: {
+      beforeRequest: [
+        async (request: Request) => {
+          console.log('interceptor ky options triggered');
+          request.headers.set('Authorization', `Bearer ${await currentUser?.getIdToken()}`);
+        },
+      ],
+    },
+  };
+  const streamsSherlockOptions = {
+    provider: featureServiceProvider(
+      config.urls.streams,
+      config.fieldNames.WaterName,
+      // @ts-expect-error the type for this may be incorrect
+      config.fieldNames.COUNTY,
+      kyOptions,
+    ),
     maxResultsToDisplay: 10,
-    onSherlockMatch: onSherlockMatch,
+    onSherlockMatch,
+  };
+  const lakesSherlockOptions = {
+    provider: featureServiceProvider(
+      config.urls.lakes,
+      config.fieldNames.WaterName,
+      // @ts-expect-error the type for this may be incorrect
+      config.fieldNames.COUNTY,
+      kyOptions,
+    ),
+    maxResultsToDisplay: 10,
+    onSherlockMatch,
   };
 
   // const onClick = useCallback(
@@ -123,7 +148,6 @@ export default function App() {
   //   },
   //   [mapView, trayState],
   // );
-  const { currentUser } = useFirebaseAuth();
   useEffect(() => {
     if (currentUser) {
       // this should take care of all requests made through the esri js api
@@ -162,12 +186,12 @@ export default function App() {
                   <h2 className="text-xl font-bold">Map controls</h2>
                   <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
-                      <Sherlock {...masqueradeSherlockOptions} label="Find a stream" />
+                      <Sherlock {...streamsSherlockOptions} label="Find a stream" />
                     </ErrorBoundary>
                   </div>
                   <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
-                      <Sherlock {...masqueradeSherlockOptions} label="Find a lake" />
+                      <Sherlock {...lakesSherlockOptions} label="Find a lake" />
                     </ErrorBoundary>
                   </div>
                 </div>
