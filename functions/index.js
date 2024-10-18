@@ -4,6 +4,7 @@ import { onRequest } from 'firebase-functions/https';
 
 const options = {
   host: process.env.AGS_HOST,
+  verbose: !!process.env.FIREBASE_FUNCTIONS_EMULATOR,
   mappings: [
     {
       from: /^\/toolbox/,
