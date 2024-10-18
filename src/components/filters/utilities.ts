@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import { useFirebaseAuth } from '@ugrc/utah-design-system';
 import ky from 'ky';
 import config from '../../config';
 import { SpeciesLengthRow } from './SpeciesLength';
@@ -20,16 +22,32 @@ type FeatureLayerDefinition = {
   fields: Field[];
 };
 
-export async function getDomainValues(url: string, fieldName: string): Promise<DomainValue[]> {
-  const responseJson = (await ky(`${url}?f=json`).json()) as FeatureLayerDefinition;
+export function useDomainValues(url: string, fieldName: string) {
+  const { currentUser } = useFirebaseAuth();
+  const getValues = async () => {
+    if (!currentUser) {
+      throw new Error('User not logged in');
+    }
 
-  const field = responseJson.fields.find((field: Field) => field.name === fieldName);
+    const responseJson = (await ky(`${url}?f=json`, {
+      headers: {
+        Authorization: `Bearer ${await currentUser.getIdToken()}`,
+      },
+    }).json()) as FeatureLayerDefinition;
 
-  if (!field) {
-    throw new Error(`${fieldName} field not found in ${url}`);
-  }
+    const field = responseJson.fields.find((field: Field) => field.name === fieldName);
 
-  return field.domain.codedValues;
+    if (!field) {
+      throw new Error(`${fieldName} field not found in ${url}`);
+    }
+
+    return field.domain.codedValues;
+  };
+
+  return useQuery({
+    queryKey: [url, fieldName],
+    queryFn: getValues,
+  });
 }
 
 export function getIsInvalidRange(min: string, max: string) {
