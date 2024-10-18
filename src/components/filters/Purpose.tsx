@@ -1,16 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
 import { Button, Checkbox, CheckboxGroup } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
-import { getDomainValues } from './utilities';
-
-async function getPurposes() {
-  return await getDomainValues(config.urls.events, config.fieldNames.SURVEY_PURPOSE);
-}
+import { useDomainValues } from './utilities';
 
 export default function Purpose(): JSX.Element {
-  const purposesDomain = useQuery({ queryKey: ['purposes'], queryFn: getPurposes });
+  const purposesDomain = useDomainValues(config.urls.events, config.fieldNames.SURVEY_PURPOSE);
   const { filterDispatch } = useFilter();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
