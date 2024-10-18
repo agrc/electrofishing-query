@@ -3,10 +3,8 @@ if (!import.meta.env.VITE_DATABASE_CONFIG) {
 }
 const databaseSecrets: { databaseName: string; user: string } = JSON.parse(import.meta.env.VITE_DATABASE_CONFIG);
 
-// TODO: this should come from an env var once we get UtahID wired up
-const arcgisServerHost = 'wrimaps.utah.gov';
-const mapService = `https://${arcgisServerHost}/arcgis/rest/services/Electrofishing/Public/MapServer`;
-const referenceMapService = `https://${arcgisServerHost}/arcgis/rest/services/Electrofishing/Reference/MapServer`;
+const featureService = `${import.meta.env.VITE_FUNCTIONS_URL}/feature`;
+const referenceMapService = `${import.meta.env.VITE_FUNCTIONS_URL}/reference`;
 
 const config = {
   MIN_DESKTOP_WIDTH: 768,
@@ -55,9 +53,9 @@ const config = {
   },
 
   urls: {
-    stations: `${mapService}/0`,
-    events: `${mapService}/1`,
-    fish: `${mapService}/2`,
+    stations: `${featureService}/0`,
+    events: `${featureService}/1`,
+    fish: `${featureService}/2`,
     landownership:
       'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
     streams: `${referenceMapService}/0`,

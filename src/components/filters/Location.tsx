@@ -1,29 +1,54 @@
 import Graphic from '@arcgis/core/Graphic';
-import { Button, featureServiceProvider, multiProvider, Sherlock, Tag, TagGroup } from '@ugrc/utah-design-system';
+import {
+  Button,
+  featureServiceProvider,
+  multiProvider,
+  Sherlock,
+  Tag,
+  TagGroup,
+  useFirebaseAuth,
+} from '@ugrc/utah-design-system';
 import { useEffect } from 'react';
 import { useListData } from 'react-stately';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
 
-const streamsProvider = featureServiceProvider(
-  config.urls.streams,
-  config.fieldNames.WaterName,
-  // @ts-ignore
-  config.fieldNames.COUNTY,
-);
-const lakesProvider = featureServiceProvider(
-  config.urls.lakes,
-  config.fieldNames.WaterName,
-  // @ts-ignore
-  config.fieldNames.COUNTY,
-);
-const provider = multiProvider([streamsProvider, lakesProvider]);
 const filterKey = 'location';
+function getKey(graphic: Graphic): string {
+  return graphic.attributes[config.fieldNames.DWR_WaterID];
+}
 
 export default function Location(): JSX.Element {
+  const { currentUser } = useFirebaseAuth();
+  const kyOptions = {
+    hooks: {
+      beforeRequest: [
+        async (request: Request) => {
+          console.log('interceptor ky options triggered');
+          request.headers.set('Authorization', `Bearer ${await currentUser?.getIdToken()}`);
+        },
+      ],
+    },
+  };
+  const streamsProvider = featureServiceProvider(
+    config.urls.streams,
+    config.fieldNames.WaterName,
+    // @ts-ignore
+    config.fieldNames.COUNTY,
+    kyOptions,
+  );
+  const lakesProvider = featureServiceProvider(
+    config.urls.lakes,
+    config.fieldNames.WaterName,
+    // @ts-ignore
+    config.fieldNames.COUNTY,
+    kyOptions,
+  );
+  const provider = multiProvider([streamsProvider, lakesProvider]);
+
   const list = useListData<Graphic>({
     initialItems: [],
-    getKey: (item) => item.attributes[config.fieldNames.DWR_WaterID],
+    getKey,
   });
   const { filterDispatch } = useFilter();
 
@@ -69,7 +94,7 @@ export default function Location(): JSX.Element {
       <div className="mt-2 flex flex-wrap gap-1">
         <TagGroup
           label="Search for a stream or lake"
-          onRemove={(keys: string[]) => list.remove(...keys)}
+          onRemove={(keys) => list.remove(...keys)}
           items={list.items}
           selectionMode="multiple"
         >
@@ -77,12 +102,16 @@ export default function Location(): JSX.Element {
             const attributes = graphic.attributes;
             const name = `${attributes[config.fieldNames.WaterName]} (${attributes[config.fieldNames.COUNTY]})`;
 
-            return <Tag>{name}</Tag>;
+            return <Tag id={getKey(graphic)}>{name}</Tag>;
           }}
         </TagGroup>
       </div>
       <div className="w-30 flex justify-end">
-        <Button aria-label="clear all species and length filters" variant="secondary" onPress={() => setSelected([])}>
+        <Button
+          aria-label="clear all species and length filters"
+          variant="secondary"
+          onPress={() => list.setSelectedKeys(new Set())}
+        >
           Clear
         </Button>
       </div>

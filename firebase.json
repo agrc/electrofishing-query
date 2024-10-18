@@ -89,6 +89,9 @@
     },
     "hosting": {
       "port": 5000
+    },
+    "firestore": {
+      "port": 8080
     }
   }
 }
