@@ -124,6 +124,23 @@ export default function App() {
   //   [mapView, trayState],
   // );
   const { currentUser } = useFirebaseAuth();
+  useEffect(() => {
+    if (currentUser) {
+      // this should take care of all requests made through the esri js api
+      esriConfig.request.interceptors?.push({
+        urls: import.meta.env.VITE_FUNCTIONS_URL,
+        before: async (params) => {
+          console.log('interceptor triggered: url', params.url);
+          params.requestOptions.headers = {
+            ...params.requestOptions.headers,
+            Authorization: `Bearer ${await currentUser.getIdToken()}`,
+          };
+        },
+      });
+
+      console.log('esri interceptor added');
+    }
+  }, [currentUser]);
 
   return (
     <>

@@ -15,6 +15,7 @@
     "escaperegexp",
     "esrijs",
     "firebaserc",
+    "firestore",
     "geocode",
     "Geospatial",
     "gnis",

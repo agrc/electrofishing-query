@@ -1,10 +1,9 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/16/solid';
-import { useQuery } from '@tanstack/react-query';
 import { Button, Select, SelectItem, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
-import { getDomainValues, getIsInvalidRange, getQuery, isPositiveWholeNumber } from './utilities';
+import { getIsInvalidRange, getQuery, isPositiveWholeNumber, useDomainValues } from './utilities';
 
 export type SpeciesLengthRow = {
   species: string;
@@ -19,13 +18,9 @@ interface RowControlsProps extends SpeciesLengthRow {
   isLast?: boolean;
 }
 
-async function getSpecies() {
-  return await getDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
-}
-
 function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }: RowControlsProps) {
   const isInvalidRange = getIsInvalidRange(min, max);
-  const speciesDomain = useQuery({ queryKey: ['species'], queryFn: getSpecies });
+  const speciesDomain = useDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
 
   return (
     <>

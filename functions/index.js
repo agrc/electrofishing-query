@@ -11,7 +11,7 @@ const options = {
       secrets: 'ARCGIS_SERVER_CREDENTIALS',
     },
     {
-      from: /^\/mapservice/,
+      from: /^\/feature/,
       to: '/arcgis/rest/services/Electrofishing/MapService/FeatureServer',
       secrets: 'ARCGIS_SERVER_CREDENTIALS',
     },
