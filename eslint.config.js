@@ -39,6 +39,7 @@ export default tsEslint.config(
   },
   {
     ignores: [
+      '!.storybook',
       '.firebase',
       '.github/*',
       '.vscode/*',
