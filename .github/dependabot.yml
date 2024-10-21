@@ -5,9 +5,21 @@ updates:
     schedule:
       interval: monthly
     groups:
-      safe-dependencies:
+      safe-app-dependencies:
         update-types: ['minor', 'patch']
-      major-dependencies:
+      major-app-dependencies:
+        update-types: ['major']
+    commit-message:
+      prefix: deps
+      prefix-development: deps(dev)
+  - package-ecosystem: npm
+    directory: /functions
+    schedule:
+      interval: monthly
+    groups:
+      safe-function-dependencies:
+        update-types: ['minor', 'patch']
+      major-function-dependencies:
         update-types: ['major']
     commit-message:
       prefix: deps
