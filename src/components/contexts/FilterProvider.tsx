@@ -5,7 +5,7 @@ export type QueryInfo = {
   where: string;
   table: string;
 };
-type FilterState = Record<string, QueryInfo>;
+export type FilterState = Partial<Record<FilterKeys, QueryInfo>>;
 type FilterKeys = 'purpose' | 'date' | 'speciesLength' | 'location';
 type Action =
   | {
