@@ -1,5 +1,52 @@
 # Changelog
 
+## [2.0.0-6](https://github.com/agrc/electrofishing-query/compare/v1.3.8...v2.0.0-6) (2024-10-22)
+
+
+### Features
+
+* add logged out state and refactor filter into it's own component ([ff8c9df](https://github.com/agrc/electrofishing-query/commit/ff8c9df4e60271fbe052f534bd886216687c9edc)), closes [#182](https://github.com/agrc/electrofishing-query/issues/182)
+* add root-level error fallback ([493c687](https://github.com/agrc/electrofishing-query/commit/493c6870b9346d57f3db41175e305a5bf0ab8cd1))
+* get purpose values from feature service ([8464d7f](https://github.com/agrc/electrofishing-query/commit/8464d7fea1ecb239991652d28c14830b7936775f))
+* implement date-range filter ([b2b1541](https://github.com/agrc/electrofishing-query/commit/b2b154119585b5b4d65f61a93d2f570b72e462f6)), closes [#183](https://github.com/agrc/electrofishing-query/issues/183)
+* implement location filter ([afebf27](https://github.com/agrc/electrofishing-query/commit/afebf27b821c1f0d5c290dd12b7e7337d7cb5c02))
+* implement purpose filter and wire to map ([4737a36](https://github.com/agrc/electrofishing-query/commit/4737a36f527b91490dcd1d0e33d8b9612ead3e11))
+* implement Species and Length filter ([50ce0fa](https://github.com/agrc/electrofishing-query/commit/50ce0fa67fe6dd1e979ca989d77609b3e4716a5e)), closes [#183](https://github.com/agrc/electrofishing-query/issues/183) [#45](https://github.com/agrc/electrofishing-query/issues/45)
+* wire up firebase auth proxy for arcgis server requests ([d3475f8](https://github.com/agrc/electrofishing-query/commit/d3475f8b571e001e71387961ca325db09f33d95e))
+* wire up lake and stream map controls ([31661a6](https://github.com/agrc/electrofishing-query/commit/31661a6e119c0ba057290e51b1b5f53f4b2568b5))
+
+
+### Bug Fixes
+
+* add missing env var ([91d13f9](https://github.com/agrc/electrofishing-query/commit/91d13f93a22a8bc2ce61db0b5702eaddd7ba1d8b))
+* **functions:** remove unnecessary env var ([a68cbc9](https://github.com/agrc/electrofishing-query/commit/a68cbc9fd328bd4e960c163329d359e989dd30e3))
+* **function:** upgrade to v2 syntax ([a365d16](https://github.com/agrc/electrofishing-query/commit/a365d16ec49b3dd4e1f326027493d12f4662e255))
+* get rid of "failed to load basemap" console error from esri js ([713dcc1](https://github.com/agrc/electrofishing-query/commit/713dcc1e8dcd6791a0385fd3fc4e0af00af28b31))
+* get rid of aria label warning in console ([4a3cb9a](https://github.com/agrc/electrofishing-query/commit/4a3cb9a795878903d3d972b75f9a3d307720df8b))
+* linting ([f914d5f](https://github.com/agrc/electrofishing-query/commit/f914d5fb5df554215d05ad7a389115c189cd2057))
+* set env vars for function via .env file ([cfc1115](https://github.com/agrc/electrofishing-query/commit/cfc11153fdf6ed03b5aa994f653eadd53696c8d5))
+* title ([c91b1cb](https://github.com/agrc/electrofishing-query/commit/c91b1cbec9a5bf520933b69dbe1e391857c0762e))
+
+
+### Dependencies
+
+* dependency updates 🌲 ([86f1ba2](https://github.com/agrc/electrofishing-query/commit/86f1ba275ccd6408c6097c92166440114c7ea0af))
+* **dev:** bump eslint-plugin-react-hooks from 5.1.0-rc-fb9a90fa48-20240614 to 5.1.0-rc.0 ([#197](https://github.com/agrc/electrofishing-query/issues/197)) ([cd9007d](https://github.com/agrc/electrofishing-query/commit/cd9007d0caa93178ae6db2ed7d456ab56bebb4c5))
+* package audit fix ([c630157](https://github.com/agrc/electrofishing-query/commit/c630157e49f7fc23bc859ce8d2ca831e93ab4fa8))
+* update packages ([fc0e5d6](https://github.com/agrc/electrofishing-query/commit/fc0e5d6cd300555f3874439799a28a4e1ed25a76))
+
+
+### Documentation
+
+* add copy step ([bda780a](https://github.com/agrc/electrofishing-query/commit/bda780acfa1899ea940489020acc21b530b5c8ed))
+* add local dev setup instructions ([e9348a3](https://github.com/agrc/electrofishing-query/commit/e9348a3be58c6756c83ca07f114d2fba6bf1e3c2))
+* fix secrets template file and add dev step step ([b10a7ed](https://github.com/agrc/electrofishing-query/commit/b10a7ed0c3b036a950af7bb5ba0e297acdec02ca))
+
+
+### Styles
+
+* add border around light mode map and match bottom border ([237639f](https://github.com/agrc/electrofishing-query/commit/237639f22fe8f0b57257e58a1bcaad0a782f37a7))
+
 ## [2.0.0-4](https://github.com/agrc/electrofishing-query/compare/v2.0.0-3...v2.0.0-4) (2024-08-26)
 
 
