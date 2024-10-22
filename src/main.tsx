@@ -6,6 +6,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './App';
+import { FilterProvider } from './components/contexts/FilterProvider';
 import { MapProvider } from './components/contexts/MapProvider';
 import './index.css';
 
@@ -49,7 +50,9 @@ createRoot(document.getElementById('root')!).render(
           <FirebaseAnalyticsProvider>
             <QueryClientProvider client={queryClient}>
               <MapProvider>
-                <App />
+                <FilterProvider>
+                  <App />
+                </FilterProvider>
               </MapProvider>
             </QueryClientProvider>
           </FirebaseAnalyticsProvider>

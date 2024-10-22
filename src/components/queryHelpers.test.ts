@@ -111,6 +111,21 @@ describe('getGridQuery', () => {
     const results = getGridQuery(input);
     expect(results).toBe(expected);
   });
+
+  it('returns an empty string if there are no where clauses', () => {
+    const input = [
+      {
+        where: '',
+        table: 'TableOne',
+      },
+    ];
+
+    const expected = '';
+
+    const results = getGridQuery(input);
+
+    expect(results).toBe(expected);
+  });
 });
 
 describe('removeIrrelevantWhiteSpace', () => {

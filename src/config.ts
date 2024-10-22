@@ -12,6 +12,7 @@ const config = {
   MARKER_FILL_COLOR: [234, 202, 0, 0.5],
   MARKER_OUTLINE_COLOR: [77, 42, 84, 1],
   databaseSecrets,
+  dynamicWorkspaceId: 'ElectrofishingQuery',
 
   fieldNames: {
     // common
@@ -53,6 +54,7 @@ const config = {
   },
 
   urls: {
+    featureService,
     stations: `${featureService}/0`,
     events: `${featureService}/1`,
     fish: `${featureService}/2`,
