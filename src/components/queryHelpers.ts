@@ -50,13 +50,15 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
 export function getGridQuery(queryInfos: QueryInfo[]): string {
   // Returns a query that selects rows in the grid
 
-  return `(${queryInfos
+  const parts = queryInfos
+    .filter((info) => info.where)
     .reduce((previous: string[], current) => {
       previous.push(current.where);
 
       return previous;
-    }, [])
-    .join(') AND (')})`;
+    }, []);
+
+  return parts.length > 0 ? `(${parts.join(') AND (')})` : '';
 }
 
 export function getStationQueryFromIds(ids: string[]): string {
