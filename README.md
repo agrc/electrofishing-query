@@ -27,6 +27,9 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
 
 1. Install the nodejs packages
    - `npm install && cd functions && npm install`
+1. Create function secrets
+   - `cd functions && cp .secret .secret.local`
+   - fill in values in `.secret.local`
 1. Copy the ArcGIS Maps SKD for JavaScript assets to the public folder. **This needs to be done anytime the arcgis package is updated.**
    - `npm run copy:arcgis`
 1. Create `.env.local` files in the project root and the functions folders using the corresponding `.env` files as examples.
