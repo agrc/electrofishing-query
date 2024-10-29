@@ -155,7 +155,7 @@ export default function App() {
     if (currentUser) {
       // this should take care of all requests made through the esri js api
       esriConfig.request.interceptors?.push({
-        urls: import.meta.env.VITE_FUNCTIONS_URL,
+        urls: config.urls.functionsUrl,
         before: async (params) => {
           console.log('interceptor triggered: url', params.url);
           params.requestOptions.headers = {

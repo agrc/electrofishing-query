@@ -3,8 +3,10 @@ if (!import.meta.env.VITE_DATABASE_CONFIG) {
 }
 const databaseSecrets: { databaseName: string; user: string } = JSON.parse(import.meta.env.VITE_DATABASE_CONFIG);
 
-const featureService = `${import.meta.env.VITE_FUNCTIONS_URL}/feature`;
-const referenceMapService = `${import.meta.env.VITE_FUNCTIONS_URL}/reference`;
+const functionsUrl = import.meta.env.VITE_FUNCTIONS_EMULATOR_URL || '/maps';
+
+const featureService = `${functionsUrl}/feature`;
+const referenceMapService = `${functionsUrl}/reference`;
 
 const config = {
   MIN_DESKTOP_WIDTH: 768,
@@ -54,6 +56,7 @@ const config = {
   },
 
   urls: {
+    functionsUrl,
     featureService,
     stations: `${featureService}/0`,
     events: `${featureService}/1`,
