@@ -10,19 +10,18 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
+    "build-storybook": "storybook build",
+    "check": "tsc -b",
     "copy:arcgis": "cpy \"./node_modules/@arcgis/core/assets/**\" ./public/assets",
-    "dev": "npm start",
-    "dev:vite": "wait-on http://127.0.0.1:4000 && vite",
     "dev:firebase-emulators": "firebase emulators:start --import emulator_data --export-on-exit --only functions,auth,ui,firestore",
+    "dev:vite": "wait-on http://127.0.0.1:4000 && vite",
     "format": "prettier . --write",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "check": "tsc -b",
     "preview": "vite preview",
-    "start": "run-p dev:*",
+    "start": "concurrently 'npm run dev:vite' 'npm run dev:firebase-emulators'",
     "start:ci": "vite --host",
-    "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "vitest"
   },
   "browserslist": {
     "production": [
@@ -70,6 +69,7 @@
     "@ugrc/tailwind-preset": "^1.0.0",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
     "cpy-cli": "^5.0.0",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
@@ -78,7 +78,6 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-storybook": "^0.10.1",
     "globals": "^15.9.0",
-    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
