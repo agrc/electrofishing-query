@@ -10,7 +10,7 @@ import { Cell, Column, Row, Table, TableHeader } from './Table';
 
 const STATION_NAME = 'STATION_NAME';
 type Result = Record<string, string | number | null>;
-async function getData(where: string, currentUser: User): Promise<Result[]> {
+async function getData(where: string, currentUser: User): Promise<Iterable<Result>> {
   if (where === '') {
     return [];
   }
@@ -111,7 +111,6 @@ export default function ResultsGrid() {
       if (currentUser) {
         return getData(gridQuery, currentUser);
       }
-      return null;
     },
   });
 
