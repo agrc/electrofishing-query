@@ -66,14 +66,22 @@
           }
         ]
       }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/maps",
+        "function": {
+          "functionId": "maps",
+          "region": "us-central1",
+          "pinTag": true
+        }
+      }
     ]
   },
-  "rewrites": [
-    {
-      "source": "**",
-      "destination": "/index.html"
-    }
-  ],
   "functions": {
     "source": "functions"
   },
