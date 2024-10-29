@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.11](https://github.com/agrc/electrofishing-query/compare/v1.3.10...v1.3.11) (2024-10-29)
+
+
+### Dependencies
+
+* bump the npm_and_yarn group in /functions with 3 updates ([49786cc](https://github.com/agrc/electrofishing-query/commit/49786cc6dd4c12a0a6ababb3a3f16f8b88ff6a6b))
+
 ## [1.3.10](https://github.com/agrc/electrofishing-query/compare/v1.3.9...v1.3.10) (2024-10-07)
 
 
