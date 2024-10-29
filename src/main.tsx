@@ -24,7 +24,7 @@ if (import.meta.env.VITE_FIREBASE_CONFIG) {
   firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 }
 
-const provider = new OAuthProvider('oidc.utah-id');
+const provider = new OAuthProvider('oidc.utahid');
 
 const MainErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => {
   return (
