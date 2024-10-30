@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "ut-dts-agrc-electro-query-dev"
+    "dev": "ut-dts-agrc-electro-query-dev",
+    "prod": "ut-dts-agrc-electro-query-prod"
   }
 }
