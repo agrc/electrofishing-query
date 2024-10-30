@@ -77,10 +77,6 @@ jobs:
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           project-id: ${{ secrets.PROJECT_ID }}
           preview: yes
-          prebuild-command: |
-            cd functions
-            npm ci
-            cd ..
           build-command: npm run build -- --mode dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           environment: dev
