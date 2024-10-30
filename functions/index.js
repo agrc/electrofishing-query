@@ -31,7 +31,7 @@ const options = {
     const utahIDEnvironments = {
       prod: 'Prod',
       dev: 'AT',
-      development: 'Dev',
+      local: 'Dev',
     };
 
     return (
