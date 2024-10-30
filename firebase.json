@@ -69,16 +69,16 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/maps/**",
         "function": {
           "functionId": "maps",
           "region": "us-central1",
           "pinTag": true
         }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
