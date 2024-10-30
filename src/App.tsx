@@ -105,7 +105,7 @@ export default function App() {
     placeGraphic(graphics);
   };
 
-  const { currentUser } = useFirebaseAuth();
+  const { currentUser, logout } = useFirebaseAuth();
   const kyOptions = {
     hooks: {
       beforeRequest: [
@@ -178,7 +178,7 @@ export default function App() {
   return (
     <>
       <main className="flex h-screen flex-col md:gap-2">
-        <Header links={links}>
+        <Header links={links} currentUser={currentUser} logout={logout}>
           <DnrLogo />
           <div className="flex h-full grow items-center gap-3">
             <h2 className="font-heading text-3xl font-black text-zinc-600 sm:text-5xl dark:text-zinc-100">
