@@ -34,11 +34,10 @@ jobs:
             cd functions
             npm ci
             cd ..
-            echo "ENVIRONMENT=stage" > .env
-            echo "AGS_HOST=https://wrimaps.at.utah.gov" >> .env
           build-command: npm run build -- --mode dev
+          environment: dev
         env:
-          VITE_DISCOVER: ${{ secrets.DISCOVER }}
+          VITE_DISCOVER_QUAD_WORD: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           VITE_DATABASE_CONFIG: ${{ secrets.DATABASE_CONFIG }}
 
@@ -61,8 +60,6 @@ jobs:
             cd functions
             npm ci
             cd ..
-            echo "ENVIRONMENT=prod" > .env
-            echo "AGS_HOST=https://wrimaps.utah.gov" >> .env
           build-command: npm run build -- --mode production
           service-now-instance: ${{ secrets.SN_INSTANCE }}
           service-now-table: ${{ secrets.SN_TABLE }}
@@ -70,8 +67,9 @@ jobs:
           service-now-username: ${{ secrets.SN_USERNAME }}
           service-now-password: ${{ secrets.SN_PASSWORD }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          environment: prod
         env:
-          VITE_DISCOVER: ${{ secrets.DISCOVER }}
+          VITE_DISCOVER_QUAD_WORD: ${{ secrets.DISCOVER }}
           VITE_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           VITE_DATABASE_CONFIG: ${{ secrets.DATABASE_CONFIG }}
 
