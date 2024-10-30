@@ -25,6 +25,7 @@ if (import.meta.env.VITE_FIREBASE_CONFIG) {
 }
 
 const provider = new OAuthProvider('oidc.utahid');
+provider.addScope('app:DWRElectroFishing');
 
 const MainErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => {
   return (
