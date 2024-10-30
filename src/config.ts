@@ -3,7 +3,7 @@ if (!import.meta.env.VITE_DATABASE_CONFIG) {
 }
 const databaseSecrets: { databaseName: string; user: string } = JSON.parse(import.meta.env.VITE_DATABASE_CONFIG);
 
-const functionsUrl = import.meta.env.VITE_FUNCTIONS_EMULATOR_URL || '/maps';
+const functionsUrl = import.meta.env.VITE_FUNCTIONS_EMULATOR_URL || `${location.href}maps`;
 
 const featureService = `${functionsUrl}/feature`;
 const referenceMapService = `${functionsUrl}/reference`;
