@@ -69,7 +69,7 @@ async function getData(where: string, currentUser: User): Promise<Iterable<Resul
       },
     }),
     outFields: '*',
-    where: '1 = 1',
+    where: '1=1',
     returnGeometry: false,
     orderByFields: `${config.fieldNames.EVENT_DATE} DESC`,
   };
