@@ -110,7 +110,10 @@ export default function Location(): JSX.Element {
         <Button
           aria-label="clear all species and length filters"
           variant="secondary"
-          onPress={() => list.setSelectedKeys(new Set())}
+          onPress={() => {
+            // todo: clear sherlock input value once this enhancement is implemented: https://github.com/agrc/kitchen-sink/issues/340
+            list.remove(...list.items.map((item) => getKey(item)));
+          }}
         >
           Clear
         </Button>
