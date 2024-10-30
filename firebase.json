@@ -73,7 +73,7 @@
         "destination": "/index.html"
       },
       {
-        "source": "/maps",
+        "source": "/maps/**",
         "function": {
           "functionId": "maps",
           "region": "us-central1",
