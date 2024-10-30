@@ -7,18 +7,19 @@ const options = {
   verbose: !!process.env.FIREBASE_FUNCTIONS_EMULATOR,
   mappings: [
     {
-      from: /^\/toolbox/,
-      to: '/arcgis/rest/services/Electrofishing/Download/GPServer',
+      // the optional /maps prefix is to support the maps rewrite rule in firebase.json
+      from: /^(\/maps)?\/toolbox\//,
+      to: '/arcgis/rest/services/Electrofishing/Download/GPServer/',
       secrets: 'ARCGIS_SERVER_CREDENTIALS',
     },
     {
-      from: /^\/feature/,
-      to: '/arcgis/rest/services/Electrofishing/MapService/FeatureServer',
+      from: /^(\/maps)?\/feature\//,
+      to: '/arcgis/rest/services/Electrofishing/MapService/FeatureServer/',
       secrets: 'ARCGIS_SERVER_CREDENTIALS',
     },
     {
-      from: /^\/reference/,
-      to: '/arcgis/rest/services/Electrofishing/Reference/MapServer',
+      from: /^(\/maps)?\/reference\//,
+      to: '/arcgis/rest/services/Electrofishing/Reference/MapServer/',
       secrets: 'ARCGIS_SERVER_CREDENTIALS',
     },
   ],
