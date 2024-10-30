@@ -29,7 +29,7 @@ const options = {
 
     const utahIDEnvironments = {
       prod: 'Prod',
-      stage: 'AT',
+      dev: 'AT',
       development: 'Dev',
     };
 
