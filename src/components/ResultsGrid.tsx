@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useFirebaseAuth } from '@ugrc/utah-design-system';
+import { Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
 import { TableBody } from 'react-aria-components';
@@ -115,7 +115,11 @@ export default function ResultsGrid() {
   });
 
   if (isPending) {
-    return <span>loading...</span>;
+    return (
+      <div className="flex h-full justify-center align-middle">
+        <Spinner />
+      </div>
+    );
   }
   if (error) {
     return <span>{error.message}</span>;

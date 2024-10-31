@@ -3,10 +3,12 @@ import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import EsriMap from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import LayerSelector from '@ugrc/layer-selector';
+import debounce from 'lodash.debounce';
 import { useEffect, useRef, useState } from 'react';
 import { useMap } from './hooks';
 
 import '@ugrc/layer-selector/src/LayerSelector.css';
+import { Spinner } from '@ugrc/utah-design-system';
 import config from '../config';
 
 type LayerFactory = {
@@ -41,6 +43,7 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
   const [selectorOptions, setSelectorOptions] = useState<SelectorOptions | null>(null);
   console.log('rendering MapContainer');
   const { setMapView } = useMap();
+  const [isDrawing, setIsDrawing] = useState(false);
 
   // setup the Map
   useEffect(() => {
@@ -79,6 +82,11 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
 
     setSelectorOptions(selectorOptions);
 
+    mapView.current.watch(
+      'updating',
+      debounce((updating) => setIsDrawing(updating), 1000),
+    );
+
     return () => {
       mapView.current?.destroy();
       mapComponent.current?.destroy();
@@ -99,6 +107,11 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
   return (
     <div ref={mapNode} className="size-full">
       {selectorOptions?.view && <LayerSelector {...selectorOptions}></LayerSelector>}
+      {mapView.current && isDrawing && (
+        <div className="absolute left-[22px] top-[90px]">
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 };
