@@ -178,9 +178,9 @@ export default function App() {
   return (
     <>
       <main className="flex h-screen flex-col md:gap-2">
-        <Header links={links} currentUser={currentUser} logout={logout}>
-          <DnrLogo />
+        <Header links={links}>
           <div className="flex h-full grow items-center gap-3">
+            <DnrLogo />
             <h2 className="font-heading text-3xl font-black text-zinc-600 sm:text-5xl dark:text-zinc-100">
               Electrofishing Query
             </h2>
