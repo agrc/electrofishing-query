@@ -216,9 +216,7 @@ export default function App() {
                   state={trayState}
                   {...trayTriggerProps}
                 >
-                  <section className="grid gap-2 px-7 pt-2">
-                    <ResultsGrid />
-                  </section>
+                  <ResultsGrid />
                 </Drawer>
               </div>
             </div>

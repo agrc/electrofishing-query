@@ -24,7 +24,7 @@ import { composeTailwindRenderProps, focusRing } from './utils.ts';
 
 export function Table(props: TableProps) {
   return (
-    <ResizableTableContainer className="relative h-full w-full overflow-auto rounded-lg border dark:border-zinc-200/40">
+    <ResizableTableContainer className="relative h-full w-full overflow-auto">
       <AriaTable {...props} />
     </ResizableTableContainer>
   );
@@ -37,7 +37,7 @@ const columnStyles = tv({
 
 const resizerStyles = tv({
   extend: focusRing,
-  base: 'box-content h-5 w-px translate-x-[8px] cursor-col-resize rounded bg-gray-400 bg-clip-content px-[8px] py-1 -outline-offset-2 resizing:w-[2px] resizing:bg-blue-600 resizing:pl-[7px] dark:bg-zinc-500 forced-colors:bg-[ButtonBorder] forced-colors:resizing:bg-[Highlight]',
+  base: 'box-content h-5 w-px translate-x-[8px] cursor-col-resize bg-gray-400 bg-clip-content px-[8px] py-1 -outline-offset-2 resizing:w-[2px] resizing:bg-blue-600 resizing:pl-[7px] dark:bg-zinc-500 forced-colors:bg-[ButtonBorder] forced-colors:resizing:bg-[Highlight]',
 });
 
 export function Column(props: ColumnProps) {
@@ -83,7 +83,7 @@ export function TableHeader<T extends object>(props: TableHeaderProps<T>) {
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        'sticky top-0 z-10 rounded-t-lg border-b backdrop-blur-md supports-[-moz-appearance:none]:bg-gray-100 dark:border-b-zinc-300 dark:supports-[-moz-appearance:none]:bg-zinc-700 forced-colors:bg-[Canvas]',
+        'sticky top-0 z-10 border-b backdrop-blur-md supports-[-moz-appearance:none]:bg-gray-100 dark:border-b-zinc-300 dark:supports-[-moz-appearance:none]:bg-zinc-700 forced-colors:bg-[Canvas]',
       )}
     >
       {/* Add extra columns for drag and drop and selection. */}
