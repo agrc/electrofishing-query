@@ -1,5 +1,5 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/16/solid';
-import { Button, Select, SelectItem, TextField } from '@ugrc/utah-design-system';
+import { Button, Select, SelectItem, Spinner, TextField } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
@@ -20,24 +20,32 @@ interface RowControlsProps extends SpeciesLengthRow {
 
 function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }: RowControlsProps) {
   const isInvalidRange = getIsInvalidRange(min, max);
-  const speciesDomain = useDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
+  const { data, isPending, error } = useDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <>
       <div className="flex w-full items-end gap-1">
-        <Select
-          className="min-w-28"
-          label="Species"
-          onSelectionChange={(newValue) => onChange({ species: newValue as string, min, max })}
-          placeholder=" "
-          selectedKey={species}
-        >
-          {speciesDomain.data?.map(({ name, code }) => (
-            <SelectItem key={code} id={code}>
-              {name}
-            </SelectItem>
-          ))}
-        </Select>
+        {isPending ? (
+          <Spinner />
+        ) : (
+          <Select
+            className="min-w-28"
+            label="Species"
+            onSelectionChange={(newValue) => onChange({ species: newValue as string, min, max })}
+            placeholder=" "
+            selectedKey={species}
+          >
+            {data?.map(({ name, code }) => (
+              <SelectItem key={code} id={code}>
+                {name}
+              </SelectItem>
+            ))}
+          </Select>
+        )}
         <TextField
           label="Min"
           className="min-w-0 flex-grow"
