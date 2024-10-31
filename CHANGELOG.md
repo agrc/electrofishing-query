@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.0.0-7](https://github.com/agrc/electrofishing-query/compare/v2.0.0-6...v2.0.0-7) (2024-10-31)
+
+
+### Features
+
+* add avatar and sign out option ([d57d1bf](https://github.com/agrc/electrofishing-query/commit/d57d1bf42d4f5c578ae0c59fb9bc6db5689185f6))
+* add avatar and sign out option ([f7ff0c4](https://github.com/agrc/electrofishing-query/commit/f7ff0c4f79bf09c9c1df506d955cf8e77f1c0908))
+* add data to rudimentary results grid ([97633bf](https://github.com/agrc/electrofishing-query/commit/97633bfd84cae1dd871eda39c456765c814bc9db))
+
+
+### Bug Fixes
+
+* add app-specific oauth scope ([4ebe8df](https://github.com/agrc/electrofishing-query/commit/4ebe8df60bdb388b3a9aecb5c54bb2f508c4035c))
+* correct dnr logo ([3d13d05](https://github.com/agrc/electrofishing-query/commit/3d13d055b6314735844775845924140fbd12fc61))
+* **functions:** fix environment value for staging ([eb62aa5](https://github.com/agrc/electrofishing-query/commit/eb62aa51403823740c3c8efa999080fbf2124948))
+* **functions:** fix mappings to work with function rewrite ([803632b](https://github.com/agrc/electrofishing-query/commit/803632b8c68923326ccd9c53491f5fa74ee0bcd2))
+* **functions:** remove empty secret file ([699320a](https://github.com/agrc/electrofishing-query/commit/699320a7be7c21f17d42af230c79db739f4a4659))
+* wire up clear button for location filter ([b6050ce](https://github.com/agrc/electrofishing-query/commit/b6050cedccba12f3b33ce057ff9d1833a3da8260))
+
+
+### Dependencies
+
+* **functions:** bump firebase deps ([b07009a](https://github.com/agrc/electrofishing-query/commit/b07009ab7c378d11bf2bbd932877f3925ad895d7))
+
+
+### Styles
+
+* add colors from their website and accent is complimentary ([6e677e2](https://github.com/agrc/electrofishing-query/commit/6e677e2eec61159de5d32d9f0ed1bffe5e0ef05f))
+
 ## [2.0.0-6](https://github.com/agrc/electrofishing-query/compare/v1.3.8...v2.0.0-6) (2024-10-22)
 
 
