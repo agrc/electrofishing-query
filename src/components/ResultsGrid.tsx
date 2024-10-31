@@ -128,7 +128,7 @@ export default function ResultsGrid() {
   return (
     <>
       <div className="px-2 py-2">Results: {data?.length}</div>
-      <Table aria-label="query results" className="-z-10 h-full w-full border-t dark:border-t-zinc-300">
+      <Table aria-label="query results" className="-z-10 w-full border-t dark:border-t-zinc-300">
         <TableHeader>
           <Column id={config.fieldNames.EVENT_DATE} minWidth={120}>
             Event Date
