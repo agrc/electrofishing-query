@@ -3,7 +3,7 @@ import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import EsriMap from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import LayerSelector from '@ugrc/layer-selector';
-import debounce from 'lodash.debounce';
+import { useViewLoading } from '@ugrc/utilities/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { useMap } from './hooks';
 
@@ -43,7 +43,8 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
   const [selectorOptions, setSelectorOptions] = useState<SelectorOptions | null>(null);
   console.log('rendering MapContainer');
   const { setMapView } = useMap();
-  const [isDrawing, setIsDrawing] = useState(false);
+  const isDrawing = useViewLoading(mapView.current);
+  console.log('isDrawing', isDrawing);
 
   // setup the Map
   useEffect(() => {
@@ -81,11 +82,6 @@ export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickE
     };
 
     setSelectorOptions(selectorOptions);
-
-    mapView.current.watch(
-      'updating',
-      debounce((updating) => setIsDrawing(updating), 1000),
-    );
 
     return () => {
       mapView.current?.destroy();
