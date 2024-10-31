@@ -25,7 +25,11 @@ export default function Purpose(): JSX.Element {
   }, [selectedValues, filterDispatch]);
 
   if (error) {
-    return <p>{error.message}</p>;
+    return (
+      <div className="text-sm text-rose-600 forced-colors:text-[Mark]">
+        There was an error retrieving the purpose values
+      </div>
+    );
   }
 
   return (
