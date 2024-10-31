@@ -23,7 +23,11 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
   const { data, isPending, error } = useDomainValues(config.urls.fish, config.fieldNames.SPECIES_CODE);
 
   if (error) {
-    return <p>{error.message}</p>;
+    return (
+      <div className="text-sm text-rose-600 forced-colors:text-[Mark]">
+        There was an error retrieving the species values
+      </div>
+    );
   }
 
   return (
