@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.0-8](https://github.com/agrc/electrofishing-query/compare/v2.0.0-7...v2.0.0-8) (2024-11-01)
+
+
+### Features
+
+* auto-update map extent to results ([ece1fe5](https://github.com/agrc/electrofishing-query/commit/ece1fe595e9f201347891217eed1e44073f56567))
+* show number of results in results panel ([42d8d04](https://github.com/agrc/electrofishing-query/commit/42d8d045b4418831f1fedd107a8e0ec0e2679e02)), closes [#184](https://github.com/agrc/electrofishing-query/issues/184)
+
+
+### Bug Fixes
+
+* add spinners to UI elements that wait for network requests ([6eafb2c](https://github.com/agrc/electrofishing-query/commit/6eafb2c0f52bf6c6f93eba41178164afe05e3788)), closes [#232](https://github.com/agrc/electrofishing-query/issues/232)
+* more user-friendly error messages ([17a6005](https://github.com/agrc/electrofishing-query/commit/17a60057ff10b5625158600d0db160c86bd86347))
+
+
+### Styles
+
+* prevent table rows from being artificially tall ([467e4d4](https://github.com/agrc/electrofishing-query/commit/467e4d485e72536606812c67fcf21b6ec2b22ee8))
+* remove extra gap between sidebar and map ([5ca12fc](https://github.com/agrc/electrofishing-query/commit/5ca12fc48852fa7dc3ef0db7edf8cdc7e55b720a))
+
 ## [2.0.0-7](https://github.com/agrc/electrofishing-query/compare/v2.0.0-6...v2.0.0-7) (2024-10-31)
 
 
