@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
-import { TableBody } from 'react-aria-components';
+import { Tab, TableBody, TabList, TabPanel, Tabs } from 'react-aria-components';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
+import Download from './Download';
 import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
 import { Cell, Column, Row, Table, TableHeader } from './Table';
 
@@ -125,67 +126,82 @@ export default function ResultsGrid() {
     return <span>{error.message}</span>;
   }
 
+  const eventIds = data?.length ? (data.map((row) => row[config.fieldNames.EVENT_ID]) as string[]) : ([] as string[]);
+
   return (
     <>
-      <div className="px-2 py-2">Results: {data?.length}</div>
-      <Table aria-label="query results" className="-z-10 w-full border-t dark:border-t-zinc-300">
-        <TableHeader>
-          <Column id={config.fieldNames.EVENT_DATE} minWidth={120}>
-            Event Date
-          </Column>
-          <Column id={config.fieldNames.OBSERVERS} minWidth={120}>
-            Observers
-          </Column>
-          <Column id={`${config.fieldNames.WaterName}_Stream`} minWidth={170}>
-            Stream
-          </Column>
-          <Column id={`${config.fieldNames.DWR_WaterID}_Stream`} minWidth={120}>
-            Stream ID
-          </Column>
-          <Column id={`${config.fieldNames.ReachCode}_Stream`} minWidth={200}>
-            Stream Reach Code
-          </Column>
-          <Column id={`${config.fieldNames.WaterName}_Lake`} minWidth={150}>
-            Lake
-          </Column>
-          <Column id={`${config.fieldNames.DWR_WaterID}_Lake`} minWidth={120}>
-            Lake ID
-          </Column>
-          <Column id={`${config.fieldNames.ReachCode}_Lake`} minWidth={200}>
-            Lake Reach Code
-          </Column>
-          <Column id={STATION_NAME} minWidth={180}>
-            Station Name
-          </Column>
-          <Column id={config.fieldNames.SPECIES} minWidth={180}>
-            Species Codes
-          </Column>
-          <Column id={config.fieldNames.TYPES} minWidth={150}>
-            Equipment
-          </Column>
-          <Column id={config.fieldNames.EVENT_ID} isRowHeader minWidth={350}>
-            Event ID
-          </Column>
-        </TableHeader>
-        <TableBody items={data}>
-          {(row) => (
-            <Row>
-              <Cell>{new Date(row[config.fieldNames.EVENT_DATE] as number).toLocaleDateString()}</Cell>
-              <Cell>{row[config.fieldNames.OBSERVERS]}</Cell>
-              <Cell>{row[`${config.fieldNames.WaterName}_Stream`]}</Cell>
-              <Cell>{row[`${config.fieldNames.DWR_WaterID}_Stream`]}</Cell>
-              <Cell>{row[`${config.fieldNames.ReachCode}_Stream`]}</Cell>
-              <Cell>{row[`${config.fieldNames.WaterName}_Lake`]}</Cell>
-              <Cell>{row[`${config.fieldNames.DWR_WaterID}_Lake`]}</Cell>
-              <Cell>{row[`${config.fieldNames.ReachCode}_Lake`]}</Cell>
-              <Cell>{row[STATION_NAME]}</Cell>
-              <Cell>{row[config.fieldNames.SPECIES]}</Cell>
-              <Cell>{row[config.fieldNames.TYPES]}</Cell>
-              <Cell>{row[config.fieldNames.EVENT_ID]}</Cell>
-            </Row>
-          )}
-        </TableBody>
-      </Table>
+      <span className="absolute right-12 top-2 z-10 self-center">
+        Records: <strong>{data?.length}</strong>
+      </span>
+      <Tabs aria-label="results panel">
+        <TabList>
+          <Tab id="grid">Results</Tab>
+          <Tab id="download">Download</Tab>
+        </TabList>
+        <TabPanel id="grid">
+          <Table aria-label="query results" className="-z-10 w-full border-t dark:border-t-zinc-300">
+            <TableHeader>
+              <Column id={config.fieldNames.EVENT_DATE} minWidth={120}>
+                Event Date
+              </Column>
+              <Column id={config.fieldNames.OBSERVERS} minWidth={120}>
+                Observers
+              </Column>
+              <Column id={`${config.fieldNames.WaterName}_Stream`} minWidth={170}>
+                Stream
+              </Column>
+              <Column id={`${config.fieldNames.DWR_WaterID}_Stream`} minWidth={120}>
+                Stream ID
+              </Column>
+              <Column id={`${config.fieldNames.ReachCode}_Stream`} minWidth={200}>
+                Stream Reach Code
+              </Column>
+              <Column id={`${config.fieldNames.WaterName}_Lake`} minWidth={150}>
+                Lake
+              </Column>
+              <Column id={`${config.fieldNames.DWR_WaterID}_Lake`} minWidth={120}>
+                Lake ID
+              </Column>
+              <Column id={`${config.fieldNames.ReachCode}_Lake`} minWidth={200}>
+                Lake Reach Code
+              </Column>
+              <Column id={STATION_NAME} minWidth={180}>
+                Station Name
+              </Column>
+              <Column id={config.fieldNames.SPECIES} minWidth={180}>
+                Species Codes
+              </Column>
+              <Column id={config.fieldNames.TYPES} minWidth={150}>
+                Equipment
+              </Column>
+              <Column id={config.fieldNames.EVENT_ID} isRowHeader minWidth={350}>
+                Event ID
+              </Column>
+            </TableHeader>
+            <TableBody items={data}>
+              {(row) => (
+                <Row>
+                  <Cell>{new Date(row[config.fieldNames.EVENT_DATE] as number).toLocaleDateString()}</Cell>
+                  <Cell>{row[config.fieldNames.OBSERVERS]}</Cell>
+                  <Cell>{row[`${config.fieldNames.WaterName}_Stream`]}</Cell>
+                  <Cell>{row[`${config.fieldNames.DWR_WaterID}_Stream`]}</Cell>
+                  <Cell>{row[`${config.fieldNames.ReachCode}_Stream`]}</Cell>
+                  <Cell>{row[`${config.fieldNames.WaterName}_Lake`]}</Cell>
+                  <Cell>{row[`${config.fieldNames.DWR_WaterID}_Lake`]}</Cell>
+                  <Cell>{row[`${config.fieldNames.ReachCode}_Lake`]}</Cell>
+                  <Cell>{row[STATION_NAME]}</Cell>
+                  <Cell>{row[config.fieldNames.SPECIES]}</Cell>
+                  <Cell>{row[config.fieldNames.TYPES]}</Cell>
+                  <Cell>{row[config.fieldNames.EVENT_ID]}</Cell>
+                </Row>
+              )}
+            </TableBody>
+          </Table>
+        </TabPanel>
+        <TabPanel id="download">
+          <Download eventIds={eventIds} />
+        </TabPanel>
+      </Tabs>
     </>
   );
 }
