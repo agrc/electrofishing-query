@@ -24,7 +24,7 @@ import { composeTailwindRenderProps, focusRing } from './utils.ts';
 
 export function Table(props: TableProps) {
   return (
-    <ResizableTableContainer className="relative h-full w-full overflow-auto">
+    <ResizableTableContainer className="relative overflow-auto">
       <AriaTable {...props} />
     </ResizableTableContainer>
   );

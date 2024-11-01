@@ -65,6 +65,7 @@ const config = {
       'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
     streams: `${referenceMapService}/0`,
     lakes: `${referenceMapService}/1`,
+    download: `${functionsUrl}/toolbox/Download`,
   },
 };
 
