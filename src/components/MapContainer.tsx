@@ -35,16 +35,24 @@ const statewide = new Extent({
   },
 });
 
-export const MapContainer = ({ onClick }: { onClick?: __esri.ViewImmediateClickEventHandler }) => {
+export const MapContainer = ({
+  onClick,
+  bottomPadding,
+}: {
+  onClick?: __esri.ViewImmediateClickEventHandler;
+  bottomPadding: number;
+}) => {
   const mapNode = useRef<HTMLDivElement | null>(null);
   const mapComponent = useRef<EsriMap | null>(null);
   const mapView = useRef<MapView>();
   const clickHandler = useRef<IHandle>();
   const [selectorOptions, setSelectorOptions] = useState<SelectorOptions | null>(null);
-  console.log('rendering MapContainer');
   const { setMapView } = useMap();
   const isDrawing = useViewLoading(mapView.current);
-  console.log('isDrawing', isDrawing);
+
+  if (mapView.current && bottomPadding) {
+    mapView.current.padding.bottom = bottomPadding;
+  }
 
   // setup the Map
   useEffect(() => {

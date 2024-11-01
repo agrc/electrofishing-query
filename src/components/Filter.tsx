@@ -40,7 +40,17 @@ export default function Filter(): JSX.Element {
     } else {
       stationsLayer.current.definitionExpression = emptyDefinition;
     }
-  }, [filter]);
+
+    stationsLayer.current
+      .queryExtent({
+        where: stationsLayer.current.definitionExpression,
+      })
+      .then((result) => {
+        if (mapView) {
+          mapView.goTo(result.extent);
+        }
+      });
+  }, [filter, mapView]);
 
   return (
     <>

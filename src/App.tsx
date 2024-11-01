@@ -207,7 +207,7 @@ export default function App() {
             <div className="relative mb-2 flex flex-1 flex-col overflow-hidden rounded border border-zinc-200 dark:border-zinc-700">
               <div className="relative flex-1 overflow-hidden dark:rounded">
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <MapContainer />
+                  <MapContainer bottomPadding={trayState.isOpen ? 320 : 0} />
                 </ErrorBoundary>
                 <Drawer
                   type="tray"
