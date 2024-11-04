@@ -50,7 +50,7 @@ export const MapContainer = ({
   const { setMapView } = useMap();
   const isDrawing = useViewLoading(mapView.current);
 
-  if (mapView.current && bottomPadding) {
+  if (mapView.current) {
     mapView.current.padding.bottom = bottomPadding;
   }
 

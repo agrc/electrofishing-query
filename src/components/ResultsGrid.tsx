@@ -2,15 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
-import { Tab, TableBody, TabList, TabPanel, Tabs } from 'react-aria-components';
+import { useEffect, useState } from 'react';
+import { Selection, Tab, TableBody, TabList, TabPanel, Tabs } from 'react-aria-components';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
+import { useSelection } from './contexts/SelectionProvider';
 import Download from './Download';
 import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
 import { Cell, Column, Row, Table, TableHeader } from './Table';
+import { getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
 const STATION_NAME = 'STATION_NAME';
-type Result = Record<string, string | number | null>;
+export type Result = Record<string, string | number | null>;
 async function getData(where: string, currentUser: User): Promise<Result[]> {
   if (where === '') {
     return [];
@@ -28,6 +31,7 @@ async function getData(where: string, currentUser: User): Promise<Result[]> {
       st.${config.fieldNames.DWR_WaterID} as ${config.fieldNames.DWR_WaterID}_Stream,
       st.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Stream,
       s.${config.fieldNames.NAME} as ${STATION_NAME},
+      s.${config.fieldNames.STATION_ID},
       SPECIES = STUFF((SELECT DISTINCT ', ' + f.${config.fieldNames.SPECIES_CODE}
                        FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.Fish_evw as f
                        WHERE se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
@@ -97,7 +101,7 @@ async function getData(where: string, currentUser: User): Promise<Result[]> {
 
   return responseJson.features.map((feature) => ({
     ...feature.attributes,
-    id: feature.attributes.ESRI_OID,
+    id: feature.attributes[config.fieldNames.ESRI_OID],
   }));
 }
 
@@ -115,6 +119,13 @@ export default function ResultsGrid() {
     },
   });
 
+  const { selectedStationIds, setSelectedStationIds } = useSelection();
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
+
+  useEffect(() => {
+    setSelectedKeys(getResultOidsFromStationIds(data, selectedStationIds));
+  }, [data, selectedStationIds]);
+
   if (isPending) {
     return (
       <div className="flex h-full justify-center align-middle">
@@ -126,12 +137,26 @@ export default function ResultsGrid() {
     return <span>{error.message}</span>;
   }
 
-  const eventIds = data?.length ? (data.map((row) => row[config.fieldNames.EVENT_ID]) as string[]) : ([] as string[]);
+  const eventIds = data?.length ? (data.map((row) => row[config.fieldNames.ESRI_OID]) as string[]) : ([] as string[]);
+
+  const onSelectionChange = (selectedOids: Selection) => {
+    if (selectedOids === 'all') {
+      setSelectedStationIds(new Set(data?.map((row) => row[config.fieldNames.STATION_ID] as string)));
+    } else {
+      setSelectedStationIds(getStationIdsFromResultRows(data, selectedOids as Set<string>));
+    }
+  };
 
   return (
     <>
       <span className="absolute right-12 top-2 z-10 self-center">
         Records: <strong>{data?.length}</strong>
+        {selectedStationIds.size > 0 && (
+          <span>
+            {' '}
+            | Selected: <strong>{selectedKeys === 'all' ? data?.length : selectedKeys.size}</strong>
+          </span>
+        )}
       </span>
       <Tabs aria-label="results panel">
         <TabList>
@@ -139,7 +164,13 @@ export default function ResultsGrid() {
           <Tab id="download">Download</Tab>
         </TabList>
         <TabPanel id="grid">
-          <Table aria-label="query results" className="-z-10 w-full border-t dark:border-t-zinc-300">
+          <Table
+            aria-label="query results"
+            className="-z-10 w-full border-t dark:border-t-zinc-300"
+            selectionMode="multiple"
+            selectedKeys={selectedKeys}
+            onSelectionChange={onSelectionChange}
+          >
             <TableHeader>
               <Column id={config.fieldNames.EVENT_DATE} minWidth={120}>
                 Event Date
