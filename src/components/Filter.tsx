@@ -1,7 +1,11 @@
+import Extent from '@arcgis/core/geometry/Extent';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import FeatureEffect from '@arcgis/core/layers/support/FeatureEffect';
+import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import { useEffect, useRef } from 'react';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
+import { useSelection } from './contexts/SelectionProvider';
 import DateRange from './filters/DateRange';
 import Location from './filters/Location';
 import Purpose from './filters/Purpose';
@@ -15,18 +19,62 @@ export default function Filter(): JSX.Element {
   const { addLayers, mapView } = useMap();
   const stationsLayer = useRef<FeatureLayer>();
   const { filter } = useFilter();
+  const initialized = useRef(false);
 
+  const { selectedStationIds, setSelectedStationIds } = useSelection();
   useEffect(() => {
-    if (!mapView || !addLayers) {
+    if (!mapView || !addLayers || initialized.current) {
       return;
     }
 
     stationsLayer.current = new FeatureLayer({
       url: config.urls.stations,
       definitionExpression: emptyDefinition,
+      outFields: [config.fieldNames.STATION_ID],
     });
     addLayers([stationsLayer.current]);
-  }, [addLayers, mapView]);
+
+    mapView.on('pointer-move', (event) => {
+      mapView.hitTest(event, { include: stationsLayer.current as FeatureLayer }).then((response) => {
+        if (response.results.length > 0) {
+          mapView.container.style.cursor = 'pointer';
+        } else {
+          mapView.container.style.cursor = 'default';
+        }
+      });
+    });
+    mapView.on('click', (event) => {
+      mapView
+        .hitTest(event, {
+          include: stationsLayer.current as FeatureLayer,
+        })
+        .then((response) => {
+          if (response.results.length > 0) {
+            const graphics = (response.results as __esri.GraphicHit[]).map((result) => result.graphic);
+            const stationIds = graphics.map((graphic) => graphic.attributes[config.fieldNames.STATION_ID]);
+            if (event.native.ctrlKey || event.native.metaKey || event.native.shiftKey) {
+              setSelectedStationIds((previousSelectedIds) => {
+                const newSelectedKeys = new Set(previousSelectedIds);
+                stationIds.forEach((stationId) => {
+                  if (newSelectedKeys.has(stationId)) {
+                    newSelectedKeys.delete(stationId);
+                  } else {
+                    newSelectedKeys.add(stationId);
+                  }
+                });
+                return newSelectedKeys;
+              });
+            } else {
+              setSelectedStationIds(new Set(stationIds));
+            }
+          } else {
+            setSelectedStationIds(new Set());
+          }
+        });
+    });
+
+    initialized.current = true;
+  }, [addLayers, mapView, setSelectedStationIds]);
 
   useEffect(() => {
     if (!stationsLayer.current) {
@@ -41,16 +89,51 @@ export default function Filter(): JSX.Element {
       stationsLayer.current.definitionExpression = emptyDefinition;
     }
 
+    setSelectedStationIds(new Set());
+
     stationsLayer.current
       .queryExtent({
         where: stationsLayer.current.definitionExpression,
       })
       .then((result) => {
         if (mapView) {
-          mapView.goTo(result.extent);
+          if (result.extent && result.count > 0) {
+            mapView.goTo(result.extent);
+          } else {
+            mapView.goTo(
+              new Extent({
+                xmax: -12612006,
+                xmin: -12246370,
+                ymax: 5125456,
+                ymin: 4473357,
+                spatialReference: {
+                  wkid: 102100,
+                },
+              }),
+            );
+          }
         }
       });
-  }, [filter, mapView]);
+  }, [filter, mapView, setSelectedStationIds]);
+
+  useEffect(() => {
+    if (!stationsLayer.current) {
+      return;
+    }
+
+    if (selectedStationIds.size === 0) {
+      // @ts-expect-error null is a valid value
+      stationsLayer.current.featureEffect = null;
+    } else {
+      const where = `${config.fieldNames.STATION_ID} IN ('${Array.from(selectedStationIds).join("','")}')`;
+      stationsLayer.current.featureEffect = new FeatureEffect({
+        filter: new FeatureFilter({
+          where,
+        }),
+        excludedEffect: 'opacity(50%)',
+      });
+    }
+  }, [selectedStationIds]);
 
   return (
     <>
