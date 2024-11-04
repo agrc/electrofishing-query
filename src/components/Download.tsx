@@ -89,7 +89,7 @@ export default function Download({ eventIds }: { eventIds: string[] }): JSX.Elem
           variant="secondary"
           onPress={onDownloadClick}
         >
-          {state.isBusy ? <Spinner /> : 'Download'}
+          {state.isBusy ? <Spinner /> : `Download ${eventIds.length} record${eventIds.length > 1 ? 's' : ''}`}
         </Button>
       </p>
       {state.error && <div className="text-sm text-rose-600 forced-colors:text-[Mark]">{state.error}</div>}

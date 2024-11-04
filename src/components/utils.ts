@@ -1,4 +1,4 @@
-import { composeRenderProps } from 'react-aria-components';
+import { composeRenderProps, Selection } from 'react-aria-components';
 import { twMerge } from 'tailwind-merge';
 import { tv } from 'tailwind-variants';
 import config from '../config';
@@ -35,4 +35,12 @@ export function getResultOidsFromStationIds(data: Result[] | undefined, selected
       ?.filter((row) => selectedStationIds.has(row[config.fieldNames.STATION_ID] as string))
       .map((row) => row[config.fieldNames.ESRI_OID] as string),
   );
+}
+
+export function getEventIdsForDownload(data: Result[] | undefined, selectedKeys: Selection): string[] {
+  return selectedKeys === 'all' || selectedKeys.size === 0
+    ? (data?.map((row) => row[config.fieldNames.EVENT_ID]) as string[])
+    : (data
+        ?.filter((row) => selectedKeys.has(row[config.fieldNames.ESRI_OID] as string))
+        .map((row) => row[config.fieldNames.EVENT_ID]) as string[]);
 }

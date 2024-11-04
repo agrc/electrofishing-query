@@ -10,7 +10,7 @@ import { useSelection } from './contexts/SelectionProvider';
 import Download from './Download';
 import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
 import { Cell, Column, Row, Table, TableHeader } from './Table';
-import { getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
+import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
 const STATION_NAME = 'STATION_NAME';
 export type Result = Record<string, string | number | null>;
@@ -137,7 +137,7 @@ export default function ResultsGrid() {
     return <span>{error.message}</span>;
   }
 
-  const eventIds = data?.length ? (data.map((row) => row[config.fieldNames.ESRI_OID]) as string[]) : ([] as string[]);
+  const eventIdsForDownload = getEventIdsForDownload(data, selectedKeys);
 
   const onSelectionChange = (selectedOids: Selection) => {
     if (selectedOids === 'all') {
@@ -238,7 +238,7 @@ export default function ResultsGrid() {
           </Table>
         </TabPanel>
         <TabPanel id="download">
-          <Download eventIds={eventIds} />
+          <Download eventIds={eventIdsForDownload} />
         </TabPanel>
       </Tabs>
     </>
