@@ -17,6 +17,8 @@ const config = {
   dynamicWorkspaceId: 'ElectrofishingQuery',
 
   fieldNames: {
+    ESRI_OID: 'ESRI_OID',
+
     // common
     STATION_ID: 'STATION_ID',
 

@@ -18,6 +18,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useOverlayTriggerState } from 'react-stately';
 import { MapContainer } from './components';
 import { useFilter } from './components/contexts/FilterProvider';
+import { SelectionProvider } from './components/contexts/SelectionProvider';
 import Filter from './components/Filter';
 import { useMap } from './components/hooks';
 import { DnrLogo } from './components/Logo';
@@ -139,18 +140,6 @@ export default function App() {
     onSherlockMatch,
   };
 
-  // const onClick = useCallback(
-  //   (event: __esri.ViewImmediateClickEvent) => {
-  //     mapView!.hitTest(event).then(({ results }) => {
-  //       if (!results.length) {
-  //         trayState.open();
-
-  //         return setInitialIdentifyLocation(event.mapPoint);
-  //       }
-  //     });
-  //   },
-  //   [mapView, trayState],
-  // );
   useEffect(() => {
     if (currentUser) {
       // this should take care of all requests made through the esri js api
@@ -188,38 +177,40 @@ export default function App() {
         </Header>
         {currentUser ? (
           <section className="relative flex min-h-0 flex-1 overflow-x-hidden md:mr-2">
-            <Drawer main state={sideBarState} {...sideBarTriggerProps}>
-              <div className="mx-2 mb-2 grid grid-cols-1 gap-2">
-                <Filter />
-                <h2 className="text-xl font-bold">Map controls</h2>
-                <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Sherlock {...streamsSherlockOptions} label="Find a stream" />
-                  </ErrorBoundary>
+            <SelectionProvider>
+              <Drawer main state={sideBarState} {...sideBarTriggerProps}>
+                <div className="mx-2 mb-2 grid grid-cols-1 gap-2">
+                  <Filter />
+                  <h2 className="text-xl font-bold">Map controls</h2>
+                  <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Sherlock {...streamsSherlockOptions} label="Find a stream" />
+                    </ErrorBoundary>
+                  </div>
+                  <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Sherlock {...lakesSherlockOptions} label="Find a lake" />
+                    </ErrorBoundary>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
+              </Drawer>
+              <div className="relative mb-2 flex flex-1 flex-col overflow-hidden rounded border border-zinc-200 dark:border-zinc-700">
+                <div className="relative flex-1 overflow-hidden dark:rounded">
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Sherlock {...lakesSherlockOptions} label="Find a lake" />
+                    <MapContainer bottomPadding={trayState.isOpen ? 320 : 0} />
                   </ErrorBoundary>
+                  <Drawer
+                    type="tray"
+                    className="shadow-inner dark:shadow-white/20"
+                    allowFullScreen
+                    state={trayState}
+                    {...trayTriggerProps}
+                  >
+                    <ResultsGrid />
+                  </Drawer>
                 </div>
               </div>
-            </Drawer>
-            <div className="relative mb-2 flex flex-1 flex-col overflow-hidden rounded border border-zinc-200 dark:border-zinc-700">
-              <div className="relative flex-1 overflow-hidden dark:rounded">
-                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <MapContainer bottomPadding={trayState.isOpen ? 320 : 0} />
-                </ErrorBoundary>
-                <Drawer
-                  type="tray"
-                  className="shadow-inner dark:shadow-white/20"
-                  allowFullScreen
-                  state={trayState}
-                  {...trayTriggerProps}
-                >
-                  <ResultsGrid />
-                </Drawer>
-              </div>
-            </div>
+            </SelectionProvider>
           </section>
         ) : (
           <section className="flex flex-1 items-center justify-center">
