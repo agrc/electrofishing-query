@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
+import { Button, Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
 import { useEffect, useState } from 'react';
@@ -155,6 +155,14 @@ export default function ResultsGrid() {
           <span>
             {' '}
             | Selected: <strong>{selectedKeys === 'all' ? data?.length : selectedKeys.size}</strong>
+            <Button
+              variant="secondary"
+              // size="extraSmall"
+              onPress={() => setSelectedStationIds(new Set())}
+              className="ml-2"
+            >
+              Clear Selection
+            </Button>
           </span>
         )}
       </span>
