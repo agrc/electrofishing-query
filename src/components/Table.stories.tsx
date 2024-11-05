@@ -9,7 +9,8 @@ export default {
   component: Table,
 };
 
-const data = results.features.map((feature) => ({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const data: any[] = results.features.map((feature) => ({
   ...feature.attributes,
   // @ts-expect-error don't care because this is test data
   id: feature.attributes[config.fieldNames.ESRI_OID],
