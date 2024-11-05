@@ -67,7 +67,7 @@ export default function Download({ eventIds }: { eventIds: string[] }): JSX.Elem
   };
 
   return (
-    <div className="p-4">
+    <div>
       <p>This can take a few minutes to process.</p>
       <Select
         placeholder="select format"
