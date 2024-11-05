@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { Button, Spinner, useFirebaseAuth } from '@ugrc/utah-design-system';
+import { Button, Spinner, Tab, TabList, TabPanel, Tabs, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
 import { useEffect, useState } from 'react';
-import { Selection, Tab, TableBody, TabList, TabPanel, Tabs } from 'react-aria-components';
+import { Selection, TableBody } from 'react-aria-components';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import { useSelection } from './contexts/SelectionProvider';
@@ -157,7 +157,7 @@ export default function ResultsGrid() {
             | Selected: <strong>{selectedKeys === 'all' ? data?.length : selectedKeys.size}</strong>
             <Button
               variant="secondary"
-              // size="extraSmall"
+              size="extraSmall"
               onPress={() => setSelectedStationIds(new Set())}
               className="ml-2"
             >
@@ -166,12 +166,12 @@ export default function ResultsGrid() {
           </span>
         )}
       </span>
-      <Tabs aria-label="results panel">
+      <Tabs aria-label="results panel" className="mt-1">
         <TabList>
           <Tab id="grid">Results</Tab>
           <Tab id="download">Download</Tab>
         </TabList>
-        <TabPanel id="grid">
+        <TabPanel id="grid" className="p-0">
           <Table
             aria-label="query results"
             className="-z-10 w-full border-t dark:border-t-zinc-300"
