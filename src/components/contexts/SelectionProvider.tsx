@@ -21,7 +21,6 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useSelection() {
-  console.log('useSelection');
   const context = useContext(SelectionContext);
 
   if (!context) {
