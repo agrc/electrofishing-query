@@ -2,7 +2,6 @@ import esriConfig from '@arcgis/core/config';
 import Graphic from '@arcgis/core/Graphic';
 import {
   Drawer,
-  Footer,
   Header,
   Sherlock,
   UtahIdLogin,
@@ -223,7 +222,6 @@ export default function App() {
           </section>
         )}
       </main>
-      <Footer />
     </>
   );
 }
