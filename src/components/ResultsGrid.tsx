@@ -40,7 +40,8 @@ async function getData(where: string, currentUser: User): Promise<Result[]> {
                      FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.equipment} as eq
                      WHERE se.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
                      FOR XML PATH ('')),
-                     1, 1, '')
+                     1, 1, ''),
+      se.${config.fieldNames.SUBMITTER}
   FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.events} as se
 
   LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish} as f
@@ -216,6 +217,9 @@ export default function ResultsGrid() {
               <Column id={config.fieldNames.TYPES} minWidth={150}>
                 Equipment
               </Column>
+              <Column id={config.fieldNames.SUBMITTER} minWidth={180}>
+                Submitter
+              </Column>
               <Column id={config.fieldNames.EVENT_ID} isRowHeader minWidth={350}>
                 Event ID
               </Column>
@@ -234,6 +238,7 @@ export default function ResultsGrid() {
                   <Cell>{row[config.fieldNames.STATION_NAME]}</Cell>
                   <Cell>{row[config.fieldNames.SPECIES]}</Cell>
                   <Cell>{row[config.fieldNames.TYPES]}</Cell>
+                  <Cell>{row[config.fieldNames.SUBMITTER]}</Cell>
                   <Cell>{row[config.fieldNames.EVENT_ID]}</Cell>
                 </Row>
               )}
