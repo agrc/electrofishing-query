@@ -7,8 +7,8 @@ import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import { useSelection } from './contexts/SelectionProvider';
 import DateRange from './filters/DateRange';
+import Domain from './filters/Domain';
 import Location from './filters/Location';
-import Purpose from './filters/Purpose';
 import SpeciesLength from './filters/SpeciesLength';
 import { useMap } from './hooks';
 import { getStationQuery } from './queryHelpers';
@@ -83,7 +83,7 @@ export default function Filter(): JSX.Element {
 
     if (Object.keys(filter).length > 0) {
       const newQuery = getStationQuery(Object.values(filter));
-      console.log('new query:', newQuery);
+      console.log('new station query:', newQuery);
       stationsLayer.current.definitionExpression = newQuery;
     } else {
       stationsLayer.current.definitionExpression = emptyDefinition;
@@ -139,7 +139,22 @@ export default function Filter(): JSX.Element {
     <>
       <h2 className="text-xl font-bold">Map filters</h2>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
-        <Purpose />
+        <Domain
+          label="Purpose"
+          filterKey="purpose"
+          featureServiceUrl={config.urls.events}
+          fieldName={config.fieldNames.SURVEY_PURPOSE}
+          tableName={config.tableNames.events}
+        />
+      </div>
+      <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
+        <Domain
+          label="Equipment Type"
+          filterKey="equipmentType"
+          featureServiceUrl={config.urls.equipment}
+          fieldName={config.fieldNames.TYPE}
+          tableName={config.tableNames.equipment}
+        />
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
         <DateRange />

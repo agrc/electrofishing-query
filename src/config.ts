@@ -26,6 +26,7 @@ const config = {
     NAME: 'NAME',
     STREAM_TYPE: 'STREAM_TYPE',
     WATER_ID: 'WATER_ID',
+    STATION_NAME: 'STATION_NAME', // dynamic field created via SQL query
 
     // SamplingEvents
     EVENT_ID: 'EVENT_ID',
@@ -34,12 +35,13 @@ const config = {
     OBSERVERS: 'OBSERVERS',
 
     // Fish
-    SPECIES: 'SPECIES', // dynamic field created via SQL query in AGSStores
+    SPECIES: 'SPECIES', // dynamic field created via SQL query
     SPECIES_CODE: 'SPECIES_CODE',
     LENGTH: 'LENGTH',
 
     // Equipment
-    TYPES: 'TYPES', // dynamic field created via SQL query in AGSStores
+    TYPES: 'TYPES', // dynamic field created via SQL query
+    TYPE: 'TYPE',
 
     // Streams/Lakes
     WaterName: 'WaterName',
@@ -50,19 +52,21 @@ const config = {
   },
 
   tableNames: {
+    equipment: 'Equipment_evw',
     events: 'SamplingEvents_evw',
-    stations: 'Stations_evw',
     fish: 'Fish_evw',
-    streams: 'UDWRStreams',
-    lakes: 'UDWRLakes',
+    lakes: 'UDWRLakes_evw',
+    stations: 'Stations_evw',
+    streams: 'UDWRStreams_evw',
   },
 
   urls: {
     functionsUrl,
     featureService,
-    stations: `${featureService}/0`,
+    equipment: `${featureService}/7`,
     events: `${featureService}/1`,
     fish: `${featureService}/2`,
+    stations: `${featureService}/0`,
     landownership:
       'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
     streams: `${referenceMapService}/0`,
