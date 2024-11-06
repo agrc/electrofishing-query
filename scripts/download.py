@@ -115,7 +115,7 @@ def main(ids, type):
                         arcpy.AddMessage('copying {} table'.format(destination))
                         where = f'{foreign_key} IN (SELECT {primary_key} FROM {secrets.DATABASE}.{secrets.USERNAME}.{dataset} where {events_where})'
                         layer = arcpy.management.MakeTableView(join(sde, destination), destination + '_layer', where)
-                        arcpy.management.CopyRows(layer, join(fgdb, destination))
+                        arcpy.management.CopyRows(layer, join(fgdb, destination.split('.')[-1]))
 
                     if arcpy.Exists(join(fgdb, relationship_class.split('.')[-1])):
                         continue
