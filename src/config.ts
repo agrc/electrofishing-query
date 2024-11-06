@@ -33,6 +33,7 @@ const config = {
     SURVEY_PURPOSE: 'SURVEY_PURPOSE',
     EVENT_DATE: 'EVENT_DATE',
     OBSERVERS: 'OBSERVERS',
+    SUBMITTER: 'SUBMITTER',
 
     // Fish
     SPECIES: 'SPECIES', // dynamic field created via SQL query

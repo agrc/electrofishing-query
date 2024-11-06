@@ -10,6 +10,7 @@ import DateRange from './filters/DateRange';
 import Domain from './filters/Domain';
 import Location from './filters/Location';
 import SpeciesLength from './filters/SpeciesLength';
+import Submitter from './filters/Submitter';
 import { useMap } from './hooks';
 import { getStationQuery } from './queryHelpers';
 
@@ -164,6 +165,9 @@ export default function Filter(): JSX.Element {
       </div>
       <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
         <Location />
+      </div>
+      <div className="flex flex-col gap-4 rounded border border-zinc-200 p-3 dark:border-zinc-700">
+        <Submitter />
       </div>
     </>
   );
