@@ -6,7 +6,7 @@ export type QueryInfo = {
   table: string;
 };
 export type FilterState = Partial<Record<FilterKeys, QueryInfo>>;
-export type FilterKeys = 'purpose' | 'date' | 'speciesLength' | 'location' | 'equipmentType';
+export type FilterKeys = 'purpose' | 'date' | 'speciesLength' | 'location' | 'equipmentType' | 'submitter';
 type Action =
   | {
       type: 'UPDATE_TABLE';
