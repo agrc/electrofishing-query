@@ -16,6 +16,7 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
    - Update Parameters -> Max Number of Records Returns from 1000 to 5000.
 1. Publish `scripts/Download.tbx/Download` as `Electrofishing/Download`:
    - asynchronous
+   - message level: "info"
    - max time a client can use the service: `300`
    - Copy `scripts/swq_secrets.py`, `scripts/__init__.py`, `scripts/download.py`, & `scripts/sql/*` to `C:\arcgisserver\directories\arcgissystem\arcgisinput\Electrofishing\Download.GPServer\extracted\p20\scripts`
    - Update `swq_secrets.py` to reflect the environment that you have published to.
