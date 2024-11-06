@@ -12,7 +12,6 @@ import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
 import { Cell, Column, Row, Table, TableHeader } from './Table';
 import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
-const STATION_NAME = 'STATION_NAME';
 export type Result = Record<string, string | number | null>;
 async function getData(where: string, currentUser: User): Promise<Result[]> {
   if (where === '') {
@@ -30,30 +29,33 @@ async function getData(where: string, currentUser: User): Promise<Result[]> {
       st.${config.fieldNames.WaterName} as ${config.fieldNames.WaterName}_Stream,
       st.${config.fieldNames.DWR_WaterID} as ${config.fieldNames.DWR_WaterID}_Stream,
       st.${config.fieldNames.ReachCode} as ${config.fieldNames.ReachCode}_Stream,
-      s.${config.fieldNames.NAME} as ${STATION_NAME},
+      s.${config.fieldNames.NAME} as ${config.fieldNames.STATION_NAME},
       s.${config.fieldNames.STATION_ID},
       SPECIES = STUFF((SELECT DISTINCT ', ' + f.${config.fieldNames.SPECIES_CODE}
-                       FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.Fish_evw as f
+                       FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish} as f
                        WHERE se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
                        FOR XML PATH ('')),
                        1, 1, ''),
       TYPES = STUFF((SELECT DISTINCT ', ' + eq.TYPE
-                     FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.Equipment_evw as eq
+                     FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.equipment} as eq
                      WHERE se.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
                      FOR XML PATH ('')),
                      1, 1, '')
-  FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.SamplingEvents_evw as se
+  FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.events} as se
 
-  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.Fish_evw as f
+  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish} as f
   ON se.${config.fieldNames.EVENT_ID} = f.${config.fieldNames.EVENT_ID}
 
-  INNER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.Stations_evw as s
+  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.equipment} as eq
+  ON se.${config.fieldNames.EVENT_ID} = eq.${config.fieldNames.EVENT_ID}
+
+  INNER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.stations} as s
   ON s.${config.fieldNames.STATION_ID} = se.${config.fieldNames.STATION_ID}
 
-  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.UDWRLakes_evw as l
+  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.lakes} as l
   ON l.${config.fieldNames.Permanent_Identifier} = s.${config.fieldNames.WATER_ID}
 
-  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.UDWRStreams_evw as st
+  LEFT OUTER JOIN ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.streams} as st
   ON st.${config.fieldNames.Permanent_Identifier} = s.${config.fieldNames.WATER_ID}
 
   WHERE ${where}
@@ -110,6 +112,7 @@ export default function ResultsGrid() {
 
   const { currentUser } = useFirebaseAuth();
   const gridQuery = getGridQuery(Object.values(filter));
+  console.log('new grid query:', gridQuery);
   const { data, isPending, error } = useQuery({
     queryKey: ['grid', gridQuery],
     queryFn: () => {
@@ -204,7 +207,7 @@ export default function ResultsGrid() {
               <Column id={`${config.fieldNames.ReachCode}_Lake`} minWidth={200}>
                 Lake Reach Code
               </Column>
-              <Column id={STATION_NAME} minWidth={180}>
+              <Column id={config.fieldNames.STATION_NAME} minWidth={180}>
                 Station Name
               </Column>
               <Column id={config.fieldNames.SPECIES} minWidth={180}>
@@ -228,7 +231,7 @@ export default function ResultsGrid() {
                   <Cell>{row[`${config.fieldNames.WaterName}_Lake`]}</Cell>
                   <Cell>{row[`${config.fieldNames.DWR_WaterID}_Lake`]}</Cell>
                   <Cell>{row[`${config.fieldNames.ReachCode}_Lake`]}</Cell>
-                  <Cell>{row[STATION_NAME]}</Cell>
+                  <Cell>{row[config.fieldNames.STATION_NAME]}</Cell>
                   <Cell>{row[config.fieldNames.SPECIES]}</Cell>
                   <Cell>{row[config.fieldNames.TYPES]}</Cell>
                   <Cell>{row[config.fieldNames.EVENT_ID]}</Cell>
