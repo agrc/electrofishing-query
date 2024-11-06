@@ -72,14 +72,27 @@ describe('getStationQuery', () => {
         where: '2 = 2',
         table: config.tableNames.events,
       },
+      {
+        where: '3 = 3',
+        table: config.tableNames.equipment,
+      },
     ];
-    const expected = removeIrrelevantWhiteSpace(`(${config.fieldNames.STATION_ID} IN (
-                  SELECT ${config.fieldNames.STATION_ID} FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.events}
-                  WHERE ${config.fieldNames.EVENT_ID} IN (
-                      SELECT ${config.fieldNames.EVENT_ID} FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish}
-                      WHERE 1 = 1
-                  ) AND 2 = 2
-              ))`);
+    const expected = removeIrrelevantWhiteSpace(
+      `(${config.fieldNames.STATION_ID} IN (
+          SELECT ${config.fieldNames.STATION_ID}
+          FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.events}
+          WHERE ${config.fieldNames.EVENT_ID} IN (
+              SELECT ${config.fieldNames.EVENT_ID}
+              FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish}
+              WHERE 1 = 1
+          ) AND 2 = 2
+          AND ${config.fieldNames.EVENT_ID} IN (
+              SELECT ${config.fieldNames.EVENT_ID}
+              FROM ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.equipment}
+              WHERE 3 = 3
+          )
+      ))`,
+    );
 
     expect(getStationQuery(input)).toBe(expected);
   });
