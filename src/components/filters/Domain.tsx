@@ -1,11 +1,23 @@
 import { Button, Checkbox, CheckboxGroup, Spinner } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
-import config from '../../config';
-import { useFilter } from '../contexts/FilterProvider';
+import { FilterKeys, useFilter } from '../contexts/FilterProvider';
 import { useDomainValues } from './utilities';
 
-export default function Purpose(): JSX.Element {
-  const { data, isPending, error } = useDomainValues(config.urls.events, config.fieldNames.SURVEY_PURPOSE);
+type DomainProps = {
+  featureServiceUrl: string;
+  fieldName: string;
+  filterKey: FilterKeys;
+  label: string;
+  tableName: string;
+};
+export default function Domain({
+  featureServiceUrl,
+  fieldName,
+  filterKey,
+  label,
+  tableName,
+}: DomainProps): JSX.Element {
+  const { data, isPending, error } = useDomainValues(featureServiceUrl, fieldName);
   const { filterDispatch } = useFilter();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
@@ -13,21 +25,21 @@ export default function Purpose(): JSX.Element {
     if (selectedValues.length > 0) {
       filterDispatch({
         type: 'UPDATE_TABLE',
-        filterKey: 'purpose',
+        filterKey,
         value: {
-          where: `${config.fieldNames.SURVEY_PURPOSE} IN ('${selectedValues.join("','")}')`,
-          table: config.tableNames.events,
+          where: `${fieldName} IN ('${selectedValues.join("','")}')`,
+          table: tableName,
         },
       });
     } else {
-      filterDispatch({ type: 'CLEAR_TABLE', filterKey: 'purpose' });
+      filterDispatch({ type: 'CLEAR_TABLE', filterKey });
     }
-  }, [selectedValues, filterDispatch]);
+  }, [selectedValues, filterDispatch, filterKey, fieldName, tableName]);
 
   if (error) {
     return (
       <div className="text-sm text-rose-600 forced-colors:text-[Mark]">
-        There was an error retrieving the purpose values
+        There was an error retrieving the values for this filter
       </div>
     );
   }
@@ -35,7 +47,7 @@ export default function Purpose(): JSX.Element {
   return (
     <>
       <div>
-        <h3 className="text-lg font-semibold">Purpose</h3>
+        <h3 className="text-lg font-semibold">{label}</h3>
         {isPending ? (
           <Spinner />
         ) : (

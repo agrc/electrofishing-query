@@ -4,19 +4,20 @@ import { QueryInfo } from './contexts/FilterProvider';
 export function getStationQuery(queryInfos: QueryInfo[]): string {
   // Returns a query that selects stations given some related table queries
   const tables: Record<string, string[]> = {};
+  const extraJoinTables = [config.tableNames.fish, config.tableNames.equipment];
 
   // organize where clauses by table
   queryInfos.forEach((info) => {
     // make sure that we don't mutate this object and mess up the grid query
     info = Object.assign({}, info);
 
-    if (info.table === config.tableNames.fish) {
-      // fish table requires an additional join
-      info.table = config.tableNames.events;
+    if (extraJoinTables.includes(info.table)) {
+      // these tables require an additional join
       info.where = `${config.fieldNames.EVENT_ID} IN (
                       SELECT ${config.fieldNames.EVENT_ID} FROM
-                      ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${config.tableNames.fish}
+                      ${config.databaseSecrets.databaseName}.${config.databaseSecrets.user}.${info.table}
                       WHERE ${info.where})`;
+      info.table = config.tableNames.events;
     }
 
     if (tables[info.table]) {
@@ -48,8 +49,7 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
 }
 
 export function getGridQuery(queryInfos: QueryInfo[]): string {
-  // Returns a query that selects rows in the grid
-
+  // Returns a query that is used as the where clause for the results grid query
   const parts = queryInfos
     .filter((info) => info.where)
     .reduce((previous: string[], current) => {
