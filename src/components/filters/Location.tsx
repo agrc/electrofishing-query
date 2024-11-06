@@ -93,10 +93,11 @@ export default function Location(): JSX.Element {
       <Sherlock provider={provider} label="Search for a stream or lake" onSherlockMatch={onSherlockMatch} />
       <div className="mt-2 flex flex-wrap gap-1">
         <TagGroup
-          label="Search for a stream or lake"
+          aria-label="selected streams or lakes"
           onRemove={(keys) => list.remove(...keys)}
           items={list.items}
           selectionMode="multiple"
+          className="mb-4"
         >
           {(graphic: Graphic) => {
             const attributes = graphic.attributes;
