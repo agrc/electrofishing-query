@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMap } from './hooks';
 
 import '@ugrc/layer-selector/src/LayerSelector.css';
-import { Spinner } from '@ugrc/utah-design-system';
+import { BusyBar } from '@ugrc/utah-design-system';
 import config from '../config';
 
 type LayerFactory = {
@@ -111,9 +111,9 @@ export const MapContainer = ({
   return (
     <div ref={mapNode} className="size-full">
       {selectorOptions?.view && <LayerSelector {...selectorOptions}></LayerSelector>}
-      {mapView.current && isDrawing && (
-        <div className="absolute left-[22px] top-[90px]">
-          <Spinner />
+      {mapView.current && (
+        <div className="absolute left-0 right-0 top-0">
+          <BusyBar busy={isDrawing} />
         </div>
       )}
     </div>
