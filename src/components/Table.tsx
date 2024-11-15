@@ -1,133 +1,164 @@
-import { Checkbox } from '@ugrc/utah-design-system';
-import { ArrowUp } from 'lucide-react';
 import {
-  Cell as AriaCell,
-  Column as AriaColumn,
-  Row as AriaRow,
-  Table as AriaTable,
-  TableHeader as AriaTableHeader,
-  Button,
-  CellProps,
-  Collection,
-  ColumnProps,
-  ColumnResizer,
-  Group,
-  ResizableTableContainer,
-  RowProps,
-  TableHeaderProps,
-  TableProps,
-  composeRenderProps,
-  useTableOptions,
-} from 'react-aria-components';
-import { tv } from 'tailwind-variants';
-import { composeTailwindRenderProps, focusRing } from './utils.ts';
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type Row,
+  type TableOptions,
+} from '@tanstack/react-table';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { forwardRef, useRef, useState, type MouseEvent } from 'react';
+import { twJoin, twMerge } from 'tailwind-merge';
 
-export function Table(props: TableProps) {
+type TableProps = {
+  /** The caption for the table. */
+  caption: string;
+  /** Optional additional class names for the component. */
+  className?: string;
+  /** The columns configuration for the table.
+   * Corresponds to the same prop in react table (https://tanstack.com/table/v8/docs/api/core/table#columns)
+   */
+  columns: any[];
+  /** The data to be displayed in the table.
+   * Corresponds to the same prop in react table (https://tanstack.com/table/v8/docs/api/core/table#data)
+   */
+  data: any[];
+  /** Optional visibility settings for table columns. */
+  visibility?: Record<string, boolean>;
+  /** Additional properties for the table, excluding columns and data. */
+  additionalTableProps?: Omit<TableOptions<unknown>, 'columns' | 'data' | 'getCoreRowModel'>;
+};
+
+const getRowRange = (rows: Row<any>[], currentIndex: number, selectedIndex: number | null): Row<any>[] => {
+  if (selectedIndex === null) {
+    return [rows[currentIndex]];
+  }
+
+  const rangeStart = selectedIndex > currentIndex ? currentIndex : selectedIndex;
+  const rangeEnd = rangeStart === currentIndex ? selectedIndex : currentIndex;
+  return rows.slice(rangeStart, rangeEnd + 1);
+};
+
+function InnerTable(
+  { columns, data, className, caption, visibility, additionalTableProps }: TableProps,
+  forwardedRef: React.ForwardedRef<HTMLDivElement>,
+) {
+  const [sorting, setSorting] = useState(additionalTableProps?.initialState?.sorting ?? []);
+  const [columnVisibility] = useState(visibility ?? {});
+
+  const { getHeaderGroups, getRowModel, setRowSelection, getState } = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+      columnVisibility,
+    },
+    onSortingChange: setSorting,
+    ...additionalTableProps,
+  });
+
+  const parentRef = useRef(null);
+  const lastSelectedIndex = useRef<number | null>(null);
+
   return (
-    <ResizableTableContainer className="relative overflow-auto">
-      <AriaTable {...props} />
-    </ResizableTableContainer>
+    <div ref={forwardedRef} className={twMerge('relative', className)}>
+      <div className="h-full overflow-auto" ref={parentRef} tabIndex={0}>
+        <table className="min-w-full table-fixed border-collapse">
+          <caption className="sr-only">{caption}</caption>
+          <thead className="sticky top-0 bg-zinc-300 text-base text-zinc-800 dark:bg-slate-800 dark:text-zinc-300">
+            {getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} className={'relative p-2 text-left'} style={{ width: header.getSize() }}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className={twJoin(
+                          header.column.getCanSort() && 'flex cursor-pointer select-none items-center justify-between',
+                          header.column.getIsSorted() &&
+                            'before:bg-mustard-500 before:absolute before:-bottom-1 before:left-0 before:z-10 before:block before:h-2 before:w-full before:rounded-full',
+                        )}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: <ChevronUpIcon className="h-4" />,
+                          desc: <ChevronDownIcon className="h-4" />,
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {getRowModel().rows.map((row, index) => {
+              let even = index % 2 === 0;
+              let odd = !even;
+              const isSelected = row.getIsSelected();
+              if (isSelected) {
+                even = false;
+                odd = false;
+              }
+
+              return (
+                <tr
+                  key={row.id}
+                  className={twJoin(
+                    additionalTableProps?.enableRowSelection && 'cursor-pointer select-none',
+                    'border-y border-y-zinc-200 dark:border-y-zinc-700',
+                    even && 'bg-slate-50 text-zinc-900 dark:bg-slate-800 dark:text-zinc-300',
+                    odd && 'bg-zinc-100 text-zinc-800 dark:bg-slate-700 dark:text-zinc-300',
+                    row.getIsSelected() && 'bg-primary-500',
+                  )}
+                  onClick={
+                    additionalTableProps?.enableRowSelection
+                      ? (e: MouseEvent<HTMLTableRowElement>): void => {
+                          const { rowSelection } = getState();
+                          const isCellSelected = row.getIsSelected();
+                          if (e.shiftKey) {
+                            const { rows } = getRowModel();
+                            const rowsToToggle = getRowRange(rows, row.index, lastSelectedIndex.current);
+                            setRowSelection(Object.fromEntries(rowsToToggle.map((r) => [r.id, !isCellSelected])));
+                          } else if (e.metaKey || e.ctrlKey) {
+                            const newSelection = structuredClone(rowSelection);
+                            if (newSelection[row.id]) {
+                              delete newSelection[row.id];
+                            } else {
+                              newSelection[row.id] = true;
+                            }
+                            console.log('newSelection', newSelection);
+                            setRowSelection(newSelection);
+                          } else {
+                            if (Object.keys(rowSelection).length > 1) {
+                              setRowSelection({ [row.id]: true });
+                            } else {
+                              row.toggleSelected();
+                            }
+                          }
+
+                          if (!isCellSelected) {
+                            lastSelectedIndex.current = row.index;
+                          }
+                        }
+                      : undefined
+                  }
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="truncate p-2" title={cell.getValue() as string}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
-const columnStyles = tv({
-  extend: focusRing,
-  base: 'flex h-5 flex-1 items-center gap-1 overflow-hidden px-2',
-});
-
-const resizerStyles = tv({
-  extend: focusRing,
-  base: 'box-content h-5 w-px translate-x-[8px] cursor-col-resize bg-gray-400 bg-clip-content px-[8px] py-1 -outline-offset-2 resizing:w-[2px] resizing:bg-blue-600 resizing:pl-[7px] dark:bg-zinc-500 forced-colors:bg-[ButtonBorder] forced-colors:resizing:bg-[Highlight]',
-});
-
-export function Column(props: ColumnProps) {
-  return (
-    <AriaColumn
-      {...props}
-      className={composeTailwindRenderProps(
-        props.className,
-        'cursor-default text-start text-base font-bold text-zinc-700 dark:text-zinc-300 [&:focus-within]:z-20 [&:hover]:z-20',
-      )}
-    >
-      {composeRenderProps(props.children, (children, { allowsSorting, sortDirection }) => (
-        <div className="flex items-center">
-          <Group role="presentation" tabIndex={-1} className={columnStyles}>
-            <span className="truncate">{children}</span>
-            {allowsSorting && (
-              <span
-                className={`flex h-4 w-4 items-center justify-center transition ${
-                  sortDirection === 'descending' ? 'rotate-180' : ''
-                }`}
-              >
-                {sortDirection && (
-                  <ArrowUp
-                    aria-hidden
-                    className="h-4 w-4 text-gray-500 dark:text-zinc-400 forced-colors:text-[ButtonText]"
-                  />
-                )}
-              </span>
-            )}
-          </Group>
-          {!props.width && <ColumnResizer className={resizerStyles} />}
-        </div>
-      ))}
-    </AriaColumn>
-  );
-}
-
-export function TableHeader<T extends object>(props: TableHeaderProps<T>) {
-  const { selectionBehavior, selectionMode, allowsDragging } = useTableOptions();
-
-  return (
-    <AriaTableHeader
-      {...props}
-      className={composeTailwindRenderProps(
-        props.className,
-        'sticky top-0 z-10 border-b backdrop-blur-md supports-[-moz-appearance:none]:bg-gray-100 dark:border-b-zinc-300 dark:supports-[-moz-appearance:none]:bg-zinc-700 forced-colors:bg-[Canvas]',
-      )}
-    >
-      {/* Add extra columns for drag and drop and selection. */}
-      {allowsDragging && <Column />}
-      {selectionBehavior === 'toggle' && (
-        <AriaColumn width={36} minWidth={36} className="cursor-default p-2 text-start text-sm font-semibold">
-          {selectionMode === 'multiple' && <Checkbox slot="selection" />}
-        </AriaColumn>
-      )}
-      <Collection items={props.columns}>{props.children}</Collection>
-    </AriaTableHeader>
-  );
-}
-
-const rowStyles = tv({
-  extend: focusRing,
-  base: 'group/row relative cursor-default select-none text-sm text-zinc-700 -outline-offset-2 hover:bg-slate-200 selected:bg-secondary-600 selected:text-white selected:hover:bg-secondary-500 disabled:text-gray-300 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:disabled:text-zinc-600',
-});
-
-export function Row<T extends object>({ id, columns, children, ...otherProps }: RowProps<T>) {
-  const { selectionBehavior, allowsDragging } = useTableOptions();
-
-  return (
-    <AriaRow id={id} {...otherProps} className={rowStyles}>
-      {allowsDragging && (
-        <Cell>
-          <Button slot="drag">≡</Button>
-        </Cell>
-      )}
-      {selectionBehavior === 'toggle' && (
-        <Cell>
-          <Checkbox slot="selection" />
-        </Cell>
-      )}
-      <Collection items={columns}>{children}</Collection>
-    </AriaRow>
-  );
-}
-
-const cellStyles = tv({
-  extend: focusRing,
-  base: 'truncate border-b p-2 -outline-offset-2 [--selected-border:theme(colors.secondary.800)] group-last/row:border-b-0 group-selected/row:border-[--selected-border] dark:border-b-zinc-700 dark:[--selected-border:theme(colors.secondary.500)] [:has(+[data-selected])_&]:border-[--selected-border]',
-});
-
-export function Cell(props: CellProps) {
-  return <AriaCell {...props} className={cellStyles} />;
-}
+export const Table = forwardRef(InnerTable);
