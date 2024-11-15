@@ -32,7 +32,21 @@ export default function Filter(): JSX.Element {
       url: config.urls.stations,
       definitionExpression: emptyDefinition,
       outFields: [config.fieldNames.STATION_ID],
+      renderer: {
+        // @ts-expect-error - accessor has issues with TS
+        type: 'simple',
+        symbol: {
+          type: 'simple-marker',
+          color: '#DD5623',
+          outline: {
+            color: [0, 0, 0],
+            width: 1,
+          },
+          size: 12,
+        },
+      },
     });
+
     addLayers([stationsLayer.current]);
 
     mapView.on('pointer-move', (event) => {
