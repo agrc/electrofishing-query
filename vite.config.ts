@@ -8,4 +8,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
+  resolve: {
+    // this is only applicable when npm-linking the utah-design-package
+    dedupe: ['firebase', '@arcgis/core'],
+  },
 });
