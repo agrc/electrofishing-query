@@ -1,46 +1,19 @@
-import { composeRenderProps, Selection } from 'react-aria-components';
-import { twMerge } from 'tailwind-merge';
-import { tv } from 'tailwind-variants';
-import config from '../config';
-import { Result } from './ResultsGrid';
-
-export const focusRing = tv({
-  base: 'outline outline-offset-2 outline-primary-900 dark:outline-secondary-600',
-  variants: {
-    isFocusVisible: {
-      false: 'outline-0',
-      true: 'outline-2',
-    },
-  },
-});
-
-export function composeTailwindRenderProps<T>(
-  className: string | ((v: T) => string) | undefined,
-  tw: string,
-): string | ((v: T) => string) {
-  return composeRenderProps(className, (className) => twMerge(tw, className));
-}
+import type { RowSelectionState } from '@tanstack/react-table';
+import type { Result } from './ResultsGrid';
 
 export function getStationIdsFromResultRows(data: Result[] | undefined, selectedOids: Set<string>): Set<string> {
-  return new Set(
-    data
-      ?.filter((row) => selectedOids.has(row[config.fieldNames.ESRI_OID] as string))
-      .map((row) => row[config.fieldNames.STATION_ID] as string),
+  return new Set(data?.filter((row) => selectedOids.has(row.ESRI_OID.toString())).map((row) => row.STATION_ID));
+}
+
+export function getResultOidsFromStationIds(
+  data: Result[] | undefined,
+  selectedStationIds: Set<string>,
+): RowSelectionState {
+  return Object.fromEntries(
+    data?.filter((row) => selectedStationIds.has(row.STATION_ID)).map((row) => [row.ESRI_OID, true]) ?? [],
   );
 }
 
-export function getResultOidsFromStationIds(data: Result[] | undefined, selectedStationIds: Set<string>): Set<string> {
-  return new Set(
-    data
-      ?.filter((row) => selectedStationIds.has(row[config.fieldNames.STATION_ID] as string))
-      .map((row) => row[config.fieldNames.ESRI_OID] as string),
-  );
-}
-
-export function getEventIdsForDownload(data: Result[] | undefined, selectedKeys: Selection): string[] {
-  return selectedKeys === 'all' || selectedKeys.size === 0
-    ? (data?.map((row) => row[config.fieldNames.EVENT_ID]) as string[])
-    : (data
-        ?.filter((row) => selectedKeys.has(row[config.fieldNames.ESRI_OID] as string))
-        .map((row) => row[config.fieldNames.EVENT_ID]) as string[]);
+export function getEventIdsForDownload(data: Result[] | undefined, selectedRows: RowSelectionState): string[] {
+  return data?.filter((row) => selectedRows[row.ESRI_OID]).map((row) => row.EVENT_ID) ?? [];
 }

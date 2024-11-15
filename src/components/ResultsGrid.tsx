@@ -1,18 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
+import { RowSelectionState, Updater } from '@tanstack/react-table';
 import { Button, Spinner, Tab, TabList, TabPanel, Tabs, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
-import { useEffect, useState } from 'react';
-import { Selection, TableBody } from 'react-aria-components';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import { useSelection } from './contexts/SelectionProvider';
 import Download from './Download';
 import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
-import { Cell, Column, Row, Table, TableHeader } from './Table';
+import { Table } from './Table';
 import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
-export type Result = Record<string, string | number | null>;
+export type Result = {
+  EVENT_ID: string;
+  EVENT_DATE: number;
+  OBSERVERS: string;
+  WaterName_Lake: string | null;
+  DWR_WaterID_Lake: string | null;
+  ReachCode_Lake: string | null;
+  WaterName_Stream: string | null;
+  DWR_WaterID_Stream: string | null;
+  ReachCode_Stream: string | null;
+  STATION_NAME: string;
+  STATION_ID: string;
+  SPECIES: string | null;
+  TYPES: string | null;
+  SUBMITTER: string | null;
+  ESRI_OID: number;
+};
+
 async function getData(where: string, currentUser: User): Promise<Result[]> {
   if (where === '') {
     return [];
@@ -104,9 +120,55 @@ async function getData(where: string, currentUser: User): Promise<Result[]> {
 
   return responseJson.features.map((feature) => ({
     ...feature.attributes,
-    id: feature.attributes[config.fieldNames.ESRI_OID],
+    id: feature.attributes.ESRI_OID,
   }));
 }
+
+const columns = [
+  {
+    accessorKey: config.fieldNames.EVENT_DATE,
+    cell: ({ getValue }: { getValue: () => number }) => new Date(getValue()).toLocaleDateString(),
+  },
+  {
+    accessorKey: config.fieldNames.OBSERVERS,
+  },
+  {
+    accessorKey: `${config.fieldNames.WaterName}_Stream`,
+  },
+  {
+    accessorKey: `${config.fieldNames.DWR_WaterID}_Stream`,
+  },
+  {
+    accessorKey: `${config.fieldNames.ReachCode}_Stream`,
+  },
+  {
+    accessorKey: `${config.fieldNames.WaterName}_Lake`,
+  },
+  {
+    accessorKey: `${config.fieldNames.DWR_WaterID}_Lake`,
+  },
+  {
+    accessorKey: `${config.fieldNames.ReachCode}_Lake`,
+  },
+  {
+    accessorKey: config.fieldNames.STATION_NAME,
+  },
+  {
+    accessorKey: config.fieldNames.SPECIES,
+  },
+  {
+    accessorKey: config.fieldNames.TYPES,
+  },
+  {
+    accessorKey: config.fieldNames.SUBMITTER,
+  },
+  {
+    accessorKey: config.fieldNames.EVENT_ID,
+  },
+  {
+    accessorKey: config.fieldNames.STATION_ID,
+  },
+];
 
 export default function ResultsGrid() {
   const { filter } = useFilter();
@@ -124,16 +186,11 @@ export default function ResultsGrid() {
   });
 
   const { selectedStationIds, setSelectedStationIds } = useSelection();
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-
-  useEffect(() => {
-    setSelectedKeys(getResultOidsFromStationIds(data, selectedStationIds));
-  }, [data, selectedStationIds]);
 
   if (isPending) {
     return (
       <div className="flex h-full justify-center align-middle">
-        <Spinner />
+        <Spinner aria-label="loading results grid" />
       </div>
     );
   }
@@ -141,15 +198,14 @@ export default function ResultsGrid() {
     return <span>{error.message}</span>;
   }
 
-  const eventIdsForDownload = getEventIdsForDownload(data, selectedKeys);
+  const rowSelection = getResultOidsFromStationIds(data, selectedStationIds);
+  const eventIdsForDownload = getEventIdsForDownload(data, rowSelection);
 
-  const onSelectionChange = (selectedOids: Selection) => {
-    if (selectedOids === 'all') {
-      setSelectedStationIds(new Set(data?.map((row) => row[config.fieldNames.STATION_ID] as string)));
-    } else {
-      setSelectedStationIds(getStationIdsFromResultRows(data, selectedOids as Set<string>));
-    }
-  };
+  function onRowSelectionChange(updateFn: Updater<RowSelectionState>) {
+    const newSelection = typeof updateFn === 'function' ? updateFn({}) : updateFn;
+
+    setSelectedStationIds(getStationIdsFromResultRows(data, new Set(Object.keys(newSelection))));
+  }
 
   return (
     <>
@@ -158,7 +214,7 @@ export default function ResultsGrid() {
         {selectedStationIds.size > 0 && (
           <span>
             {' '}
-            | Selected: <strong>{selectedKeys === 'all' ? data?.length : selectedKeys.size}</strong>
+            | Selected: <strong>{Object.keys(rowSelection).length}</strong>
             <Button
               variant="secondary"
               size="extraSmall"
@@ -170,80 +226,29 @@ export default function ResultsGrid() {
           </span>
         )}
       </span>
-      <Tabs aria-label="results panel" className="mt-1">
+      <Tabs aria-label="results panel" className="h-full pt-1">
         <TabList>
           <Tab id="grid">Results</Tab>
           <Tab id="download">Download</Tab>
         </TabList>
-        <TabPanel id="grid" className="p-0">
-          <Table
-            aria-label="query results"
-            className="-z-10 w-full border-t dark:border-t-zinc-300"
-            selectionMode="multiple"
-            selectedKeys={selectedKeys}
-            onSelectionChange={onSelectionChange}
-          >
-            <TableHeader>
-              <Column id={config.fieldNames.EVENT_DATE} minWidth={120}>
-                Event Date
-              </Column>
-              <Column id={config.fieldNames.OBSERVERS} minWidth={120}>
-                Observers
-              </Column>
-              <Column id={`${config.fieldNames.WaterName}_Stream`} minWidth={170}>
-                Stream
-              </Column>
-              <Column id={`${config.fieldNames.DWR_WaterID}_Stream`} minWidth={120}>
-                Stream ID
-              </Column>
-              <Column id={`${config.fieldNames.ReachCode}_Stream`} minWidth={200}>
-                Stream Reach Code
-              </Column>
-              <Column id={`${config.fieldNames.WaterName}_Lake`} minWidth={150}>
-                Lake
-              </Column>
-              <Column id={`${config.fieldNames.DWR_WaterID}_Lake`} minWidth={120}>
-                Lake ID
-              </Column>
-              <Column id={`${config.fieldNames.ReachCode}_Lake`} minWidth={200}>
-                Lake Reach Code
-              </Column>
-              <Column id={config.fieldNames.STATION_NAME} minWidth={180}>
-                Station Name
-              </Column>
-              <Column id={config.fieldNames.SPECIES} minWidth={180}>
-                Species Codes
-              </Column>
-              <Column id={config.fieldNames.TYPES} minWidth={150}>
-                Equipment
-              </Column>
-              <Column id={config.fieldNames.SUBMITTER} minWidth={180}>
-                Submitter
-              </Column>
-              <Column id={config.fieldNames.EVENT_ID} isRowHeader minWidth={350}>
-                Event ID
-              </Column>
-            </TableHeader>
-            <TableBody items={data}>
-              {(row) => (
-                <Row>
-                  <Cell>{new Date(row[config.fieldNames.EVENT_DATE] as number).toLocaleDateString()}</Cell>
-                  <Cell>{row[config.fieldNames.OBSERVERS]}</Cell>
-                  <Cell>{row[`${config.fieldNames.WaterName}_Stream`]}</Cell>
-                  <Cell>{row[`${config.fieldNames.DWR_WaterID}_Stream`]}</Cell>
-                  <Cell>{row[`${config.fieldNames.ReachCode}_Stream`]}</Cell>
-                  <Cell>{row[`${config.fieldNames.WaterName}_Lake`]}</Cell>
-                  <Cell>{row[`${config.fieldNames.DWR_WaterID}_Lake`]}</Cell>
-                  <Cell>{row[`${config.fieldNames.ReachCode}_Lake`]}</Cell>
-                  <Cell>{row[config.fieldNames.STATION_NAME]}</Cell>
-                  <Cell>{row[config.fieldNames.SPECIES]}</Cell>
-                  <Cell>{row[config.fieldNames.TYPES]}</Cell>
-                  <Cell>{row[config.fieldNames.SUBMITTER]}</Cell>
-                  <Cell>{row[config.fieldNames.EVENT_ID]}</Cell>
-                </Row>
-              )}
-            </TableBody>
-          </Table>
+
+        <TabPanel id="grid" className="min-h-0 flex-1 p-0">
+          {data && (
+            <Table
+              caption="query results"
+              className="h-full w-full"
+              columns={columns}
+              data={data}
+              additionalTableProps={{
+                state: {
+                  rowSelection,
+                },
+                getRowId: (row) => (row as Result).ESRI_OID.toString(),
+                enableRowSelection: true,
+                onRowSelectionChange,
+              }}
+            />
+          )}
         </TabPanel>
         <TabPanel id="download">
           <Download eventIds={eventIdsForDownload} />

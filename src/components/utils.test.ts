@@ -1,12 +1,43 @@
 import { describe, expect, it } from 'vitest';
-import config from '../config';
 import { Result } from './ResultsGrid';
 import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
 describe('getStationIdsFromResultRows', () => {
   const data: Result[] = [
-    { [config.fieldNames.ESRI_OID]: '1', [config.fieldNames.STATION_ID]: 'A' },
-    { [config.fieldNames.ESRI_OID]: '2', [config.fieldNames.STATION_ID]: 'B' },
+    {
+      ESRI_OID: 1,
+      STATION_ID: 'A',
+      EVENT_ID: '',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
+    {
+      ESRI_OID: 2,
+      STATION_ID: 'B',
+      EVENT_ID: '',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
   ];
 
   it('should return correct station IDs', () => {
@@ -24,50 +55,105 @@ describe('getStationIdsFromResultRows', () => {
 
 describe('getResultOidsFromStationIds', () => {
   const data: Result[] = [
-    { [config.fieldNames.ESRI_OID]: '1', [config.fieldNames.STATION_ID]: 'A' },
-    { [config.fieldNames.ESRI_OID]: '2', [config.fieldNames.STATION_ID]: 'B' },
+    {
+      ESRI_OID: 1,
+      STATION_ID: 'A',
+      EVENT_ID: '',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
+    {
+      ESRI_OID: 2,
+      STATION_ID: 'B',
+      EVENT_ID: '',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
   ];
 
   it('should return correct OIDs', () => {
     const selectedStationIds = new Set(['A']);
     const result = getResultOidsFromStationIds(data, selectedStationIds);
-    expect(result).toEqual(new Set(['1']));
+    expect(result).toEqual({ '1': true });
   });
 
   it('should return an empty set if no matching station IDs', () => {
     const selectedStationIds = new Set(['C']);
     const result = getResultOidsFromStationIds(data, selectedStationIds);
-    expect(result).toEqual(new Set());
+    expect(result).toEqual({});
   });
 });
 
 describe('getEventIdsForDownload', () => {
   const data: Result[] = [
-    { [config.fieldNames.ESRI_OID]: '1', [config.fieldNames.EVENT_ID]: 'E1' },
-    { [config.fieldNames.ESRI_OID]: '2', [config.fieldNames.EVENT_ID]: 'E2' },
+    {
+      ESRI_OID: 1,
+      EVENT_ID: 'E1',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      STATION_ID: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
+    {
+      ESRI_OID: 2,
+      EVENT_ID: 'E2',
+      EVENT_DATE: 0,
+      OBSERVERS: '',
+      WaterName_Lake: null,
+      DWR_WaterID_Lake: null,
+      ReachCode_Lake: null,
+      WaterName_Stream: null,
+      DWR_WaterID_Stream: null,
+      ReachCode_Stream: null,
+      STATION_NAME: '',
+      STATION_ID: '',
+      SPECIES: null,
+      TYPES: null,
+      SUBMITTER: null,
+    },
   ];
 
-  it('should return all event IDs if selectedKeys is "all"', () => {
-    const selectedKeys = 'all';
-    const result = getEventIdsForDownload(data, selectedKeys);
-    expect(result).toEqual(['E1', 'E2']);
-  });
-
-  it('should return all event IDs if selectedKeys is an empty set', () => {
-    const selectedKeys: Set<string> = new Set();
-    const result = getEventIdsForDownload(data, selectedKeys);
-    expect(result).toEqual(['E1', 'E2']);
+  it('should an empty array if selectedKeys is an empty set', () => {
+    const result = getEventIdsForDownload(data, {});
+    expect(result).toEqual([]);
   });
 
   it('should return correct event IDs for selected OIDs', () => {
-    const selectedKeys = new Set(['1']);
-    const result = getEventIdsForDownload(data, selectedKeys);
+    const result = getEventIdsForDownload(data, { '1': true });
     expect(result).toEqual(['E1']);
   });
 
   it('should return an empty array if no matching OIDs', () => {
-    const selectedKeys = new Set(['3']);
-    const result = getEventIdsForDownload(data, selectedKeys);
+    const result = getEventIdsForDownload(data, { '3': true });
     expect(result).toEqual([]);
   });
 });
