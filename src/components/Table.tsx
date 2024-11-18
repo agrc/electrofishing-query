@@ -67,7 +67,7 @@ function InnerTable(
       <div className="h-full overflow-auto" ref={parentRef} tabIndex={0}>
         <table className="min-w-full table-fixed border-collapse">
           <caption className="sr-only">{caption}</caption>
-          <thead className="sticky top-0 bg-zinc-300 text-base text-zinc-800 dark:bg-slate-800 dark:text-zinc-300">
+          <thead className="sticky top-0 bg-zinc-200 text-base dark:bg-zinc-800">
             {getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -109,8 +109,8 @@ function InnerTable(
                   className={twJoin(
                     additionalTableProps?.enableRowSelection && 'cursor-pointer select-none',
                     'border-y border-y-zinc-200 dark:border-y-zinc-700',
-                    even && 'bg-slate-50 text-zinc-900 dark:bg-slate-800 dark:text-zinc-300',
-                    odd && 'bg-zinc-100 text-zinc-800 dark:bg-slate-700 dark:text-zinc-300',
+                    even && 'bg-zinc-100 dark:bg-zinc-500',
+                    odd && 'bg-zinc-200 dark:bg-zinc-600',
                     row.getIsSelected() && 'bg-primary-500',
                   )}
                   onClick={
