@@ -1,5 +1,4 @@
 import Extent from '@arcgis/core/geometry/Extent';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import FeatureEffect from '@arcgis/core/layers/support/FeatureEffect';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import { useEffect, useRef } from 'react';
@@ -17,40 +16,18 @@ import { getStationQuery } from './queryHelpers';
 const emptyDefinition = '1=0';
 
 export default function Filter(): JSX.Element {
-  const { addLayers, mapView } = useMap();
-  const stationsLayer = useRef<FeatureLayer>();
+  const { stationsLayer, mapView } = useMap();
   const { filter } = useFilter();
   const initialized = useRef(false);
 
   const { selectedStationIds, setSelectedStationIds } = useSelection();
   useEffect(() => {
-    if (!mapView || !addLayers || initialized.current) {
+    if (!mapView || !stationsLayer) {
       return;
     }
 
-    stationsLayer.current = new FeatureLayer({
-      url: config.urls.stations,
-      definitionExpression: emptyDefinition,
-      outFields: [config.fieldNames.STATION_ID],
-      renderer: {
-        // @ts-expect-error - accessor has issues with TS
-        type: 'simple',
-        symbol: {
-          type: 'simple-marker',
-          color: '#DD5623',
-          outline: {
-            color: [0, 0, 0],
-            width: 1,
-          },
-          size: 12,
-        },
-      },
-    });
-
-    addLayers([stationsLayer.current]);
-
     mapView.on('pointer-move', (event) => {
-      mapView.hitTest(event, { include: stationsLayer.current as FeatureLayer }).then((response) => {
+      mapView.hitTest(event, { include: stationsLayer }).then((response) => {
         if (response.results.length > 0) {
           mapView.container.style.cursor = 'pointer';
         } else {
@@ -58,10 +35,11 @@ export default function Filter(): JSX.Element {
         }
       });
     });
+
     mapView.on('click', (event) => {
       mapView
         .hitTest(event, {
-          include: stationsLayer.current as FeatureLayer,
+          include: stationsLayer,
         })
         .then((response) => {
           if (response.results.length > 0) {
@@ -89,26 +67,26 @@ export default function Filter(): JSX.Element {
     });
 
     initialized.current = true;
-  }, [addLayers, mapView, setSelectedStationIds]);
+  }, [mapView, setSelectedStationIds, stationsLayer]);
 
   useEffect(() => {
-    if (!stationsLayer.current) {
+    if (!stationsLayer) {
       return;
     }
 
     if (Object.keys(filter).length > 0) {
       const newQuery = getStationQuery(Object.values(filter));
       console.log('new station query:', newQuery);
-      stationsLayer.current.definitionExpression = newQuery;
+      stationsLayer.definitionExpression = newQuery;
     } else {
-      stationsLayer.current.definitionExpression = emptyDefinition;
+      stationsLayer.definitionExpression = emptyDefinition;
     }
 
     setSelectedStationIds(new Set());
 
-    stationsLayer.current
+    stationsLayer
       .queryExtent({
-        where: stationsLayer.current.definitionExpression,
+        where: stationsLayer.definitionExpression,
       })
       .then((result) => {
         if (mapView) {
@@ -129,26 +107,26 @@ export default function Filter(): JSX.Element {
           }
         }
       });
-  }, [filter, mapView, setSelectedStationIds]);
+  }, [filter, mapView, setSelectedStationIds, stationsLayer]);
 
   useEffect(() => {
-    if (!stationsLayer.current) {
+    if (!stationsLayer) {
       return;
     }
 
     if (selectedStationIds.size === 0) {
       // @ts-expect-error null is a valid value
-      stationsLayer.current.featureEffect = null;
+      stationsLayer.featureEffect = null;
     } else {
       const where = `${config.fieldNames.STATION_ID} IN ('${Array.from(selectedStationIds).join("','")}')`;
-      stationsLayer.current.featureEffect = new FeatureEffect({
+      stationsLayer.featureEffect = new FeatureEffect({
         filter: new FeatureFilter({
           where,
         }),
         excludedEffect: 'opacity(50%)',
       });
     }
-  }, [selectedStationIds]);
+  }, [selectedStationIds, stationsLayer]);
 
   return (
     <>

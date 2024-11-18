@@ -3,10 +3,12 @@ import { RowSelectionState, Updater } from '@tanstack/react-table';
 import { Button, Spinner, Tab, TabList, TabPanel, Tabs, useFirebaseAuth } from '@ugrc/utah-design-system';
 import { User } from 'firebase/auth';
 import ky from 'ky';
+import { SearchIcon, SquareXIcon } from 'lucide-react';
 import config from '../config';
 import { useFilter } from './contexts/FilterProvider';
 import { useSelection } from './contexts/SelectionProvider';
 import Download from './Download';
+import { useMap } from './hooks';
 import { getGridQuery, removeIrrelevantWhiteSpace } from './queryHelpers';
 import { Table } from './Table';
 import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
@@ -184,6 +186,7 @@ const columns = [
 
 export default function ResultsGrid() {
   const { filter } = useFilter();
+  const { stationsLayer, mapView } = useMap();
 
   const { currentUser } = useFirebaseAuth();
   const gridQuery = getGridQuery(Object.values(filter));
@@ -219,23 +222,45 @@ export default function ResultsGrid() {
     setSelectedStationIds(getStationIdsFromResultRows(data, new Set(Object.keys(newSelection))));
   }
 
+  const onZoomToSelection = () => {
+    if (!mapView || !stationsLayer) {
+      return;
+    }
+
+    stationsLayer
+      .queryExtent({
+        where: `${config.fieldNames.STATION_ID} IN ('${Array.from(selectedStationIds).join("','")}')`,
+      })
+      .then((result) => {
+        // handle if only a single feature was selected
+        if (result.count === 1) {
+          mapView.goTo({ target: result.extent.center, zoom: 12 });
+        } else {
+          mapView.goTo(result.extent);
+        }
+      });
+  };
+
   return (
     <>
-      <span className="absolute right-12 top-2 z-10 self-center">
-        Records: <strong>{data?.length}</strong>
+      <span className="absolute right-12 top-2 z-10 flex items-center gap-1 self-center">
+        Results: <strong>{data?.length}</strong>
         {selectedStationIds.size > 0 && (
-          <span>
+          <>
             {' '}
             | Selected: <strong>{Object.keys(rowSelection).length}</strong>
             <Button
               variant="secondary"
               size="extraSmall"
               onPress={() => setSelectedStationIds(new Set())}
-              className="ml-2"
+              aria-label="clear selection"
             >
-              Clear Selection
+              <SquareXIcon size={16} />
             </Button>
-          </span>
+            <Button variant="secondary" size="extraSmall" onPress={onZoomToSelection} aria-label="zoom to selection">
+              <SearchIcon size={16} />
+            </Button>
+          </>
         )}
       </span>
       <Tabs aria-label="results panel" className="h-full pt-1">
