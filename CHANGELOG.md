@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.0.0-9](https://github.com/agrc/electrofishing-query/compare/v2.0.0-8...v2.0.0-9) (2024-11-18)
+
+
+### Features
+
+* add clear selection button ([3d4ca02](https://github.com/agrc/electrofishing-query/commit/3d4ca027d70f8600caff78600ab7db4e101af04d))
+* add download functionality ([580a0cb](https://github.com/agrc/electrofishing-query/commit/580a0cb0ca898813315a9ac03999ca45eb23910d)), closes [#186](https://github.com/agrc/electrofishing-query/issues/186)
+* add equipment type filter ([8d3c6e2](https://github.com/agrc/electrofishing-query/commit/8d3c6e25d655ca4e430bea608f281fc9e7a2b988)), closes [#42](https://github.com/agrc/electrofishing-query/issues/42)
+* add zoom to selection button ([4038395](https://github.com/agrc/electrofishing-query/commit/40383958e5e5c819500465b2b5217d9e7b15935d)), closes [#243](https://github.com/agrc/electrofishing-query/issues/243)
+* implement result grid UDS tabs ([6eb02a0](https://github.com/agrc/electrofishing-query/commit/6eb02a06cf437f4f590432847aa82e705f160c90))
+* implement submitter email filter ([94007a9](https://github.com/agrc/electrofishing-query/commit/94007a9f5d5b79212676a90272182c98b0571fa6)), closes [#43](https://github.com/agrc/electrofishing-query/issues/43)
+* results grid and station selection ([1d8c42a](https://github.com/agrc/electrofishing-query/commit/1d8c42ae930b697aaad48bbbd34079075dd2be83)), closes [#187](https://github.com/agrc/electrofishing-query/issues/187)
+* wire up selection to download panel ([41167ad](https://github.com/agrc/electrofishing-query/commit/41167adf82f3fa4b986645028091fbba237e65db))
+
+
+### Bug Fixes
+
+* clear input after selecting a result in stream/lake filter ([fa2087d](https://github.com/agrc/electrofishing-query/commit/fa2087d56a14178a07fe009301c8e6d73bb2c585))
+* fix bug causing fgdb downloads to fail ([f20bec0](https://github.com/agrc/electrofishing-query/commit/f20bec07a43ed3583d1636bcd13eaf159e8e17c0)), closes [#239](https://github.com/agrc/electrofishing-query/issues/239)
+* remove footer ([eee8528](https://github.com/agrc/electrofishing-query/commit/eee8528c7d6ceb6d877bc37d7dc84005f246f476))
+* switch out placeholder for UDS busy bar ([63575dd](https://github.com/agrc/electrofishing-query/commit/63575dd08543d651bc59c832b128ba0ba16644be))
+* switch out table for tanstack version ([251f6e4](https://github.com/agrc/electrofishing-query/commit/251f6e4dd8f7156d0faae4a90fbebff8c9757320))
+
+
+### Dependencies
+
+* bump npm dependencies 🌲 ([161b37e](https://github.com/agrc/electrofishing-query/commit/161b37eaa92cb88682827c2f2d804487c7d5b068))
+
+
+### Styles
+
+* remove duplicate visible label ([717a5b9](https://github.com/agrc/electrofishing-query/commit/717a5b951ae49b0c0377a97bbaa082e5f1962e2f))
+* standardize table colors ([83c7a54](https://github.com/agrc/electrofishing-query/commit/83c7a54f866e38caf02d957ce2ea1b24dd116b5c))
+* update primary color to better match DNR logo ([71612df](https://github.com/agrc/electrofishing-query/commit/71612dfff22159586d1e1f3f3ef19ea56d268f32))
+
 ## [2.0.0-8](https://github.com/agrc/electrofishing-query/compare/v2.0.0-7...v2.0.0-8) (2024-11-01)
 
 
