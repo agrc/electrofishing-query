@@ -65,7 +65,7 @@ function InnerTable(
   return (
     <div ref={forwardedRef} className={twMerge('relative', className)}>
       <div className="h-full overflow-auto" ref={parentRef} tabIndex={0}>
-        <table className="min-w-full table-fixed border-collapse">
+        <table className="w-full table-fixed border-collapse">
           <caption className="sr-only">{caption}</caption>
           <thead className="sticky top-0 bg-zinc-200 text-base dark:bg-zinc-800">
             {getHeaderGroups().map((headerGroup) => (
@@ -147,7 +147,12 @@ function InnerTable(
                   }
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="truncate p-2" title={cell.getValue() as string}>
+                    <td
+                      key={cell.id}
+                      className="truncate p-2"
+                      title={cell.getValue() as string}
+                      style={{ width: `${cell.column.getSize()}px` }}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
