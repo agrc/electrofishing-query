@@ -111,11 +111,7 @@ export const MapContainer = ({
   return (
     <div ref={mapNode} className="size-full">
       {selectorOptions?.view && <LayerSelector {...selectorOptions}></LayerSelector>}
-      {mapView.current && (
-        <div className="absolute left-0 right-0 top-0">
-          <BusyBar busy={isDrawing} />
-        </div>
-      )}
+      {mapView.current && <BusyBar busy={isDrawing} />}
     </div>
   );
 };
