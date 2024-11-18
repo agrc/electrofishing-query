@@ -120,7 +120,7 @@ function InnerTable(
                           const isCellSelected = row.getIsSelected();
                           if (e.shiftKey) {
                             const { rows } = getRowModel();
-                            const rowsToToggle = getRowRange(rows, row.index, lastSelectedIndex.current);
+                            const rowsToToggle = getRowRange(rows, index, lastSelectedIndex.current);
                             setRowSelection(Object.fromEntries(rowsToToggle.map((r) => [r.id, !isCellSelected])));
                           } else if (e.metaKey || e.ctrlKey) {
                             const newSelection = structuredClone(rowSelection);
@@ -140,7 +140,7 @@ function InnerTable(
                           }
 
                           if (!isCellSelected) {
-                            lastSelectedIndex.current = row.index;
+                            lastSelectedIndex.current = index;
                           }
                         }
                       : undefined
