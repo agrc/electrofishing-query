@@ -77,7 +77,7 @@ function InnerTable(
                         className={twJoin(
                           header.column.getCanSort() && 'flex cursor-pointer select-none items-center justify-between',
                           header.column.getIsSorted() &&
-                            'before:bg-mustard-500 before:absolute before:-bottom-1 before:left-0 before:z-10 before:block before:h-2 before:w-full before:rounded-full',
+                            'before:absolute before:-bottom-1 before:left-0 before:z-10 before:block before:h-2 before:w-full before:rounded-full',
                         )}
                         onClick={header.column.getToggleSortingHandler()}
                       >
@@ -111,7 +111,7 @@ function InnerTable(
                     'border-y border-y-zinc-200 dark:border-y-zinc-700',
                     even && 'bg-zinc-100 dark:bg-zinc-500',
                     odd && 'bg-zinc-200 dark:bg-zinc-600',
-                    row.getIsSelected() && 'bg-primary-500',
+                    row.getIsSelected() && 'bg-primary-500 text-zinc-50',
                   )}
                   onClick={
                     additionalTableProps?.enableRowSelection
