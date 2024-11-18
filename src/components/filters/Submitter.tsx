@@ -6,7 +6,7 @@ import { useFilter } from '../contexts/FilterProvider';
 export default function Submitter(): JSX.Element {
   const { filterDispatch } = useFilter();
 
-  const onChange = debounce((value) => {
+  const onChange = debounce((value: string) => {
     filterDispatch({
       type: 'UPDATE_TABLE',
       filterKey: 'submitter',
