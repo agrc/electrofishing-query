@@ -18,10 +18,12 @@ type TableProps = {
   /** The columns configuration for the table.
    * Corresponds to the same prop in react table (https://tanstack.com/table/v8/docs/api/core/table#columns)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: any[];
   /** The data to be displayed in the table.
    * Corresponds to the same prop in react table (https://tanstack.com/table/v8/docs/api/core/table#data)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   /** Optional visibility settings for table columns. */
   visibility?: Record<string, boolean>;
@@ -29,6 +31,7 @@ type TableProps = {
   additionalTableProps?: Omit<TableOptions<unknown>, 'columns' | 'data' | 'getCoreRowModel'>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRowRange = (rows: Row<any>[], currentIndex: number, selectedIndex: number | null): Row<any>[] => {
   if (selectedIndex === null) {
     return [rows[currentIndex]];
