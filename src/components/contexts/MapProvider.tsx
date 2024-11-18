@@ -1,8 +1,10 @@
 import Graphic from '@arcgis/core/Graphic';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import MapView from '@arcgis/core/views/MapView';
 import { useGraphicManager } from '@ugrc/utilities/hooks';
 import PropTypes from 'prop-types';
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useRef, useState } from 'react';
+import config from '../../config';
 
 export const MapContext = createContext<{
   mapView: MapView | null;
@@ -10,6 +12,7 @@ export const MapContext = createContext<{
   placeGraphic: (graphic: Graphic | Graphic[] | null) => void;
   zoom: (geometry: __esri.GoToTarget2D) => void;
   addLayers: (layers: __esri.Layer[]) => void;
+  stationsLayer: __esri.FeatureLayer | undefined;
 } | null>(null);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
@@ -46,6 +49,30 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
     mapView.map.addMany(layers);
   };
 
+  const stationsLayer = useRef<FeatureLayer>();
+  if (mapView && !stationsLayer.current) {
+    stationsLayer.current = new FeatureLayer({
+      url: config.urls.stations,
+      definitionExpression: '1=0',
+      outFields: [config.fieldNames.STATION_ID],
+      renderer: {
+        // @ts-expect-error - accessor has issues with TS
+        type: 'simple',
+        symbol: {
+          type: 'simple-marker',
+          color: '#DD5623',
+          outline: {
+            color: [0, 0, 0],
+            width: 1,
+          },
+          size: 12,
+        },
+      },
+    });
+
+    addLayers([stationsLayer.current]);
+  }
+
   return (
     <MapContext.Provider
       value={{
@@ -54,6 +81,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
         placeGraphic,
         zoom,
         addLayers,
+        stationsLayer: stationsLayer.current,
       }}
     >
       {children}
