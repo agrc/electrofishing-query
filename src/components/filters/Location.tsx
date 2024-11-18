@@ -1,5 +1,6 @@
 import Graphic from '@arcgis/core/Graphic';
 import {
+  AsyncListItem,
   Button,
   featureServiceProvider,
   multiProvider,
@@ -9,7 +10,7 @@ import {
   useFirebaseAuth,
 } from '@ugrc/utah-design-system';
 import { useEffect } from 'react';
-import { useListData } from 'react-stately';
+import { AsyncListData, useListData } from 'react-stately';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
 
@@ -50,7 +51,10 @@ export default function Location(): JSX.Element {
   });
   const { filterDispatch } = useFilter();
 
-  const onSherlockMatch = (matches: Graphic[]) => {
+  const onSherlockMatch = (matches: Graphic[], context: { list: AsyncListData<AsyncListItem> }) => {
+    // clear contents of input
+    context.list.setFilterText('');
+
     list.append(...matches);
   };
 
