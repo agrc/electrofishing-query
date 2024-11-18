@@ -46,7 +46,6 @@ function InnerTable(
   { columns, data, className, caption, visibility, additionalTableProps }: TableProps,
   forwardedRef: React.ForwardedRef<HTMLDivElement>,
 ) {
-  const [sorting, setSorting] = useState(additionalTableProps?.initialState?.sorting ?? []);
   const [columnVisibility] = useState(visibility ?? {});
 
   const { getHeaderGroups, getRowModel, setRowSelection, getState } = useReactTable({
@@ -55,10 +54,8 @@ function InnerTable(
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
-      sorting,
       columnVisibility,
     },
-    onSortingChange: setSorting,
     ...additionalTableProps,
   });
 
