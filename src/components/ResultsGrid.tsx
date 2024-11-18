@@ -131,42 +131,54 @@ const columns = [
   },
   {
     accessorKey: config.fieldNames.OBSERVERS,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.WaterName}_Stream`,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.DWR_WaterID}_Stream`,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.ReachCode}_Stream`,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.WaterName}_Lake`,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.DWR_WaterID}_Lake`,
+    size: 200,
   },
   {
     accessorKey: `${config.fieldNames.ReachCode}_Lake`,
+    size: 200,
   },
   {
     accessorKey: config.fieldNames.STATION_NAME,
+    size: 300,
   },
   {
     accessorKey: config.fieldNames.SPECIES,
+    size: 200,
   },
   {
     accessorKey: config.fieldNames.TYPES,
+    size: 200,
   },
   {
     accessorKey: config.fieldNames.SUBMITTER,
   },
   {
     accessorKey: config.fieldNames.EVENT_ID,
+    size: 350,
   },
   {
     accessorKey: config.fieldNames.STATION_ID,
+    size: 350,
   },
 ];
 
