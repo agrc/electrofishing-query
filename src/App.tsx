@@ -120,7 +120,6 @@ export default function App() {
     provider: featureServiceProvider(
       config.urls.streams,
       config.fieldNames.WaterName,
-      // @ts-expect-error the type for this may be incorrect
       config.fieldNames.COUNTY,
       kyOptions,
     ),
@@ -131,7 +130,6 @@ export default function App() {
     provider: featureServiceProvider(
       config.urls.lakes,
       config.fieldNames.WaterName,
-      // @ts-expect-error the type for this may be incorrect
       config.fieldNames.COUNTY,
       kyOptions,
     ),

@@ -33,14 +33,12 @@ export default function Location(): JSX.Element {
   const streamsProvider = featureServiceProvider(
     config.urls.streams,
     config.fieldNames.WaterName,
-    // @ts-expect-error - need to update the type for featureServiceProvider
     config.fieldNames.COUNTY,
     kyOptions,
   );
   const lakesProvider = featureServiceProvider(
     config.urls.lakes,
     config.fieldNames.WaterName,
-    // @ts-expect-error - need to update the type for featureServiceProvider
     config.fieldNames.COUNTY,
     kyOptions,
   );
