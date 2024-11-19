@@ -30,6 +30,9 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
     );
   }
 
+  const iconClasses = 'w-5 text-zinc-700 dark:text-zinc-50';
+  const buttonClasses = 'p-0';
+
   return (
     <>
       <div className="flex w-full items-end gap-1">
@@ -52,7 +55,7 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
         )}
         <TextField
           label="Min"
-          className="min-w-0 flex-grow"
+          className="min-w-0 flex-1"
           value={min}
           type="number"
           isInvalid={(min.length && !isPositiveWholeNumber(min)) || isInvalidRange}
@@ -60,19 +63,19 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
         />
         <TextField
           label="Max"
-          className="min-w-0 flex-grow"
+          className="min-w-0 flex-1"
           value={max}
           type="number"
           isInvalid={(max.length && !isPositiveWholeNumber(max)) || isInvalidRange}
           onChange={(newValue: string) => onChange({ species, min, max: newValue })}
         />
         {isLast ? (
-          <Button aria-label="add new filter" variant="icon" className="w-16" onPress={addRow}>
-            <PlusCircleIcon />
+          <Button aria-label="add new filter" variant="icon" onPress={addRow} className={buttonClasses}>
+            <PlusCircleIcon className={iconClasses} />
           </Button>
         ) : (
-          <Button aria-label="remove this filter" variant="icon" className="w-16" onPress={removeRow}>
-            <MinusCircleIcon />
+          <Button aria-label="remove this filter" variant="icon" onPress={removeRow} className={buttonClasses}>
+            <MinusCircleIcon className={iconClasses} />
           </Button>
         )}
       </div>
