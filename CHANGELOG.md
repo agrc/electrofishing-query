@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0-10](https://github.com/agrc/electrofishing-query/compare/v2.0.0-9...v2.0.0-10) (2024-11-20)
+
+
+### Bug Fixes
+
+* species/length filter input and buttons layout ([ec5eb10](https://github.com/agrc/electrofishing-query/commit/ec5eb10b7b5d7db83ade09d48bc5417499436034)), closes [#246](https://github.com/agrc/electrofishing-query/issues/246)
+
 ## [2.0.0-9](https://github.com/agrc/electrofishing-query/compare/v2.0.0-8...v2.0.0-9) (2024-11-18)
 
 
