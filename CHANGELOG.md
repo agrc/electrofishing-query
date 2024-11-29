@@ -1,5 +1,86 @@
 # Changelog
 
+## [2.0.0-11](https://github.com/agrc/electrofishing-query/compare/v1.3.11...v2.0.0-11) (2024-11-29)
+
+
+### Features
+
+* add avatar and sign out option ([673e86d](https://github.com/agrc/electrofishing-query/commit/673e86d8914bde7ed29b35af39fa9f7038e68824))
+* add avatar and sign out option ([b353fe2](https://github.com/agrc/electrofishing-query/commit/b353fe2986db11de09fc1fdc97e7b7e7ed292ffe))
+* add clear selection button ([f8293ef](https://github.com/agrc/electrofishing-query/commit/f8293ef59a769f92c283b4f5dc7ab4cb2d00a342))
+* add data to rudimentary results grid ([7aaddc1](https://github.com/agrc/electrofishing-query/commit/7aaddc1d6083f23edb3d281b592a5fb03d323a1b))
+* add download functionality ([aae1f48](https://github.com/agrc/electrofishing-query/commit/aae1f4859dad9abcd3551ead89176ddb28b1bd4a)), closes [#186](https://github.com/agrc/electrofishing-query/issues/186)
+* add equipment type filter ([364939a](https://github.com/agrc/electrofishing-query/commit/364939ac2d5bc9ba89fd3245d51e0c1971bcb348)), closes [#42](https://github.com/agrc/electrofishing-query/issues/42)
+* add logged out state and refactor filter into it's own component ([b7ebb8b](https://github.com/agrc/electrofishing-query/commit/b7ebb8ba44c86bfa23fbac06a8f1d04389e169b0)), closes [#182](https://github.com/agrc/electrofishing-query/issues/182)
+* add root-level error fallback ([a4a6f46](https://github.com/agrc/electrofishing-query/commit/a4a6f4657705a04f8ab4756b94bdbe111b8ab434))
+* add zoom to selection button ([2266a12](https://github.com/agrc/electrofishing-query/commit/2266a124f204d0dc4d036cd434f5c05851c4b323)), closes [#243](https://github.com/agrc/electrofishing-query/issues/243)
+* auto-update map extent to results ([bbfc348](https://github.com/agrc/electrofishing-query/commit/bbfc3480e9550cb8432bf674db6614ae24a7f5bf))
+* get purpose values from feature service ([b4fca3b](https://github.com/agrc/electrofishing-query/commit/b4fca3bc1bb433a2530dd894b4857baa5d04961b))
+* implement date-range filter ([9b87302](https://github.com/agrc/electrofishing-query/commit/9b8730206965f705ad38e04cf900f35b75d9434a)), closes [#183](https://github.com/agrc/electrofishing-query/issues/183)
+* implement location filter ([f3f9829](https://github.com/agrc/electrofishing-query/commit/f3f9829c03c67d371362cd7232bbc4e32767f791))
+* implement purpose filter and wire to map ([2f7310f](https://github.com/agrc/electrofishing-query/commit/2f7310f9b7ddb9bc423d0872f9af2028e6a5829a))
+* implement result grid UDS tabs ([13c246b](https://github.com/agrc/electrofishing-query/commit/13c246bbcacfc3c841825c86ad7262d63814dbb2))
+* implement Species and Length filter ([cb57c21](https://github.com/agrc/electrofishing-query/commit/cb57c211708559e8691b3c37eea302f320047e0f)), closes [#183](https://github.com/agrc/electrofishing-query/issues/183) [#45](https://github.com/agrc/electrofishing-query/issues/45)
+* implement submitter email filter ([f00ba2f](https://github.com/agrc/electrofishing-query/commit/f00ba2f75bfb2203290455c6e7340c0beb2cf7c5)), closes [#43](https://github.com/agrc/electrofishing-query/issues/43)
+* results grid and station selection ([39e860d](https://github.com/agrc/electrofishing-query/commit/39e860de9bfbf12d08e065db1b3e348bfacd8eed)), closes [#187](https://github.com/agrc/electrofishing-query/issues/187)
+* show number of results in results panel ([98506e3](https://github.com/agrc/electrofishing-query/commit/98506e34256393263cff6c46847c5c80b9d2c663)), closes [#184](https://github.com/agrc/electrofishing-query/issues/184)
+* wire up firebase auth proxy for arcgis server requests ([ac1fa62](https://github.com/agrc/electrofishing-query/commit/ac1fa62da1bf5ebc752647375f2df45d9ab742b4))
+* wire up lake and stream map controls ([e260910](https://github.com/agrc/electrofishing-query/commit/e260910c82ef63ca9b86b8aaef9bff510f2dafd6))
+* wire up selection to download panel ([84a5313](https://github.com/agrc/electrofishing-query/commit/84a5313db100d81ff1b1ab028ffa4f5f9c7587dd))
+
+
+### Bug Fixes
+
+* add app-specific oauth scope ([769108c](https://github.com/agrc/electrofishing-query/commit/769108c4ec1ef3e3dd2cd677a20a9ede039ba025))
+* add missing env var ([b60e443](https://github.com/agrc/electrofishing-query/commit/b60e443162764d44b8cd560bfafaafcc75fd094a))
+* add spinners to UI elements that wait for network requests ([79420c9](https://github.com/agrc/electrofishing-query/commit/79420c9040d7b002bab0f95a3be5002a9886ccf5)), closes [#232](https://github.com/agrc/electrofishing-query/issues/232)
+* clear input after selecting a result in stream/lake filter ([b862313](https://github.com/agrc/electrofishing-query/commit/b862313a99a06ccade09c555330e0301a0e6d566))
+* correct dnr logo ([567c71a](https://github.com/agrc/electrofishing-query/commit/567c71a0c4903aa9ef12875ba550605094d68aff))
+* fix bug causing fgdb downloads to fail ([f1c9af2](https://github.com/agrc/electrofishing-query/commit/f1c9af2d5f7ce5cc656eaf12bf9589a473fdbb89)), closes [#239](https://github.com/agrc/electrofishing-query/issues/239)
+* **functions:** fix environment value for staging ([f47c966](https://github.com/agrc/electrofishing-query/commit/f47c96660df6a412afa1c61f779bb6cf3cf381f5))
+* **functions:** fix mappings to work with function rewrite ([220533b](https://github.com/agrc/electrofishing-query/commit/220533b2b154b7bc5002f4a4cdf11634b03f62ec))
+* **functions:** remove empty secret file ([10dad81](https://github.com/agrc/electrofishing-query/commit/10dad81f22d658f88d40561915622bbffddd9cc9))
+* **functions:** remove unnecessary env var ([774dc0f](https://github.com/agrc/electrofishing-query/commit/774dc0ff13469c1fda68c0acffd258518eda1092))
+* get rid of "failed to load basemap" console error from esri js ([68276d9](https://github.com/agrc/electrofishing-query/commit/68276d9da2bc217f142c2ffb52a9c83312feab78))
+* get rid of aria label warning in console ([b48d036](https://github.com/agrc/electrofishing-query/commit/b48d0368db3196d6865872c080f208aef1629bf0))
+* linting ([56ecb75](https://github.com/agrc/electrofishing-query/commit/56ecb75ca408099ce1b1e6951c2f1c3eb4094683))
+* more user-friendly error messages ([22d043d](https://github.com/agrc/electrofishing-query/commit/22d043d71c57018526fffc674e4e03029c387145))
+* remove footer ([b3ce260](https://github.com/agrc/electrofishing-query/commit/b3ce260f00ca5ca1e256a73701257c325e6e15df))
+* set env vars for function via .env file ([432a692](https://github.com/agrc/electrofishing-query/commit/432a69261527100391bc9f2ee3ee201591cc3778))
+* species/length filter input and buttons layout ([eb9521b](https://github.com/agrc/electrofishing-query/commit/eb9521b172d5168b7140dd58ef5e891b972aa68f)), closes [#246](https://github.com/agrc/electrofishing-query/issues/246)
+* switch out placeholder for UDS busy bar ([c594c62](https://github.com/agrc/electrofishing-query/commit/c594c62889ca264c40e563e78d4e4cf16dcc0011))
+* switch out table for tanstack version ([1723fa8](https://github.com/agrc/electrofishing-query/commit/1723fa89cc01f2e2b18cc91ce9f6c05ef46105b0))
+* title ([66b6db9](https://github.com/agrc/electrofishing-query/commit/66b6db9afda9f8d27248e2f7851b775b13cd72ca))
+* wire up clear button for location filter ([f45a99f](https://github.com/agrc/electrofishing-query/commit/f45a99f79300056a592fff386036e13d63a523f0))
+
+
+### Dependencies
+
+* bump npm dependencies 🌲 ([caf2be9](https://github.com/agrc/electrofishing-query/commit/caf2be914f582c9b5134e073784c035e77951c6b))
+* dependency updates 🌲 ([02af92c](https://github.com/agrc/electrofishing-query/commit/02af92ce08f78d7e986debc750230e8e9ac470d1))
+* **dev:** bump eslint-plugin-react-hooks from 5.1.0-rc-fb9a90fa48-20240614 to 5.1.0-rc.0 ([#197](https://github.com/agrc/electrofishing-query/issues/197)) ([c8d6b3c](https://github.com/agrc/electrofishing-query/commit/c8d6b3c86d7ef8c40ed7c044eb369b81bcdc98a8))
+* **functions:** bump firebase deps ([a85772c](https://github.com/agrc/electrofishing-query/commit/a85772cc8ed3e3c8188aa67f9e7f6a48bb0e4655))
+* package audit fix ([a7d9b75](https://github.com/agrc/electrofishing-query/commit/a7d9b75d971d089bef5867921dac535795f84f12))
+* update packages ([83cbb3c](https://github.com/agrc/electrofishing-query/commit/83cbb3c357f1d2909b6aea68a8b2f6703401831d))
+
+
+### Documentation
+
+* add copy step ([dc7b72e](https://github.com/agrc/electrofishing-query/commit/dc7b72eedd50b48ba6e4ca35e3509c0c6160728b))
+* add local dev setup instructions ([a6a97ab](https://github.com/agrc/electrofishing-query/commit/a6a97ab8de7f19b7a03dc729ab92cb8af3a0186c))
+* fix secrets template file and add dev step step ([5721db7](https://github.com/agrc/electrofishing-query/commit/5721db7337bedcb75826a29d1d98e4c67e5741b2))
+
+
+### Styles
+
+* add border around light mode map and match bottom border ([08d8099](https://github.com/agrc/electrofishing-query/commit/08d8099729aea7d103290169fa2ccd02fbaa4867))
+* add colors from their website and accent is complimentary ([8c40f68](https://github.com/agrc/electrofishing-query/commit/8c40f684717c3deb127ac86f5485c3a45e7ef158))
+* prevent table rows from being artificially tall ([97144ab](https://github.com/agrc/electrofishing-query/commit/97144ab987de7200811a90cb16a4fb44667e6552))
+* remove duplicate visible label ([aa17108](https://github.com/agrc/electrofishing-query/commit/aa171080e23d9bfba1cd9fa2988414d6917b11ec))
+* remove extra gap between sidebar and map ([3e77e0c](https://github.com/agrc/electrofishing-query/commit/3e77e0c082177a821febb77673b12605b6fbcc5a))
+* standardize table colors ([81ae6cf](https://github.com/agrc/electrofishing-query/commit/81ae6cf3decc918ae002e0bf7c47b44523aa5287))
+* update primary color to better match DNR logo ([f7c69bd](https://github.com/agrc/electrofishing-query/commit/f7c69bdb74a5aa4fc50267c5e26b662951333282))
+
 ## [2.0.0-10](https://github.com/agrc/electrofishing-query/compare/v2.0.0-9...v2.0.0-10) (2024-11-20)
 
 
