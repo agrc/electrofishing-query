@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/agrc/electrofishing-query/compare/v2.0.0...v2.0.1) (2024-11-29)
+
+
+### Bug Fixes
+
+* **functions:** v2 syntax upgrade ([7c2f631](https://github.com/agrc/electrofishing-query/commit/7c2f6313b99cdaf1b503cc888f231f5a1810d4fe))
+
 ## [2.0.0](https://github.com/agrc/electrofishing-query/compare/v1.3.11...v2.0.0) (2024-11-29)
 
 
