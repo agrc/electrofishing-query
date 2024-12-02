@@ -4,7 +4,7 @@ import { onRequest } from 'firebase-functions/v2/https';
 
 const options = {
   host: process.env.AGS_HOST,
-  verbose: !!process.env.FIREBASE_FUNCTIONS_EMULATOR,
+  verbose: true,
   mappings: [
     {
       // the optional /maps prefix is to support the maps rewrite rule in firebase.json
