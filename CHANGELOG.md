@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2-0](https://github.com/agrc/electrofishing-query/compare/v2.0.1...v2.0.2-0) (2024-12-02)
+
+
+### Bug Fixes
+
+* unregister old service worker ([10c256f](https://github.com/agrc/electrofishing-query/commit/10c256f10932febe1747d4ec3fa2706e6919696b))
+
 ## [2.0.1](https://github.com/agrc/electrofishing-query/compare/v2.0.0...v2.0.1) (2024-11-29)
 
 
