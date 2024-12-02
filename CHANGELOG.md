@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.4](https://github.com/agrc/electrofishing-query/compare/v2.0.3...v2.0.4) (2024-12-02)
+
+
+### Dependencies
+
+* bump firebase-admin ([5286d49](https://github.com/agrc/electrofishing-query/commit/5286d498d80307e27736c8f2b2397b3df5f0bf04))
+* **dev:** bump eslint-plugin-react-hooks ([dbee4dc](https://github.com/agrc/electrofishing-query/commit/dbee4dc75e452899376cd040baafad5073f6395a))
+
 ## [2.0.3](https://github.com/agrc/electrofishing-query/compare/v2.0.2...v2.0.3) (2024-12-02)
 
 
