@@ -10,6 +10,18 @@ import { FilterProvider } from './components/contexts/FilterProvider';
 import { MapProvider } from './components/contexts/MapProvider';
 import './index.css';
 
+// unregister old service worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(
+    function(registrations) {
+      for (const registration of registrations) {
+        console.log('Unregistering service worker:', registration);
+        registration.unregister();
+      }
+    }
+  );
+}
+
 let firebaseConfig = {
   apiKey: '',
   authDomain: '',
