@@ -16,7 +16,9 @@ if ("serviceWorker" in navigator) {
     function(registrations) {
       for (const registration of registrations) {
         console.log('Unregistering service worker:', registration);
-        registration.unregister();
+        registration.unregister().then(function(success) {
+          if (success) window.location.reload();
+        });
       }
     }
   );
