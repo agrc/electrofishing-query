@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/agrc/electrofishing-query/compare/v2.0.2...v2.0.3) (2024-12-02)
+
+
+### Bug Fixes
+
+* reload window after service worker unregistration ([301059a](https://github.com/agrc/electrofishing-query/commit/301059acf735974f6da8be61879a4a9362987c08))
+
 ## [2.0.2](https://github.com/agrc/electrofishing-query/compare/v2.0.1...v2.0.2) (2024-12-02)
 
 
