@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.6-0](https://github.com/agrc/electrofishing-query/compare/v2.0.4...v2.0.6-0) (2024-12-03)
+
+
+### Bug Fixes
+
+* Revert "chore(function): add more logging to middleware" ([b1cc7f1](https://github.com/agrc/electrofishing-query/commit/b1cc7f1d8e16df38a0968a9f37d6d4ed1450b38e))
+
+
+### Dependencies
+
+* bump ugrc package deps for layer selector and map loader fixes ([b90cb02](https://github.com/agrc/electrofishing-query/commit/b90cb02e8d1ecfa4c5fbbd5c54f19b81f1ef850b))
+
 ## [2.0.4](https://github.com/agrc/electrofishing-query/compare/v2.0.3...v2.0.4) (2024-12-02)
 
 
