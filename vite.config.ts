@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), loadVersion()],
   test: {
     environment: 'happy-dom',
+    setupFiles: './vitest.setup.js',
   },
   resolve: {
     // this is only applicable when npm-linking the utah-design-package
