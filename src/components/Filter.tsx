@@ -15,7 +15,7 @@ import { getStationQuery } from './queryHelpers';
 
 const emptyDefinition = '1=0';
 
-export default function Filter(): JSX.Element {
+export default function Filter() {
   const { stationsLayer, mapView } = useMap();
   const { filter } = useFilter();
   const initialized = useRef(false);

@@ -101,7 +101,7 @@ export default function App() {
     //      private
     logEvent('sherlock:zoom');
 
-    zoom(graphics[0].geometry);
+    zoom(graphics[0]?.geometry);
     placeGraphic(graphics);
   };
 

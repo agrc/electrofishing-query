@@ -1,6 +1,6 @@
 import Graphic from '@arcgis/core/Graphic';
 import {
-  AsyncListItem,
+  type AsyncListItem,
   Button,
   featureServiceProvider,
   multiProvider,
@@ -10,7 +10,7 @@ import {
   useFirebaseAuth,
 } from '@ugrc/utah-design-system';
 import { useEffect } from 'react';
-import { AsyncListData, useListData } from 'react-stately';
+import { type AsyncListData, useListData } from 'react-stately';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
 
@@ -19,7 +19,7 @@ function getKey(graphic: Graphic): string {
   return graphic.attributes[config.fieldNames.DWR_WaterID];
 }
 
-export default function Location(): JSX.Element {
+export default function Location() {
   const { currentUser } = useFirebaseAuth();
   const kyOptions = {
     hooks: {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Result } from './ResultsGrid';
+import type { Result } from './ResultsGrid';
 import { getEventIdsForDownload, getResultOidsFromStationIds, getStationIdsFromResultRows } from './utils';
 
 describe('getStationIdsFromResultRows', () => {

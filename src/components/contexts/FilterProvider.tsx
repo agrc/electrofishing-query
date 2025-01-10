@@ -1,4 +1,4 @@
-import { createContext, Dispatch, useContext } from 'react';
+import { createContext, type Dispatch, useContext } from 'react';
 import { useImmerReducer } from 'use-immer';
 
 export type QueryInfo = {
