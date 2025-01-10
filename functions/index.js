@@ -1,5 +1,5 @@
+import initProxy from '@ugrc/firebase-auth-arcgis-server-proxy';
 import 'dotenv/config';
-import initProxy from 'firebase-auth-arcgis-server-proxy';
 import { onRequest } from 'firebase-functions/v2/https';
 
 const options = {
