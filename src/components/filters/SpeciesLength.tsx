@@ -115,7 +115,7 @@ export default function SpeciesLength() {
   };
 
   useEffect(() => {
-    if (rows.length === 1 && isEmpty(rows[0])) {
+    if (rows.length === 1 && isEmpty(rows[0]!)) {
       filterDispatch({ type: 'CLEAR_TABLE', filterKey });
     } else {
       const newQuery = rows

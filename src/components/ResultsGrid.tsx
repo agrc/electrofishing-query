@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { RowSelectionState, Updater } from '@tanstack/react-table';
+import type { RowSelectionState, Updater } from '@tanstack/react-table';
 import { Button, Spinner, Tab, TabList, TabPanel, Tabs, useFirebaseAuth } from '@ugrc/utah-design-system';
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import ky from 'ky';
 import { SearchIcon, SquareXIcon } from 'lucide-react';
 import config from '../config';

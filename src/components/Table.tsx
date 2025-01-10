@@ -34,7 +34,7 @@ type TableProps = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRowRange = (rows: Row<any>[], currentIndex: number, selectedIndex: number | null): Row<any>[] => {
   if (selectedIndex === null) {
-    return [rows[currentIndex]];
+    return rows[currentIndex] ? [rows[currentIndex]] : [];
   }
 
   const rangeStart = selectedIndex > currentIndex ? currentIndex : selectedIndex;

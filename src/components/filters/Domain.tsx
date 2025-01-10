@@ -1,6 +1,6 @@
 import { Button, Checkbox, CheckboxGroup, Spinner } from '@ugrc/utah-design-system';
 import { useEffect, useState } from 'react';
-import { FilterKeys, useFilter } from '../contexts/FilterProvider';
+import { type FilterKeys, useFilter } from '../contexts/FilterProvider';
 import { useDomainValues } from './utilities';
 
 type DomainProps = {
@@ -10,13 +10,7 @@ type DomainProps = {
   label: string;
   tableName: string;
 };
-export default function Domain({
-  featureServiceUrl,
-  fieldName,
-  filterKey,
-  label,
-  tableName,
-}: DomainProps): JSX.Element {
+export default function Domain({ featureServiceUrl, fieldName, filterKey, label, tableName }: DomainProps) {
   const { data, isPending, error } = useDomainValues(featureServiceUrl, fieldName);
   const { filterDispatch } = useFilter();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);

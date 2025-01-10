@@ -2,8 +2,7 @@ import Graphic from '@arcgis/core/Graphic';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import MapView from '@arcgis/core/views/MapView';
 import { useGraphicManager } from '@ugrc/utilities/hooks';
-import PropTypes from 'prop-types';
-import { createContext, ReactNode, useRef, useState } from 'react';
+import { createContext, type ReactNode, useRef, useState } from 'react';
 import config from '../../config';
 
 export const MapContext = createContext<{
@@ -49,7 +48,7 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
     mapView.map.addMany(layers);
   };
 
-  const stationsLayer = useRef<FeatureLayer>();
+  const stationsLayer = useRef<FeatureLayer>(undefined);
   if (mapView && !stationsLayer.current) {
     stationsLayer.current = new FeatureLayer({
       url: config.urls.stations,
@@ -87,8 +86,4 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </MapContext.Provider>
   );
-};
-
-MapProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };

@@ -1,5 +1,5 @@
 import config from '../config';
-import { QueryInfo } from './contexts/FilterProvider';
+import type { QueryInfo } from './contexts/FilterProvider';
 
 export function getStationQuery(queryInfos: QueryInfo[]): string {
   // Returns a query that selects stations given some related table queries
@@ -21,7 +21,7 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
     }
 
     if (tables[info.table]) {
-      tables[info.table].push(info.where);
+      tables[info.table]!.push(info.where);
     } else {
       tables[info.table] = [info.where];
     }
@@ -29,7 +29,7 @@ export function getStationQuery(queryInfos: QueryInfo[]): string {
 
   const query = Object.keys(tables).reduce((previous, current, currentIndex) => {
     // concat where clauses for table
-    const where = tables[current].join(' AND ');
+    const where = tables[current]!.join(' AND ');
 
     // support multiple table queries
     if (currentIndex > 0) {
@@ -77,7 +77,7 @@ type Row = Record<string, string>;
 export function getIdsFromGridSelection(rows: Row[], selection: Record<string, boolean>): string {
   const selectedIds = Object.keys(selection);
   if (selectedIds.length > 0) {
-    rows = rows.filter((row) => selectedIds.indexOf(row[config.fieldNames.EVENT_ID]) > -1);
+    rows = rows.filter((row) => selectedIds.indexOf(row[config.fieldNames.EVENT_ID]!) > -1);
   }
 
   return rows.map((row) => row[config.fieldNames.EVENT_ID]).join(';');

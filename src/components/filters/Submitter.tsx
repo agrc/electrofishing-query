@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 import config from '../../config';
 import { useFilter } from '../contexts/FilterProvider';
 
-export default function Submitter(): JSX.Element {
+export default function Submitter() {
   const { filterDispatch } = useFilter();
 
   const onChange = debounce((value: string) => {

@@ -24,7 +24,7 @@ type State = {
   isBusy: boolean;
 };
 
-export default function Download({ eventIds }: { eventIds: string[] }): JSX.Element {
+export default function Download({ eventIds }: { eventIds: string[] }) {
   const queryClient = useQueryClient();
   const [state, setState] = useState<State>({
     format: '',

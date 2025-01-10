@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFirebaseAuth } from '@ugrc/utah-design-system';
 import ky from 'ky';
 import config from '../../config';
-import { SpeciesLengthRow } from './SpeciesLength';
+import type { SpeciesLengthRow } from './SpeciesLength';
 
 export function isPositiveWholeNumber(value: string): boolean {
   return Number.isInteger(Number(value)) && Number(value) > 0;
@@ -66,7 +66,7 @@ export function getQuery(row: SpeciesLengthRow): string | null {
   ];
 
   const parts = queryInfos
-    .filter(([node]) => node.length > 0)
+    .filter(([node]) => node && node.length > 0)
     .map(([node, comparison, fieldName, quote]) => {
       return `${fieldName} ${comparison} ${quote}${node}${quote}`;
     });
