@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.6](https://github.com/agrc/electrofishing-query/compare/v2.0.5...v2.0.6) (2025-01-10)
+
+
+### Dependencies
+
+* bump nanoid from 3.3.7 to 3.3.8 in the npm_and_yarn group ([87d769a](https://github.com/agrc/electrofishing-query/commit/87d769a94a249a3a17ba9028c47f3d95e990204c))
+* bump storybook ([9b8286b](https://github.com/agrc/electrofishing-query/commit/9b8286b54d88c539812f4a90e2bbd0c8a030e6f6))
+* bump the npm_and_yarn group in /functions with 2 updates ([6e16591](https://github.com/agrc/electrofishing-query/commit/6e1659179a75c89cc5b32f5dc76d02ccd344d491))
+* bump the safe-app-dependencies group with 30 updates ([79e5a4e](https://github.com/agrc/electrofishing-query/commit/79e5a4eef51e000e830681d639ce997a198f850d))
+* bump the safe-function-dependencies group ([f26c8f0](https://github.com/agrc/electrofishing-query/commit/f26c8f07078cca9c9464a6ffe2801116d82e584e))
+* **dev:** bump eslint-plugin-react-hooks from 5.1.0-rc.1 to 5.1.0 ([608ad93](https://github.com/agrc/electrofishing-query/commit/608ad939a5d28dbf732f388f27624c3a6652b2f0))
+* FY25 Q3 dependency bumps 🌲 ([e4f2346](https://github.com/agrc/electrofishing-query/commit/e4f23467db0a674c93252b2d6daa9e9adf1d028a))
+
 ## [2.0.6-0](https://github.com/agrc/electrofishing-query/compare/v2.0.5...v2.0.6-0) (2025-01-10)
 
 
