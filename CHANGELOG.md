@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.7-0](https://github.com/agrc/electrofishing-query/compare/v2.0.6...v2.0.7-0) (2025-01-28)
+
+
+### Bug Fixes
+
+* switch to clickable download link ([e965647](https://github.com/agrc/electrofishing-query/commit/e9656472179110555b2a3d8c8839e360d9fd01e5))
+
 ## [2.0.6](https://github.com/agrc/electrofishing-query/compare/v2.0.5...v2.0.6) (2025-01-10)
 
 
