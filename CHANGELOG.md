@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.7-1](https://github.com/agrc/electrofishing-query/compare/v2.0.7-0...v2.0.7-1) (2025-01-28)
+
+
+### Bug Fixes
+
+* switch out arcgis server download URL with the correct origin ([a9760e2](https://github.com/agrc/electrofishing-query/commit/a9760e28f60e3cb54c03d46fcc44cbbd02331ff5))
+
 ## [2.0.7-0](https://github.com/agrc/electrofishing-query/compare/v2.0.6...v2.0.7-0) (2025-01-28)
 
 
