@@ -15,7 +15,15 @@ async function download(eventIds: string[], format: string): Promise<string> {
   const parameter = await jobInfo.fetchResultData('Zip_File');
   const value = parameter.value as __esri.DataFile;
 
-  return value.url.replace('http', 'https');
+  if (import.meta.env.MODE === 'development') {
+    // in local dev, the URL comes back from arcgis server like this:
+    // http://wrimaps.at.utah.gov/arcgis/rest/directories/arcgisjobs/electrofishing/download_gpserver/j90f5a566908440338294c24963a064bf/scratch/data.zip
+    return value.url.replace('http', 'https');
+  } else {
+    // in staging and prod the URL comes back like this:
+    // http://electrofishing-query.dev.utah.gov/arcgis/rest/directories/arcgisjobs/electrofishing/download_gpserver/jc18805d7a9514528841c41408c1eed1f/scratch/data.zip
+    return `${config.urls.arcgisServer}${new URL(value.url).pathname}`;
+  }
 }
 
 type State = {

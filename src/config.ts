@@ -73,6 +73,7 @@ const config = {
     streams: `${referenceMapService}/0`,
     lakes: `${referenceMapService}/1`,
     download: `${functionsUrl}/toolbox/Download`,
+    arcgisServer: import.meta.env.MODE === 'production' ? 'https://wrimaps.utah.gov' : 'https://wrimaps.at.utah.gov',
   },
 };
 
