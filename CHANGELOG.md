@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.7](https://github.com/agrc/electrofishing-query/compare/v2.0.6...v2.0.7) (2025-01-28)
+
+
+### Bug Fixes
+
+* switch out arcgis server download URL with the correct origin ([cabcb58](https://github.com/agrc/electrofishing-query/commit/cabcb58b1153b7427796e99dd92806f262e522c7))
+* switch to clickable download link ([e8498f6](https://github.com/agrc/electrofishing-query/commit/e8498f69b19b802161ee68b3c472993e6057667b))
+
+
+### Dependencies
+
+* **dev:** bump vite from 6.0.7 to 6.0.11 in the npm_and_yarn group ([d24403e](https://github.com/agrc/electrofishing-query/commit/d24403ed9131c2a94d20fd23db765b025259ed2e))
+
 ## [2.0.7-1](https://github.com/agrc/electrofishing-query/compare/v2.0.7-0...v2.0.7-1) (2025-01-28)
 
 
