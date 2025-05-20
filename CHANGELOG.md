@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.8](https://github.com/agrc/electrofishing-query/compare/v2.0.7...v2.0.8) (2025-05-20)
+
+
+### Dependencies
+
+* bump npm dependencies 🌲 ([c186184](https://github.com/agrc/electrofishing-query/commit/c186184bb0715446132e0813d060bacffcc00060))
+* bump storybook ([2c840de](https://github.com/agrc/electrofishing-query/commit/2c840def1a2bd87ccbd0ba279ecb9fdda9da04d6))
+
+
+### Styles
+
+* fix spinner sizes ([bd4515c](https://github.com/agrc/electrofishing-query/commit/bd4515cc02c02f0120a2dccc2b9536f51539df37))
+
 ## [2.0.7](https://github.com/agrc/electrofishing-query/compare/v2.0.6...v2.0.7) (2025-01-28)
 
 
