@@ -1,0 +1,7 @@
+packages:
+  - functions
+onlyBuiltDependencies:
+  - '@firebase/util'
+  - '@vaadin/vaadin-usage-statistics'
+  - esbuild
+  - protobufjs
