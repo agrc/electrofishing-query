@@ -55,7 +55,6 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
       definitionExpression: '1=0',
       outFields: [config.fieldNames.STATION_ID],
       renderer: {
-        // @ts-expect-error - accessor has issues with TS
         type: 'simple',
         symbol: {
           type: 'simple-marker',
