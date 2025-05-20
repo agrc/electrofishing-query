@@ -15,6 +15,10 @@ async function download(eventIds: string[], format: string): Promise<string> {
   const parameter = await jobInfo.fetchResultData('Zip_File');
   const value = parameter.value as __esri.DataFile;
 
+  if (!value.url) {
+    throw new Error('No URL returned from the download service');
+  }
+
   if (import.meta.env.MODE === 'development') {
     // in local dev, the URL comes back from arcgis server like this:
     // http://wrimaps.at.utah.gov/arcgis/rest/directories/arcgisjobs/electrofishing/download_gpserver/j90f5a566908440338294c24963a064bf/scratch/data.zip
@@ -54,7 +58,7 @@ export default function Download({ eventIds }: { eventIds: string[] }) {
     let url;
     try {
       url = await queryClient.fetchQuery({
-        queryKey: ['download', eventIds],
+        queryKey: ['download', eventIds, state.format],
         queryFn: () => download(eventIds as string[], state.format),
       });
     } catch (error) {

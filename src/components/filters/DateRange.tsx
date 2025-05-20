@@ -57,7 +57,7 @@ export default function DateRange() {
             isInvalid={isInvalid}
           />
         </div>
-        {isInvalid && <p className="text-sm text-red-500">"From" must be before "To"</p>}
+        {isInvalid && <p className="text-sm text-red-500">&quot;From&quot; must be before &quot;To&quot;</p>}
         <div className="w-30 flex justify-end">
           <Button variant="secondary" onPress={() => setDates(emptyState)}>
             Clear

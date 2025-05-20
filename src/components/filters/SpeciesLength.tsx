@@ -79,7 +79,7 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
           </Button>
         )}
       </div>
-      {isInvalidRange && <p className="text-sm text-red-500">"Min" must be less than "Max"</p>}
+      {isInvalidRange && <p className="text-sm text-red-500">&quot;Min&quot; must be less than &quot;Max&quot;</p>}
     </>
   );
 }
