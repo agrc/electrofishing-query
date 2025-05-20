@@ -29,9 +29,9 @@ export default function Filter() {
     mapView.on('pointer-move', (event) => {
       mapView.hitTest(event, { include: stationsLayer }).then((response) => {
         if (response.results.length > 0) {
-          mapView.container.style.cursor = 'pointer';
+          mapView.container!.style.cursor = 'pointer';
         } else {
-          mapView.container.style.cursor = 'default';
+          mapView.container!.style.cursor = 'default';
         }
       });
     });
@@ -115,7 +115,6 @@ export default function Filter() {
     }
 
     if (selectedStationIds.size === 0) {
-      // @ts-expect-error null is a valid value
       stationsLayer.featureEffect = null;
     } else {
       const where = `${config.fieldNames.STATION_ID} IN ('${Array.from(selectedStationIds).join("','")}')`;
