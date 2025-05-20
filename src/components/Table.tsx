@@ -64,7 +64,7 @@ function InnerTable(
 
   return (
     <div ref={forwardedRef} className={twMerge('relative', className)}>
-      <div className="h-full overflow-auto" ref={parentRef} tabIndex={0}>
+      <div className="h-full overflow-auto" ref={parentRef}>
         <table className="w-full table-fixed border-collapse">
           <caption className="sr-only">{caption}</caption>
           <thead className="sticky top-0 bg-zinc-200 text-base dark:bg-zinc-800">
@@ -73,6 +73,7 @@ function InnerTable(
                 {headerGroup.headers.map((header) => (
                   <th key={header.id} className={'relative p-2 text-left'} style={{ width: header.getSize() }}>
                     {header.isPlaceholder ? null : (
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                       <div
                         className={twJoin(
                           header.column.getCanSort() && 'flex cursor-pointer select-none items-center justify-between',

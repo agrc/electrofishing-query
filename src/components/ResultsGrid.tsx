@@ -192,7 +192,7 @@ export default function ResultsGrid() {
   const gridQuery = getGridQuery(Object.values(filter));
   console.log('new grid query:', gridQuery);
   const { data, isPending, error } = useQuery({
-    queryKey: ['grid', gridQuery],
+    queryKey: ['grid', gridQuery, currentUser],
     queryFn: () => {
       if (currentUser) {
         return getData(gridQuery, currentUser);
