@@ -43,7 +43,9 @@ export default function Domain({ featureServiceUrl, fieldName, filterKey, label,
       <div>
         <h3 className="text-lg font-semibold">{label}</h3>
         {isPending ? (
-          <Spinner />
+          <div className="size-8">
+            <Spinner />
+          </div>
         ) : (
           <CheckboxGroup onChange={setSelectedValues} value={selectedValues}>
             {data?.map(({ name, code }) => (

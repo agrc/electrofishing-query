@@ -204,8 +204,10 @@ export default function ResultsGrid() {
 
   if (isPending) {
     return (
-      <div className="flex h-full justify-center align-middle">
-        <Spinner aria-label="loading results grid" />
+      <div className="flex h-full flex-col items-center justify-center">
+        <div className="size-16">
+          <Spinner aria-label="loading results grid" />
+        </div>
       </div>
     );
   }
