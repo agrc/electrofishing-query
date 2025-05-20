@@ -36,3 +36,7 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
 1. Create `.env.local` files in the project root and the functions folders using the corresponding `.env` files as examples.
 1. Start the development server
    - `npm start`
+
+### Dependency Updates
+
+`tailwindcss`, and `tailwindcss-react-aria-components` can't be updated until we migrate the design system to tailwind 4.
