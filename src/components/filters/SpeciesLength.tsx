@@ -31,13 +31,15 @@ function RowControls({ species, min, max, onChange, addRow, removeRow, isLast }:
   }
 
   const iconClasses = 'w-5 text-zinc-700 dark:text-zinc-50';
-  const buttonClasses = 'p-0';
+  const buttonClasses = 'p-0 mb-1';
 
   return (
     <>
       <div className="flex w-full items-end gap-1">
         {isPending ? (
-          <Spinner />
+          <div className="mb-1 size-6">
+            <Spinner />
+          </div>
         ) : (
           <Select
             className="min-w-28"
