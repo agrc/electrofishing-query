@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.10](https://github.com/agrc/electrofishing-query/compare/v2.0.9...v2.0.10) (2025-08-01)
+
+
+### Dependencies
+
+* bump the safe-app-dependencies group with 3 updates ([bcee46e](https://github.com/agrc/electrofishing-query/commit/bcee46eee2334be7f91522396b968d517d34c77c))
+
 ## [2.0.9](https://github.com/agrc/electrofishing-query/compare/v2.0.8...v2.0.9) (2025-07-31)
 
 
