@@ -40,10 +40,9 @@
     "@heroicons/react": "^2.2.0",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-table": "^8.21.3",
-    "@ugrc/layer-selector": "^6.4.0",
     "@ugrc/tailwind-preset": "^1.2.0",
-    "@ugrc/utah-design-system": "^1.27.3",
-    "@ugrc/utilities": "^3.0.4",
+    "@ugrc/utah-design-system": "^1.28.1",
+    "@ugrc/utilities": "^3.1.0",
     "firebase": "^12.0.0",
     "immer": "^10.1.1",
     "ky": "^1.8.2",
@@ -59,6 +58,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.1",
+    "@storybook/addon-docs": "^9.0.18",
     "@storybook/addon-links": "^9.0.18",
     "@storybook/react-vite": "^9.0.18",
     "@types/lodash.debounce": "^4.0.9",
@@ -86,7 +86,6 @@
     "vite": "^6.3.5",
     "vite-plugin-package-version": "^1.1.0",
     "vitest": "^3.2.4",
-    "wait-on": "^8.0.4",
-    "@storybook/addon-docs": "^9.0.18"
+    "wait-on": "^8.0.4"
   }
 }
