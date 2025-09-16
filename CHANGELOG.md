@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.11](https://github.com/agrc/electrofishing-query/compare/v2.0.10...v2.0.11) (2025-09-16)
+
+
+### Bug Fixes
+
+* migrate to utah design system layer selector ([4336ba1](https://github.com/agrc/electrofishing-query/commit/4336ba18567711720fa79ce30bd1490711ce4fed))
+
+
+### Dependencies
+
+* update [@ugrc](https://github.com/ugrc) packages and audit fix ([4177321](https://github.com/agrc/electrofishing-query/commit/417732179a96c0363f78af9be25d89f1ceb2e137))
+
 ## [2.0.10](https://github.com/agrc/electrofishing-query/compare/v2.0.9...v2.0.10) (2025-08-01)
 
 
