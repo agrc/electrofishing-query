@@ -170,8 +170,8 @@ importers:
         specifier: ^2.0.8
         version: 2.0.8(encoding@0.1.13)
       dotenv:
-        specifier: ^16.6.1
-        version: 16.6.1
+        specifier: ^17.2.1
+        version: 17.2.1
       firebase-admin:
         specifier: ^13.0.2
         version: 13.4.0(encoding@0.1.13)
@@ -197,12 +197,14 @@ packages:
 
   '@arcgis/components-utils@4.33.13':
     resolution: {integrity: sha512-6rBblq24lwQ/zTBVKkE675FB9pyBmyKGQSgGR9ot0izyW9u0Jh+ggxJ+54JG8medYPNgKxOwsLw/0ktTtuPF2Q==}
+    deprecated: This version is no longer supported. Upgrade to @latest
 
   '@arcgis/core@4.33.10':
     resolution: {integrity: sha512-UsF2y9NjhE5wTsiBO54ZMnaDvWu4fqIkZanBM0Dde/01rkp+RXmCHR+xzhbsvT4A52JbjbASn6466uMhQeoX9w==}
 
   '@arcgis/lumina@4.33.13':
     resolution: {integrity: sha512-WOxHls8EN4u177ReNaFqRD0/LjXd59SggNBjAvOicDL2YO9Pr3doVnosaLP7/8TKzGah3fA+pvn/Nt266XitNg==}
+    deprecated: This version is no longer supported. Upgrade to @latest
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -3156,8 +3158,8 @@ packages:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
     engines: {node: '>=8'}
 
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+  dotenv@17.2.1:
+    resolution: {integrity: sha512-kQhDYKZecqnM0fCnzI5eIv5L4cAe/iRI+HqMbO/hbRdTAeXDG+M9FjipUxNfbARuEg4iHIbhnhs78BCHNbSxEQ==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -10178,7 +10180,7 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
-  dotenv@16.6.1: {}
+  dotenv@17.2.1: {}
 
   dunder-proto@1.0.1:
     dependencies:
