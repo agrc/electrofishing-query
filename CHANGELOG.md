@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.12](https://github.com/agrc/electrofishing-query/compare/v2.0.11...v2.0.12) (2025-11-11)
+
+
+### Dependencies
+
+* bump the major-app-dependencies group across 1 directory with 3 updates ([9665a3a](https://github.com/agrc/electrofishing-query/commit/9665a3a8190ee98d7e633af28a20ebd1ee417851))
+* bump the safe-app-dependencies group across 1 directory with 33 updates ([58636a6](https://github.com/agrc/electrofishing-query/commit/58636a6c3339c9e1fa9db040ed706fcd7457bb07))
+* **dev:** bump vite from 7.1.5 to 7.1.11 ([16afaaf](https://github.com/agrc/electrofishing-query/commit/16afaaf87e92047f8fd1459bce7501efe31aa228))
+
 ## [2.0.11](https://github.com/agrc/electrofishing-query/compare/v2.0.10...v2.0.11) (2025-09-16)
 
 
