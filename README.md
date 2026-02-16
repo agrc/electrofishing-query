@@ -40,3 +40,7 @@ Production: [https://electrofishing-query.ugrc.utah.gov](https://electrofishing-
 ### Dependency Updates
 
 `tailwindcss`, and `tailwindcss-react-aria-components` can't be updated until we migrate the design system to tailwind 4.
+
+## Attribution
+
+This project was developed with the assistance of [GitHub Copilot](https://github.com/features/copilot).
