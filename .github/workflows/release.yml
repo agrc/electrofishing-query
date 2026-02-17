@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to run tests against'
+        description: "Environment to run tests against"
         type: environment
         required: true
 
@@ -24,8 +24,11 @@ jobs:
     if: github.event.release.prerelease == true || inputs.environment == 'dev'
 
     steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v6
+
       - name: 🚀 Deploy
-        uses: agrc/firebase-website-deploy-composite-action@v1
+        uses: agrc/firebase-website-deploy-composite-action@v2
         with:
           identity-provider: ${{ secrets.IDENTITY_PROVIDER }}
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
@@ -45,8 +48,11 @@ jobs:
     if: github.event.release.prerelease == false || inputs.environment == 'prod'
 
     steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v6
+
       - name: 🚀 Deploy
-        uses: agrc/firebase-website-deploy-composite-action@v1
+        uses: agrc/firebase-website-deploy-composite-action@v2
         with:
           identity-provider: ${{ secrets.IDENTITY_PROVIDER }}
           service-account-email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
