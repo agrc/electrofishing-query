@@ -1,5 +1,6 @@
 import initProxy from '@ugrc/firebase-auth-arcgis-server-proxy';
 import 'dotenv/config';
+import { defineSecret } from 'firebase-functions/params';
 import { onRequest } from 'firebase-functions/v2/https';
 
 const options = {
@@ -43,6 +44,7 @@ const options = {
   },
 };
 
-const [proxy, secrets] = initProxy(options);
+const [proxy, secretNames] = initProxy(options);
+const secrets = secretNames.map(defineSecret);
 
 export const maps = onRequest({ secrets, invoker: 'public' }, proxy);
