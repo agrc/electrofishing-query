@@ -13,7 +13,7 @@
     "build-storybook": "storybook build",
     "check": "tsc -b",
     "copy:arcgis": "cpy \"./node_modules/@arcgis/core/assets/**\" ./public/assets",
-    "dev:firebase-emulators": "firebase emulators:start --import emulator_data --export-on-exit --only functions,auth,ui,firestore",
+    "dev:firebase-emulators": "./scripts/start-emulators.sh",
     "dev:vite": "vite",
     "format": "prettier . --write",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
