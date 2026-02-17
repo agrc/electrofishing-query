@@ -4,7 +4,7 @@ import { FirebaseAnalyticsProvider, FirebaseAppProvider, FirebaseAuthProvider } 
 import { OAuthProvider } from 'firebase/auth';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, getErrorMessage, type FallbackProps } from 'react-error-boundary';
 import App from './App';
 import { FilterProvider } from './components/contexts/FilterProvider';
 import { MapProvider } from './components/contexts/MapProvider';
@@ -39,12 +39,12 @@ if (import.meta.env.VITE_FIREBASE_CONFIG) {
 const provider = new OAuthProvider('oidc.utahid');
 provider.addScope('app:DWRElectroFishing');
 
-const MainErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => {
+const MainErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
     <div className="static flex h-screen w-screen items-center justify-center">
       <div className="flex-col items-center">
         <h1>Something went wrong</h1>
-        <pre className="text-red-500">{error.message}</pre>
+        <pre className="text-red-500">{getErrorMessage(error)}</pre>
         <button className="w-full rounded-full border p-1" onClick={resetErrorBoundary}>
           Try again
         </button>
