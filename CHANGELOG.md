@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.13](https://github.com/agrc/electrofishing-query/compare/v2.0.12...v2.0.13) (2026-02-17)
+
+
+### Dependencies
+
+* bump npm dependencies 🌲 ([5fdc6e8](https://github.com/agrc/electrofishing-query/commit/5fdc6e87d35d766a0cfb19ab232b91069dc1e037))
+* bump the major-app-dependencies group across 1 directory with 2 updates ([aa49755](https://github.com/agrc/electrofishing-query/commit/aa49755172e14a8c39063a3180aa39803c4b60f0))
+* bump the safe-app-dependencies group across 1 directory with 2 updates ([30b11dc](https://github.com/agrc/electrofishing-query/commit/30b11dcf20049cdab2a4214538f8a5546b75bb92))
+* **dev:** bump happy-dom from 18.0.1 to 20.0.2 ([a5715b7](https://github.com/agrc/electrofishing-query/commit/a5715b799a9d30d78e8c8b80e9f08491c6540223))
+
 ## [2.0.12](https://github.com/agrc/electrofishing-query/compare/v2.0.11...v2.0.12) (2025-11-11)
 
 
