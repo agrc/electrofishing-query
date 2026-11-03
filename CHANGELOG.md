@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.14](https://github.com/agrc/electrofishing-query/compare/v2.0.13...v2.0.14) (2026-11-03)
+
+
+### Bug Fixes
+
+* allow required pnpm dependency builds ([dbfccd3](https://github.com/agrc/electrofishing-query/commit/dbfccd35d65f55296205c6e178d2795126b74107))
+* update land ownership vector tile URL ([43de4e3](https://github.com/agrc/electrofishing-query/commit/43de4e3d2e0567477b514556812568ec5fe55ce2))
+
 ## [2.0.13](https://github.com/agrc/electrofishing-query/compare/v2.0.12...v2.0.13) (2026-02-17)
 
 
