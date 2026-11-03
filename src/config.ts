@@ -69,7 +69,7 @@ const config = {
     fish: `${featureService}/2`,
     stations: `${featureService}/0`,
     landownership:
-      'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_WM_VectorTile/VectorTileServer',
+      'https://gis.trustlands.utah.gov/hosting/rest/services/Hosted/Land_Ownership_Agency_Web_Mercator_Vector_T/VectorTileServer',
     streams: `${referenceMapService}/0`,
     lakes: `${referenceMapService}/1`,
     download: `${functionsUrl}/toolbox/Download`,
